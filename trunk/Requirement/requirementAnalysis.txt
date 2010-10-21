@@ -1,0 +1,25 @@
+Man hinh dang nhap
+   -Co bao nhieu loai user?
+   -y nghia phieu nhap, phieu xuat
+   
+Quan ly doi tuong
+   -text area de lam gi?
+   -them Loai,tinh nen chuyen sang quyen admin
+   -se cho table view sap xep theo tung cot
+   -doi title cua man hinh
+   
+Quan ly benh nhan
+
+Tim thuoc va dich vu
+   -tim theo nhieu tieu chi
+   -ho tro go~
+   
+Phieu nhap hang
+
+Phieu xuat hang
+
+Toa thuoc 
+ -ko hoat dong
+ 
+ 
+
