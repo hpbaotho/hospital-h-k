@@ -2,3 +2,6 @@
 2. Plugin of eclipse 3.6.1:
    2.1 JasperReport IDE: http://www.jasperassistant.com/updates
    2.2 Window Builder Pro (SWT, SWING, ...): http://dl.google.com/eclipse/inst/d2wbpro/latest/3.6
+   
+3. How to install Plugin ?
+   In eclipse: Help --> Install New Software... --> ...
