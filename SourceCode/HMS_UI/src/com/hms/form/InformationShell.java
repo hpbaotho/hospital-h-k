@@ -144,7 +144,7 @@ public class InformationShell extends Shell {
 		label_10.setBounds(447, 29, 130, 183);
 		
 		Button button = new Button(this, SWT.NONE);
-		button.setImage(SWTResourceManager.getImage(InformationShell.class, "/com/hms/icon/save-icon3.png"));
+		button.setImage(SWTResourceManager.getImage(InformationShell.class, "/com/hms/icon/hms-save-icon.png"));
 		button.setBounds(447, 216, 130, 77);
 		createContents();
 	}
