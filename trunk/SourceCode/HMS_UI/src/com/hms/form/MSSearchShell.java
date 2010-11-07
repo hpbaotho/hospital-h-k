@@ -54,7 +54,7 @@ public class MSSearchShell extends Shell {
 	 */
 	public MSSearchShell(Display display) {
 		super(display, SWT.SHELL_TRIM);
-		setImage(SWTResourceManager.getImage(MSSearchShell.class, "/com/hms/icon/imx-tablet-icon.png"));
+		setImage(SWTResourceManager.getImage(MSSearchShell.class, "/com/hms/icon/hms-tablet-icon.png"));
 		setLayout(null);
 		
 		Composite composite = new Composite(this, SWT.BORDER);

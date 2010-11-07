@@ -45,6 +45,18 @@ public class ResourceBundle_vi_VN extends ListResourceBundle {
 	
 	{ "HMS.MenuFrame.menu.doctor.prescription", "Toa thuốc" },
 	
+	{ "HMS.MenuFrame.menu.doctor.subclinical", "Cận lâm sàng" },
+	
+	{ "HMS.MenuFrame.menu.doctor.medical_test", "Xét nghiệm" },
+	
+	{ "HMS.MenuFrame.menu.invoice", "Hóa đơn" },
+	
+	{ "HMS.MenuFrame.menu.invoice.medicine_service", "Hóa đơn thuốc và dịch vụ" },
+	
+	{ "HMS.MenuFrame.menu.invoice.import", "Phiếu nhập" },
+	
+	{ "HMS.MenuFrame.menu.invoice.export", "Phiếu xuất" },
+	
 	{ "HMS.MenuFrame.menu.logout", "Đăng xuất" },
 	
 	{ "HMS.MSSearchShell.title", "Tìm thuốc và dịch vụ" },

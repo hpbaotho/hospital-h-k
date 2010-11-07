@@ -53,7 +53,7 @@ public class LoginShell extends Shell {
 	 * Create contents of the shell.
 	 */
 	protected void createContents() {
-		setImage(SWTResourceManager.getImage(SWTApplication.class, "/com/hms/icon/imx-login-icon.png"));
+		setImage(SWTResourceManager.getImage(SWTApplication.class, "/com/hms/icon/hms-login-icon.png"));
 		setSize(450, 300);
 		setText(Messages.getString("HMS.LoginFrame.title"));
 		setLocation(400, 200);
@@ -98,7 +98,7 @@ public class LoginShell extends Shell {
 		});
 		button.setAlignment(SWT.LEFT);
 		button.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		button.setImage(SWTResourceManager.getImage(SWTApplication.class, "/com/hms/icon/imx-login-button-icon.png"));
+		button.setImage(SWTResourceManager.getImage(SWTApplication.class, "/com/hms/icon/hms-login-button-icon.png"));
 		button.setBounds(82, 194, 134, 34);
 		button.setText(Messages.getString("HMS.LoginFrame.button.login"));
 		
@@ -111,7 +111,7 @@ public class LoginShell extends Shell {
 		});
 		button_1.setAlignment(SWT.LEFT);
 		button_1.setText(Messages.getString("HMS.LoginFrame.button.exit"));
-		button_1.setImage(SWTResourceManager.getImage(SWTApplication.class, "/com/hms/icon/imx-exit-button-icon.png"));
+		button_1.setImage(SWTResourceManager.getImage(SWTApplication.class, "/com/hms/icon/hms-exit-button-icon.png"));
 		button_1.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
 		button_1.setBounds(237, 194, 134, 34);
 
