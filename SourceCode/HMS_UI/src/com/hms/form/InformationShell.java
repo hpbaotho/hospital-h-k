@@ -9,6 +9,11 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import com.swtdesigner.SWTResourceManager;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 
 public class InformationShell extends Shell {
 	private Text text;
@@ -139,9 +144,31 @@ public class InformationShell extends Shell {
 		text_9.setFont(SWTResourceManager.getFont("Tahoma", 10, SWT.NORMAL));
 		text_9.setBounds(103, 272, 338, 21);
 		
-		Label label_10 = new Label(this, SWT.BORDER | SWT.WRAP);
+		final Label label_10 = new Label(this, SWT.BORDER | SWT.WRAP);
 		label_10.setImage(SWTResourceManager.getImage(InformationShell.class, "/com/hms/image/hospital21.png"));
 		label_10.setBounds(447, 29, 130, 183);
+		
+		Menu menu = new Menu(label_10);
+		label_10.setMenu(menu);
+		
+		final FileDialog fd = new FileDialog(this, SWT.OPEN);
+		
+		MenuItem menuItem = new MenuItem(menu, SWT.NONE);
+		menuItem.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+		        fd.setText("Open");
+		        fd.setFilterPath("C:/");
+		        String[] filterExt = { "*.png", "*.jpg", "*.*" };
+		        fd.setFilterExtensions(filterExt);
+		        String selected = fd.open();
+		        System.out.println(selected);
+		        if (selected != null) {
+		        	label_10.setImage(SWTResourceManager.getImage(selected));
+		        }
+			}
+		});
+		menuItem.setText(Messages.getString("HMS.InformationShell.menu.change_picture"));
 		
 		Button button = new Button(this, SWT.NONE);
 		button.setImage(SWTResourceManager.getImage(InformationShell.class, "/com/hms/icon/hms-save-icon.png"));

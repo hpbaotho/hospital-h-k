@@ -113,6 +113,8 @@ public class ResourceBundle_vi_VN extends ListResourceBundle {
 	
 	{ "HMS.InformationShell.label.accountancy", "Kế toán:" },
 	
+	{ "HMS.InformationShell.menu.change_picture", "Thay đổi hình ảnh" },
+	
 	};
 
 }
