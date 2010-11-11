@@ -69,6 +69,15 @@ public class MenuShell extends Shell {
 				.getString("HMS.MenuFrame.menu.admin.hospital_info"));
 
 		MenuItem menuItem_3 = new MenuItem(menu_1, SWT.NONE);
+		menuItem_3.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				AdministratorShell adminShell = new AdministratorShell(getDisplay());
+				adminShell.setLocation(250, 50);
+				adminShell.open();
+				adminShell.layout();
+			}
+		});
 		menuItem_3.setImage(SWTResourceManager.getImage(MenuShell.class,
 				"/com/hms/icon/hms-admin-icon.png"));
 		menuItem_3
