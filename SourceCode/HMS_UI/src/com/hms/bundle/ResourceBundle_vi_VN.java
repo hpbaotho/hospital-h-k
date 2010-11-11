@@ -115,6 +115,36 @@ public class ResourceBundle_vi_VN extends ListResourceBundle {
 	
 	{ "HMS.InformationShell.menu.change_picture", "Thay đổi hình ảnh" },
 	
+	{ "HMS.InformationShell.button.save", "  Lưu" },
+	
+	{ "HMS.InformationShell.button.cancel", "  Hủy" },
+	
+	{ "HMS.AdministratorShell.title", "Quản lý và phân quyền người sử dụng" },
+	
+	{ "HMS.AdministratorShell.group.user", "Người sử dụng" },
+	
+	{ "HMS.AdministratorShell.group.user_info", "Thông tin người sử dụng" },
+	
+	{ "HMS.AdministratorShell.group.user_info.label.username", "Tên đăng nhập" },
+	
+	{ "HMS.AdministratorShell.group.user_info.label.password", "Mật khẩu" },
+	
+	{ "HMS.AdministratorShell.group.user_info.label.confirm_password", "Xác nhận mật khẩu" },
+	
+	{ "HMS.AdministratorShell.group.user_info.label.fullname", "Tên đầy đủ" },
+	
+	{ "HMS.AdministratorShell.group.user_info.label.email", "Email" },
+	
+	{ "HMS.AdministratorShell.group.user_info.label.picture", "Hình ảnh" },
+	
+	{ "HMS.AdministratorShell.group.user_privileges", "Quyền sử dụng" },
+	
+	{ "HMS.AdministratorShell.group.user_privileges.label.group_function", "Nhóm chức năng" },
+	
+	{ "HMS.AdministratorShell.group.user_privileges.label.privileges", "Các quyền sẳn có" },
+	
+	{ "HMS.AdministratorShell.group.user_privileges.label.used_privileges", "Các quyền được sử dụng" },
+	
 	};
 
 }

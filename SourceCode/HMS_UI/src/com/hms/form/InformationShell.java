@@ -53,6 +53,7 @@ public class InformationShell extends Shell {
 	 */
 	public InformationShell(Display display) {
 		super(display, SWT.SHELL_TRIM);
+		setImage(SWTResourceManager.getImage(InformationShell.class, "/com/hms/icon/hms-information-icon.png"));
 		
 		Label label = new Label(this, SWT.NONE);
 		label.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
@@ -170,9 +171,18 @@ public class InformationShell extends Shell {
 		});
 		menuItem.setText(Messages.getString("HMS.InformationShell.menu.change_picture"));
 		
-		Button button = new Button(this, SWT.NONE);
-		button.setImage(SWTResourceManager.getImage(InformationShell.class, "/com/hms/icon/hms-save-icon.png"));
-		button.setBounds(447, 216, 130, 77);
+		Button btnSave = new Button(this, SWT.NONE);
+		btnSave.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
+		btnSave.setText(Messages.getString("HMS.InformationShell.button.save"));
+		btnSave.setImage(SWTResourceManager.getImage(InformationShell.class, "/com/hms/icon/hms-save-icon.png"));
+		btnSave.setBounds(447, 216, 130, 36);
+		
+		Button btnCancel = new Button(this, SWT.NONE);
+		btnCancel.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
+		btnCancel.setText(Messages.getString("HMS.InformationShell.button.cancel"));
+		btnCancel.setImage(SWTResourceManager.getImage(InformationShell.class, "/com/hms/icon/hms-cancel-icon.png"));
+		btnCancel.setBounds(447, 258, 130, 36);
+		
 		createContents();
 	}
 
