@@ -15,5 +15,9 @@
 	<classpathentry kind="lib" path="F:/IDE/eclipse-SDK-3.6.1-win32/eclipse/plugins/com.ibm.icu_4.2.1.v20100412.jar" sourcepath="F:/IDE/eclipse-SDK-3.6.1-win32/eclipse/plugins/com.ibm.icu.source_4.2.1.v20100412.jar"/>
 	<classpathentry kind="lib" path="F:/IDE/eclipse-SDK-3.6.1-win32/eclipse/plugins/org.eclipse.ui.forms_3.5.2.r36_v20100702.jar" sourcepath="F:/IDE/eclipse-SDK-3.6.1-win32/eclipse/plugins/org.eclipse.ui.forms.source_3.5.2.r36_v20100702.jar"/>
 	<classpathentry kind="lib" path="F:/Project/BVDK/Hospital/SourceCode/HMS_UI/lib/gallery-0.5.2.jar" sourcepath="gallery-0.5.2-src.zip"/>
+	<classpathentry kind="lib" path="datechooser-1.0.0.jar" sourcepath="datechooser-1.0.0-src.zip"/>
+	<classpathentry kind="lib" path="calendarcombo-1.0.0.jar" sourcepath="calendarcombo-1.0.0-src.zip"/>
+	<classpathentry kind="lib" path="cwt-0.9.0.jar" sourcepath="cwt-0.9.0-src.zip"/>
+	<classpathentry kind="lib" path="cdatetime-0.14.0.jar" sourcepath="cdatetime-0.14.0-src.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
