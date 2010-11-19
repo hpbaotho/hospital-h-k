@@ -168,6 +168,15 @@ public class MenuShell extends Shell {
 				.getString("HMS.MenuFrame.menu.invoice.medicine_service"));
 
 		MenuItem menuItem_14 = new MenuItem(menu_3, SWT.NONE);
+		menuItem_14.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				IMInvoiceListShell imInvoice = new IMInvoiceListShell(getDisplay());
+				imInvoice.setLocation(250, 50);
+				imInvoice.open();
+				imInvoice.layout();
+			}
+		});
 		menuItem_14.setImage(SWTResourceManager.getImage(MenuShell.class,
 				"/com/hms/icon/hms-invoice-io-icon.png"));
 		menuItem_14.setText(Messages

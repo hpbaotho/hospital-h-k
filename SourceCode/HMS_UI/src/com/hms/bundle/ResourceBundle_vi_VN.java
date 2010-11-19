@@ -215,6 +215,8 @@ public class ResourceBundle_vi_VN extends ListResourceBundle {
 	
 	{ "HMS.MSManagementShell.title", "Quản lý thuốc và dịch vụ" },
 	
+	{ "HMS.IMInvoiceListShell.title", "Danh sách phiếu nhập hàng" },
+	
 	};
 
 }
