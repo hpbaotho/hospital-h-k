@@ -217,6 +217,10 @@ public class ResourceBundle_vi_VN extends ListResourceBundle {
 	
 	{ "HMS.IMInvoiceListShell.title", "Danh sách phiếu nhập hàng" },
 	
+	{ "HMS.EXInvoiceListShell.title", "Danh sách phiếu xuất hàng" },
+	
+	{ "HMS.InvoiceListShell.title", "Danh sách hóa đơn" },
+	
 	};
 
 }
