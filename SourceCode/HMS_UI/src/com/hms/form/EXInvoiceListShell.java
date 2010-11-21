@@ -13,7 +13,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
-public class IMInvoiceListShell extends Shell {
+public class EXInvoiceListShell extends Shell {
 	private Table table;
 
 	/**
@@ -23,7 +23,7 @@ public class IMInvoiceListShell extends Shell {
 	public static void main(String args[]) {
 		try {
 			Display display = Display.getDefault();
-			IMInvoiceListShell shell = new IMInvoiceListShell(display);
+			EXInvoiceListShell shell = new EXInvoiceListShell(display);
 			shell.open();
 			shell.layout();
 			while (!shell.isDisposed()) {
@@ -40,9 +40,9 @@ public class IMInvoiceListShell extends Shell {
 	 * Create the shell.
 	 * @param display
 	 */
-	public IMInvoiceListShell(Display display) {
+	public EXInvoiceListShell(Display display) {
 		super(display, SWT.SHELL_TRIM);
-		setImage(SWTResourceManager.getImage(IMInvoiceListShell.class, "/com/hms/icon/hms-invoice-io-icon.png"));
+		setImage(SWTResourceManager.getImage(EXInvoiceListShell.class, "/com/hms/icon/hms-invoice-io-icon.png"));
 		
 		Composite composite = new Composite(this, SWT.BORDER);
 		composite.setBounds(10, 10, 872, 650);
@@ -66,7 +66,7 @@ public class IMInvoiceListShell extends Shell {
 		
 		TableColumn tblclmnSupplier = new TableColumn(table, SWT.CENTER);
 		tblclmnSupplier.setWidth(133);
-		tblclmnSupplier.setText("Supplier");
+		tblclmnSupplier.setText("Customer");
 		
 		TableColumn tblclmnAddress = new TableColumn(table, SWT.CENTER);
 		tblclmnAddress.setWidth(338);
@@ -80,14 +80,14 @@ public class IMInvoiceListShell extends Shell {
 		btnAdd.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				IMInvoiceShell imInvoice = new IMInvoiceShell(getDisplay());
-				imInvoice.setLocation(250, 50);
-				imInvoice.open();
-				imInvoice.layout();
+				EXInvoiceShell exInvoice = new EXInvoiceShell(getDisplay());
+				exInvoice.setLocation(250, 50);
+				exInvoice.open();
+				exInvoice.layout();
 			}
 		});
 		btnAdd.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		btnAdd.setImage(SWTResourceManager.getImage(IMInvoiceListShell.class, "/com/hms/icon/hms-add-icon.png"));
+		btnAdd.setImage(SWTResourceManager.getImage(EXInvoiceListShell.class, "/com/hms/icon/hms-add-icon.png"));
 		btnAdd.setBounds(236, 590, 133, 46);
 		btnAdd.setText("Add");
 		
@@ -95,27 +95,27 @@ public class IMInvoiceListShell extends Shell {
 		btnEdit.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				IMInvoiceShell imInvoice = new IMInvoiceShell(getDisplay());
-				imInvoice.setLocation(250, 50);
-				imInvoice.open();
-				imInvoice.layout();
+				EXInvoiceShell exInvoice = new EXInvoiceShell(getDisplay());
+				exInvoice.setLocation(250, 50);
+				exInvoice.open();
+				exInvoice.layout();
 			}
 		});
 		btnEdit.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
 		btnEdit.setText("Edit");
-		btnEdit.setImage(SWTResourceManager.getImage(IMInvoiceListShell.class, "/com/hms/icon/hms-edit-icon.png"));
+		btnEdit.setImage(SWTResourceManager.getImage(EXInvoiceListShell.class, "/com/hms/icon/hms-edit-icon.png"));
 		btnEdit.setBounds(394, 590, 133, 46);
 		
 		Button btnExit = new Button(composite, SWT.NONE);
 		btnExit.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
 		btnExit.setText("Exit");
-		btnExit.setImage(SWTResourceManager.getImage(IMInvoiceListShell.class, "/com/hms/icon/hms-cancel-icon.png"));
+		btnExit.setImage(SWTResourceManager.getImage(EXInvoiceListShell.class, "/com/hms/icon/hms-cancel-icon.png"));
 		btnExit.setBounds(709, 590, 133, 46);
 		
 		Button btnDelete = new Button(composite, SWT.NONE);
 		btnDelete.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
 		btnDelete.setText("Delete");
-		btnDelete.setImage(SWTResourceManager.getImage(IMInvoiceListShell.class, "/com/hms/icon/hms-delete-icon.png"));
+		btnDelete.setImage(SWTResourceManager.getImage(EXInvoiceListShell.class, "/com/hms/icon/hms-delete-icon.png"));
 		btnDelete.setBounds(552, 590, 133, 46);
 		createContents();
 	}
@@ -124,7 +124,7 @@ public class IMInvoiceListShell extends Shell {
 	 * Create contents of the shell.
 	 */
 	protected void createContents() {
-		setText(Messages.getString("HMS.IMInvoiceListShell.title"));
+		setText(Messages.getString("HMS.EXInvoiceListShell.title"));
 		setSize(900, 700);
 
 	}

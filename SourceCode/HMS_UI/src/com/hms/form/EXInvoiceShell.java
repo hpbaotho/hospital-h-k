@@ -14,7 +14,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
-public class IMInvoiceShell extends Shell {
+public class EXInvoiceShell extends Shell {
 	private Text text;
 	private Text text_1;
 	private Text text_2;
@@ -33,7 +33,7 @@ public class IMInvoiceShell extends Shell {
 	public static void main(String args[]) {
 		try {
 			Display display = Display.getDefault();
-			IMInvoiceShell shell = new IMInvoiceShell(display);
+			EXInvoiceShell shell = new EXInvoiceShell(display);
 			shell.open();
 			shell.layout();
 			while (!shell.isDisposed()) {
@@ -50,14 +50,14 @@ public class IMInvoiceShell extends Shell {
 	 * Create the shell.
 	 * @param display
 	 */
-	public IMInvoiceShell(Display display) {
+	public EXInvoiceShell(Display display) {
 		super(display, SWT.SHELL_TRIM);
-		setImage(SWTResourceManager.getImage(IMInvoiceShell.class, "/com/hms/icon/hms-invoice-io-icon.png"));
+		setImage(SWTResourceManager.getImage(EXInvoiceShell.class, "/com/hms/icon/hms-invoice-io-icon.png"));
 		
 		Group grpImportInvoiceInformation = new Group(this, SWT.SHADOW_ETCHED_IN);
 		grpImportInvoiceInformation.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
 		grpImportInvoiceInformation.setToolTipText("");
-		grpImportInvoiceInformation.setText("Import invoice information");
+		grpImportInvoiceInformation.setText("Export invoice information");
 		grpImportInvoiceInformation.setBounds(10, 10, 872, 238);
 		
 		Label lblInvoiceNumber = new Label(grpImportInvoiceInformation, SWT.NONE);
@@ -69,7 +69,7 @@ public class IMInvoiceShell extends Shell {
 		text.setBounds(146, 34, 200, 21);
 		
 		Label lblSupplier = new Label(grpImportInvoiceInformation, SWT.NONE);
-		lblSupplier.setText("Supplier");
+		lblSupplier.setText("Customer");
 		lblSupplier.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
 		lblSupplier.setBounds(10, 61, 130, 21);
 		
@@ -183,20 +183,20 @@ public class IMInvoiceShell extends Shell {
 		toolBar.setBounds(844, 24, 24, 44);
 		
 		ToolItem toolItem = new ToolItem(toolBar, SWT.NONE);
-		toolItem.setImage(SWTResourceManager.getImage(IMInvoiceShell.class, "/com/hms/icon/hms-add-icon.png"));
+		toolItem.setImage(SWTResourceManager.getImage(EXInvoiceShell.class, "/com/hms/icon/hms-add-icon.png"));
 		
 		ToolItem toolItem_1 = new ToolItem(toolBar, SWT.NONE);
-		toolItem_1.setImage(SWTResourceManager.getImage(IMInvoiceShell.class, "/com/hms/icon/hms-delete-icon.png"));
+		toolItem_1.setImage(SWTResourceManager.getImage(EXInvoiceShell.class, "/com/hms/icon/hms-delete-icon.png"));
 		
 		Button btnSave = new Button(this, SWT.NONE);
-		btnSave.setImage(SWTResourceManager.getImage(IMInvoiceShell.class, "/com/hms/icon/hms-save-icon.png"));
+		btnSave.setImage(SWTResourceManager.getImage(EXInvoiceShell.class, "/com/hms/icon/hms-save-icon.png"));
 		btnSave.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
 		btnSave.setBounds(545, 614, 134, 46);
 		btnSave.setText("Save");
 		
 		Button btnCancel = new Button(this, SWT.NONE);
 		btnCancel.setText("Cancel");
-		btnCancel.setImage(SWTResourceManager.getImage(IMInvoiceShell.class, "/com/hms/icon/hms-cancel-icon.png"));
+		btnCancel.setImage(SWTResourceManager.getImage(EXInvoiceShell.class, "/com/hms/icon/hms-cancel-icon.png"));
 		btnCancel.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
 		btnCancel.setBounds(710, 614, 134, 46);
 		createContents();
@@ -206,7 +206,7 @@ public class IMInvoiceShell extends Shell {
 	 * Create contents of the shell.
 	 */
 	protected void createContents() {
-		setText("Import Invoice");
+		setText("Export Invoice");
 		setSize(900, 700);
 
 	}

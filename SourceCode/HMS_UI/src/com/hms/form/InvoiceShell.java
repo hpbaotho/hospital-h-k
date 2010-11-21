@@ -13,18 +13,16 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
+import org.eclipse.swt.widgets.Composite;
 
-public class IMInvoiceShell extends Shell {
+public class InvoiceShell extends Shell {
 	private Text text;
-	private Text text_1;
 	private Text text_2;
-	private Text text_3;
 	private Text text_4;
 	private Text text_5;
-	private Text text_6;
-	private Text text_7;
-	private Text text_8;
 	private Table table;
+	private Text text_1;
+	private Text text_3;
 
 	/**
 	 * Launch the application.
@@ -33,7 +31,7 @@ public class IMInvoiceShell extends Shell {
 	public static void main(String args[]) {
 		try {
 			Display display = Display.getDefault();
-			IMInvoiceShell shell = new IMInvoiceShell(display);
+			InvoiceShell shell = new InvoiceShell(display);
 			shell.open();
 			shell.layout();
 			while (!shell.isDisposed()) {
@@ -50,101 +48,99 @@ public class IMInvoiceShell extends Shell {
 	 * Create the shell.
 	 * @param display
 	 */
-	public IMInvoiceShell(Display display) {
+	public InvoiceShell(Display display) {
 		super(display, SWT.SHELL_TRIM);
-		setImage(SWTResourceManager.getImage(IMInvoiceShell.class, "/com/hms/icon/hms-invoice-io-icon.png"));
+		setImage(SWTResourceManager.getImage(InvoiceShell.class, "/com/hms/icon/hms-invoice-io-icon.png"));
 		
 		Group grpImportInvoiceInformation = new Group(this, SWT.SHADOW_ETCHED_IN);
 		grpImportInvoiceInformation.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
 		grpImportInvoiceInformation.setToolTipText("");
-		grpImportInvoiceInformation.setText("Import invoice information");
-		grpImportInvoiceInformation.setBounds(10, 10, 872, 238);
+		grpImportInvoiceInformation.setText("Patient information");
+		grpImportInvoiceInformation.setBounds(10, 10, 872, 147);
 		
 		Label lblInvoiceNumber = new Label(grpImportInvoiceInformation, SWT.NONE);
 		lblInvoiceNumber.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
 		lblInvoiceNumber.setBounds(10, 34, 130, 21);
-		lblInvoiceNumber.setText("Invoice number");
+		lblInvoiceNumber.setText("Patient ID");
 		
 		text = new Text(grpImportInvoiceInformation, SWT.BORDER);
 		text.setBounds(146, 34, 200, 21);
 		
-		Label lblSupplier = new Label(grpImportInvoiceInformation, SWT.NONE);
-		lblSupplier.setText("Supplier");
-		lblSupplier.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		lblSupplier.setBounds(10, 61, 130, 21);
-		
-		text_1 = new Text(grpImportInvoiceInformation, SWT.BORDER);
-		text_1.setBounds(146, 61, 200, 21);
-		
 		Label lblWarehouse = new Label(grpImportInvoiceInformation, SWT.NONE);
-		lblWarehouse.setText("Warehouse");
+		lblWarehouse.setText("Day of birth");
 		lblWarehouse.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
 		lblWarehouse.setBounds(10, 88, 130, 21);
 		
 		text_2 = new Text(grpImportInvoiceInformation, SWT.BORDER);
 		text_2.setBounds(146, 88, 200, 21);
 		
-		Label lblTax = new Label(grpImportInvoiceInformation, SWT.NONE);
-		lblTax.setText("Tax");
-		lblTax.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		lblTax.setBounds(10, 115, 130, 21);
-		
-		text_3 = new Text(grpImportInvoiceInformation, SWT.BORDER);
-		text_3.setBounds(146, 115, 200, 21);
-		
 		Label lblTotal = new Label(grpImportInvoiceInformation, SWT.NONE);
-		lblTotal.setText("Total");
+		lblTotal.setText("Date");
 		lblTotal.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		lblTotal.setBounds(10, 142, 130, 21);
+		lblTotal.setBounds(10, 115, 130, 21);
 		
 		text_4 = new Text(grpImportInvoiceInformation, SWT.BORDER);
-		text_4.setBounds(146, 142, 200, 21);
+		text_4.setBounds(511, 35, 200, 21);
 		
 		Label lblAddress = new Label(grpImportInvoiceInformation, SWT.NONE);
 		lblAddress.setText("Address");
 		lblAddress.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		lblAddress.setBounds(405, 61, 100, 21);
+		lblAddress.setBounds(10, 61, 100, 21);
 		
 		text_5 = new Text(grpImportInvoiceInformation, SWT.BORDER);
-		text_5.setBounds(511, 62, 200, 21);
+		text_5.setBounds(146, 61, 479, 21);
 		
 		Label lblDate = new Label(grpImportInvoiceInformation, SWT.NONE);
-		lblDate.setText("Date");
+		lblDate.setText("Pattient name");
 		lblDate.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
 		lblDate.setBounds(405, 34, 100, 21);
 		
 		CalendarCombo calendarCombo = new CalendarCombo(grpImportInvoiceInformation, SWT.NONE);
 		calendarCombo.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.NORMAL));
-		calendarCombo.setBounds(511, 34, 114, 21);
+		calendarCombo.setBounds(146, 115, 114, 21);
 		
 		Label lblPrice = new Label(grpImportInvoiceInformation, SWT.NONE);
-		lblPrice.setText("Price");
+		lblPrice.setText("Sex");
 		lblPrice.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		lblPrice.setBounds(405, 115, 100, 21);
+		lblPrice.setBounds(405, 88, 58, 21);
 		
-		text_6 = new Text(grpImportInvoiceInformation, SWT.BORDER);
-		text_6.setBounds(511, 116, 200, 21);
+		Button btnMale = new Button(grpImportInvoiceInformation, SWT.RADIO);
+		btnMale.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.NORMAL));
+		btnMale.setBounds(489, 87, 58, 21);
+		btnMale.setText("Male");
 		
-		Label lblPrepay = new Label(grpImportInvoiceInformation, SWT.NONE);
-		lblPrepay.setText("Prepay");
-		lblPrepay.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		lblPrepay.setBounds(405, 142, 100, 21);
+		Button btnFemale = new Button(grpImportInvoiceInformation, SWT.RADIO);
+		btnFemale.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.NORMAL));
+		btnFemale.setText("Female");
+		btnFemale.setBounds(553, 88, 72, 21);
 		
-		text_7 = new Text(grpImportInvoiceInformation, SWT.BORDER);
-		text_7.setBounds(511, 143, 200, 21);
+		Button btnResident = new Button(grpImportInvoiceInformation, SWT.CHECK);
+		btnResident.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.NORMAL));
+		btnResident.setBounds(266, 115, 80, 21);
+		btnResident.setText("Resident");
 		
-		Label lblNotices = new Label(grpImportInvoiceInformation, SWT.NONE);
-		lblNotices.setText("Notices");
-		lblNotices.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		lblNotices.setBounds(10, 169, 130, 21);
+		Label lblRoom = new Label(grpImportInvoiceInformation, SWT.NONE);
+		lblRoom.setText("Room");
+		lblRoom.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
+		lblRoom.setBounds(367, 115, 58, 21);
 		
-		text_8 = new Text(grpImportInvoiceInformation, SWT.BORDER);
-		text_8.setBounds(146, 169, 565, 59);
+		CalendarCombo calendarCombo_1 = new CalendarCombo(grpImportInvoiceInformation, SWT.NONE);
+		calendarCombo_1.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.NORMAL));
+		calendarCombo_1.setBounds(431, 115, 93, 21);
+		
+		Label lblBed = new Label(grpImportInvoiceInformation, SWT.NONE);
+		lblBed.setText("Bed");
+		lblBed.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
+		lblBed.setBounds(540, 115, 72, 21);
+		
+		CalendarCombo calendarCombo_2 = new CalendarCombo(grpImportInvoiceInformation, SWT.NONE);
+		calendarCombo_2.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.NORMAL));
+		calendarCombo_2.setBounds(618, 115, 93, 21);
 		
 		Group grpMedicineMenu = new Group(this, SWT.NONE);
 		grpMedicineMenu.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
 		grpMedicineMenu.setText("Medicine menu");
-		grpMedicineMenu.setBounds(10, 254, 872, 354);
+		grpMedicineMenu.setBounds(10, 163, 872, 354);
 		
 		table = new Table(grpMedicineMenu, SWT.BORDER | SWT.FULL_SELECTION);
 		table.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.NORMAL));
@@ -183,22 +179,41 @@ public class IMInvoiceShell extends Shell {
 		toolBar.setBounds(844, 24, 24, 44);
 		
 		ToolItem toolItem = new ToolItem(toolBar, SWT.NONE);
-		toolItem.setImage(SWTResourceManager.getImage(IMInvoiceShell.class, "/com/hms/icon/hms-add-icon.png"));
+		toolItem.setImage(SWTResourceManager.getImage(InvoiceShell.class, "/com/hms/icon/hms-add-icon.png"));
 		
 		ToolItem toolItem_1 = new ToolItem(toolBar, SWT.NONE);
-		toolItem_1.setImage(SWTResourceManager.getImage(IMInvoiceShell.class, "/com/hms/icon/hms-delete-icon.png"));
+		toolItem_1.setImage(SWTResourceManager.getImage(InvoiceShell.class, "/com/hms/icon/hms-delete-icon.png"));
 		
 		Button btnSave = new Button(this, SWT.NONE);
-		btnSave.setImage(SWTResourceManager.getImage(IMInvoiceShell.class, "/com/hms/icon/hms-save-icon.png"));
+		btnSave.setImage(SWTResourceManager.getImage(InvoiceShell.class, "/com/hms/icon/hms-save-icon.png"));
 		btnSave.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
 		btnSave.setBounds(545, 614, 134, 46);
 		btnSave.setText("Save");
 		
 		Button btnCancel = new Button(this, SWT.NONE);
 		btnCancel.setText("Cancel");
-		btnCancel.setImage(SWTResourceManager.getImage(IMInvoiceShell.class, "/com/hms/icon/hms-cancel-icon.png"));
+		btnCancel.setImage(SWTResourceManager.getImage(InvoiceShell.class, "/com/hms/icon/hms-cancel-icon.png"));
 		btnCancel.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
 		btnCancel.setBounds(710, 614, 134, 46);
+		
+		Composite composite = new Composite(this, SWT.BORDER);
+		composite.setBounds(10, 523, 872, 85);
+		
+		Label lblTotal_1 = new Label(composite, SWT.NONE);
+		lblTotal_1.setText("Total");
+		lblTotal_1.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
+		lblTotal_1.setBounds(10, 10, 130, 21);
+		
+		text_1 = new Text(composite, SWT.BORDER);
+		text_1.setBounds(146, 10, 200, 21);
+		
+		Label lblInsurance = new Label(composite, SWT.NONE);
+		lblInsurance.setText("Insurance");
+		lblInsurance.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
+		lblInsurance.setBounds(10, 37, 130, 21);
+		
+		text_3 = new Text(composite, SWT.BORDER);
+		text_3.setBounds(146, 37, 200, 21);
 		createContents();
 	}
 
@@ -206,7 +221,7 @@ public class IMInvoiceShell extends Shell {
 	 * Create contents of the shell.
 	 */
 	protected void createContents() {
-		setText("Import Invoice");
+		setText("Invoice");
 		setSize(900, 700);
 
 	}

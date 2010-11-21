@@ -162,6 +162,15 @@ public class MenuShell extends Shell {
 		menuItem_12.setMenu(menu_3);
 
 		MenuItem menuItem_13 = new MenuItem(menu_3, SWT.NONE);
+		menuItem_13.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				InvoiceListShell invoice = new InvoiceListShell(getDisplay());
+				invoice.setLocation(250, 50);
+				invoice.open();
+				invoice.layout();
+			}
+		});
 		menuItem_13.setImage(SWTResourceManager.getImage(MenuShell.class,
 				"/com/hms/icon/hms-invoice-icon.png"));
 		menuItem_13.setText(Messages
@@ -183,6 +192,15 @@ public class MenuShell extends Shell {
 				.getString("HMS.MenuFrame.menu.invoice.import"));
 
 		MenuItem menuItem_15 = new MenuItem(menu_3, SWT.NONE);
+		menuItem_15.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				EXInvoiceListShell exInvoice = new EXInvoiceListShell(getDisplay());
+				exInvoice.setLocation(250, 50);
+				exInvoice.open();
+				exInvoice.layout();
+			}
+		});
 		menuItem_15.setImage(SWTResourceManager.getImage(MenuShell.class,
 				"/com/hms/icon/hms-invoice-io-icon.png"));
 		menuItem_15.setText(Messages
