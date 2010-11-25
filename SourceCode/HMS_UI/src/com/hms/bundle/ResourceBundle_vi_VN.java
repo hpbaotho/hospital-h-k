@@ -221,6 +221,8 @@ public class ResourceBundle_vi_VN extends ListResourceBundle {
 	
 	{ "HMS.InvoiceListShell.title", "Danh sách hóa đơn" },
 	
+	{ "HMS.PrescriptionListShell.title", "Danh sách toa thuốc" },
+	
 	};
 
 }

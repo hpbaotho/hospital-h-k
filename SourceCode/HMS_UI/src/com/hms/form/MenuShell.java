@@ -122,10 +122,10 @@ public class MenuShell extends Shell {
 		mntmPatientmanagement.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				PatientManagementShell patientShell = new PatientManagementShell(getDisplay());
-				patientShell.setLocation(250, 50);
-				patientShell.open();
-				patientShell.layout();
+				PatientListShell patientList = new PatientListShell(getDisplay());
+				patientList.setLocation(250, 50);
+				patientList.open();
+				patientList.layout();
 			}
 		});
 		mntmPatientmanagement.setImage(SWTResourceManager.getImage(MenuShell.class, "/com/hms/icon/hms-patient-icon.png"));
@@ -138,6 +138,15 @@ public class MenuShell extends Shell {
 		menuItem_1.setMenu(menu_2);
 
 		MenuItem menuItem_8 = new MenuItem(menu_2, SWT.NONE);
+		menuItem_8.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				PrescriptionListShell prescription = new PrescriptionListShell(getDisplay());
+				prescription.setLocation(250, 50);
+				prescription.open();
+				prescription.layout();
+			}
+		});
 		menuItem_8.setImage(SWTResourceManager.getImage(MenuShell.class,
 				"/com/hms/icon/hms-prescription-icon.png"));
 		menuItem_8.setText(Messages
