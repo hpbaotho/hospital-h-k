@@ -14,6 +14,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Combo;
 
 public class InvoiceShell extends Shell {
 	private Text text;
@@ -124,18 +125,16 @@ public class InvoiceShell extends Shell {
 		lblRoom.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
 		lblRoom.setBounds(367, 115, 58, 21);
 		
-		CalendarCombo calendarCombo_1 = new CalendarCombo(grpImportInvoiceInformation, SWT.NONE);
-		calendarCombo_1.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.NORMAL));
-		calendarCombo_1.setBounds(431, 115, 93, 21);
-		
 		Label lblBed = new Label(grpImportInvoiceInformation, SWT.NONE);
 		lblBed.setText("Bed");
 		lblBed.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		lblBed.setBounds(540, 115, 72, 21);
+		lblBed.setBounds(553, 115, 49, 21);
 		
-		CalendarCombo calendarCombo_2 = new CalendarCombo(grpImportInvoiceInformation, SWT.NONE);
-		calendarCombo_2.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.NORMAL));
-		calendarCombo_2.setBounds(618, 115, 93, 21);
+		Combo combo = new Combo(grpImportInvoiceInformation, SWT.NONE);
+		combo.setBounds(431, 115, 103, 21);
+		
+		Combo combo_1 = new Combo(grpImportInvoiceInformation, SWT.NONE);
+		combo_1.setBounds(608, 115, 103, 21);
 		
 		Group grpMedicineMenu = new Group(this, SWT.NONE);
 		grpMedicineMenu.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
