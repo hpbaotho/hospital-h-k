@@ -7,9 +7,6 @@ import org.eclipse.swt.widgets.Shell;
 import com.hms.bundle.Messages;
 import com.swtdesigner.SWTResourceManager;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -116,6 +113,12 @@ public class PatientListShell extends Shell {
 		button_2.setBounds(572, 594, 133, 46);
 		
 		Button button_3 = new Button(composite_1, SWT.NONE);
+		button_3.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				dispose();
+			}
+		});
 		button_3.setText("Exit");
 		button_3.setImage(SWTResourceManager.getImage(PatientListShell.class, "/com/hms/icon/hms-cancel-icon.png"));
 		button_3.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
@@ -127,7 +130,7 @@ public class PatientListShell extends Shell {
 	 * Create contents of the shell.
 	 */
 	protected void createContents() {
-		setText(Messages.getString("HMS.HistoryShell.title"));
+		setText(Messages.getString("HMS.PatientManagementShell.title"));
 		setSize(900, 700);
 
 	}

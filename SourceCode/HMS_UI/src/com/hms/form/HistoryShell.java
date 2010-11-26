@@ -5,12 +5,15 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 import com.hms.bundle.Messages;
+import com.hms.model.table.sort.TableNumberSortModel;
+import com.hms.model.table.sort.TableTextSortModel;
 import com.swtdesigner.SWTResourceManager;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
@@ -78,11 +81,13 @@ public class HistoryShell extends Shell {
 		combo.setBounds(247, 37, 180, 21);
 		
 		Button btnHinTh = new Button(composite, SWT.NONE);
+		btnHinTh.setImage(SWTResourceManager.getImage(HistoryShell.class, "/com/hms/icon/hms-search-icon.png"));
 		btnHinTh.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
 		btnHinTh.setBounds(450, 10, 108, 30);
 		btnHinTh.setText(Messages.getString("HMS.HistoryShell.button.display"));
 		
 		Button btnThot = new Button(composite, SWT.NONE);
+		btnThot.setImage(SWTResourceManager.getImage(HistoryShell.class, "/com/hms/icon/hms-cancel-icon.png"));
 		btnThot.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -118,14 +123,23 @@ public class HistoryShell extends Shell {
 		tblclmnHnhng.setText(Messages.getString("HMS.HistoryShell.header.action"));
 		
 		TableItem tableItem = new TableItem(table, SWT.NONE);
-		tableItem.setText(1, "admin");
-		tableItem.setText(2, "22/22/1000");
-		tableItem.setText(3, "Create user");
+		tableItem.setText(1, "admin1");
+		tableItem.setText(2, "22/12/1000");
+		tableItem.setText(3, "Create user2");
 		
 		TableItem tableItem_1 = new TableItem(table, SWT.NONE);
-		tableItem_1.setText(1, "admin");
-		tableItem_1.setText(2, "22/22/1000");
-		tableItem_1.setText(3, "Create user");
+		tableItem_1.setText(1, "admin2");
+		tableItem_1.setText(2, "19/11/1000");
+		tableItem_1.setText(3, "Create user1");
+		
+		//Add sort function
+		Listener textSortListener = new TableTextSortModel(this.table);
+		
+		tblclmnNgiSDng.addListener(SWT.Selection, textSortListener);
+		tblclmnThiGian.addListener(SWT.Selection, textSortListener);
+		tblclmnHnhng.addListener(SWT.Selection, textSortListener);
+		
+		table.setSortColumn(tblclmnNgiSDng);
 		
 		Menu menu = new Menu(table);
 		table.setMenu(menu);

@@ -13,6 +13,8 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 
 public class EXInvoiceShell extends Shell {
 	private Text text;
@@ -195,6 +197,12 @@ public class EXInvoiceShell extends Shell {
 		btnSave.setText("Save");
 		
 		Button btnCancel = new Button(this, SWT.NONE);
+		btnCancel.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				dispose();
+			}
+		});
 		btnCancel.setText("Cancel");
 		btnCancel.setImage(SWTResourceManager.getImage(EXInvoiceShell.class, "/com/hms/icon/hms-cancel-icon.png"));
 		btnCancel.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));

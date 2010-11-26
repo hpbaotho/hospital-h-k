@@ -329,6 +329,12 @@ public class AdministratorShell extends Shell {
 		btnLu.setBounds(350, 10, 110, 30);
 		
 		Button btnHy = new Button(composite, SWT.NONE);
+		btnHy.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				dispose();
+			}
+		});
 		btnHy.setImage(SWTResourceManager.getImage(AdministratorShell.class, "/com/hms/icon/hms-cancel-icon.png"));
 		btnHy.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
 		btnHy.setBounds(500, 10, 110, 30);

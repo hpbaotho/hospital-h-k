@@ -107,6 +107,12 @@ public class EXInvoiceListShell extends Shell {
 		btnEdit.setBounds(394, 590, 133, 46);
 		
 		Button btnExit = new Button(composite, SWT.NONE);
+		btnExit.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				dispose();
+			}
+		});
 		btnExit.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
 		btnExit.setText("Exit");
 		btnExit.setImage(SWTResourceManager.getImage(EXInvoiceListShell.class, "/com/hms/icon/hms-cancel-icon.png"));
