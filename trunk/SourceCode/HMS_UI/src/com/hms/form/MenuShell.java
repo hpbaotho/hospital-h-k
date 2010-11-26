@@ -63,6 +63,15 @@ public class MenuShell extends Shell {
 		menuItem.setMenu(menu_1);
 
 		MenuItem menuItem_2 = new MenuItem(menu_1, SWT.NONE);
+		menuItem_2.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				InformationShell infoShell = new InformationShell(getDisplay());
+				infoShell.setLocation(250, 50);
+				infoShell.open();
+				infoShell.layout();
+			}
+		});
 		menuItem_2.setImage(SWTResourceManager.getImage(MenuShell.class,
 				"/com/hms/icon/hms-information-icon.png"));
 		menuItem_2.setText(Messages
@@ -84,6 +93,15 @@ public class MenuShell extends Shell {
 				.setText(Messages.getString("HMS.MenuFrame.menu.admin.admin"));
 
 		MenuItem menuItem_4 = new MenuItem(menu_1, SWT.NONE);
+		menuItem_4.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				HistoryShell history = new HistoryShell(getDisplay());
+				history.setLocation(250, 50);
+				history.open();
+				history.layout();
+			}
+		});
 		menuItem_4.setImage(SWTResourceManager.getImage(MenuShell.class,
 				"/com/hms/icon/hms-history-icon.png"));
 		menuItem_4.setText(Messages
@@ -293,10 +311,10 @@ public class MenuShell extends Shell {
 		toolItem_5.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				MSSearchShell searchShell = new MSSearchShell(getDisplay());
-				searchShell.setLocation(250, 50);
-				searchShell.open();
-				searchShell.layout();
+				PrescriptionListShell prescriptionShell = new PrescriptionListShell(getDisplay());
+				prescriptionShell.setLocation(250, 50);
+				prescriptionShell.open();
+				prescriptionShell.layout();
 			}
 		});
 		toolItem_5.setToolTipText(Messages

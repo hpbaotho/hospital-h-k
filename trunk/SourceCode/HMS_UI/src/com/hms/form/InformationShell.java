@@ -178,6 +178,12 @@ public class InformationShell extends Shell {
 		btnSave.setBounds(447, 216, 130, 36);
 		
 		Button btnCancel = new Button(this, SWT.NONE);
+		btnCancel.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				dispose();
+			}
+		});
 		btnCancel.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
 		btnCancel.setText(Messages.getString("HMS.InformationShell.button.cancel"));
 		btnCancel.setImage(SWTResourceManager.getImage(InformationShell.class, "/com/hms/icon/hms-cancel-icon.png"));
