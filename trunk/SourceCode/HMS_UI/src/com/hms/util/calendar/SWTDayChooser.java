@@ -66,6 +66,7 @@ public class SWTDayChooser extends Composite
     private Locale locale;
     private List listeners;
     private List keyListeners = null;
+    private List mouseListeners = null;
     private int style;
 
     public SWTDayChooser(Composite parent, int style) {
@@ -285,6 +286,14 @@ public class SWTDayChooser extends Composite
      * @see org.eclipse.swt.events.MouseListener#mouseDoubleClick(org.eclipse.swt.events.MouseEvent)
      */
     public void mouseDoubleClick(MouseEvent event) {
+    	if (this.mouseListeners != null) {
+    		MouseAdapter[] mouseListenerArray = new MouseAdapter[this.mouseListeners.size()];
+    		mouseListeners.toArray(mouseListenerArray);
+    		
+    		for (int i = 0; i < mouseListenerArray.length; i++) {
+                mouseListenerArray[i].mouseDoubleClick(event);
+            }
+    	}
     }
 
     /* (non-Javadoc)
@@ -462,6 +471,19 @@ public class SWTDayChooser extends Composite
     public void removeSWTCalendarKeyListener(KeyAdapter listener) {
     	if (this.keyListeners != null) {
     		this.keyListeners.remove(listener);
+    	}
+    }
+    
+    public void addSWTCalendarMouseListener(MouseAdapter listener) {
+    	if (this.mouseListeners == null) {
+    		this.mouseListeners = new ArrayList<MouseAdapter>();
+    	}
+    	this.mouseListeners.add(listener);
+    }
+    
+    public void removeSWTCalendarMouseListener(MouseAdapter listener) {
+    	if (this.mouseListeners != null) {
+    		this.mouseListeners.remove(listener);
     	}
     }
     

@@ -23,13 +23,11 @@
 package com.hms.util.calendar;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.KeyAdapter;import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.events.KeyAdapter;import org.eclipse.swt.events.MouseAdapter;import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.widgets.Composite;
-
-import java.text.DateFormatSymbols;
+import org.eclipse.swt.widgets.Composite;import java.text.DateFormatSymbols;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -82,7 +80,7 @@ public class SWTMonthChooser extends Composite {
     public void removeSelectionListener(SelectionListener listener) {
         comboBox.removeSelectionListener(listener);
     }
-    public void addSWTCalendarKeyListener(KeyAdapter listener) {        comboBox.addKeyListener(listener);    }    public void removeSWTCalendarKeyListener(KeyAdapter listener) {        comboBox.removeKeyListener(listener);    }
+    public void addSWTCalendarKeyListener(KeyAdapter listener) {        comboBox.addKeyListener(listener);    }    public void removeSWTCalendarKeyListener(KeyAdapter listener) {        comboBox.removeKeyListener(listener);    }    public void addSWTCalendarMouseListener(MouseAdapter listener) {    	comboBox.addMouseListener(listener);    }        public void removeSWTCalendarMouseListener(MouseAdapter listener) {    	comboBox.removeMouseListener(listener);    }    
     public void setMonth(int newMonth) {
         comboBox.select(newMonth);
     }

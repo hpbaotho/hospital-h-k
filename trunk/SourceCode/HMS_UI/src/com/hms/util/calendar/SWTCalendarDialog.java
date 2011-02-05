@@ -11,7 +11,9 @@ import java.util.Calendar;
 import java.util.Date;
 import com.swtdesigner.SWTResourceManager;
 import org.eclipse.swt.events.KeyAdapter;
-import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;import org.eclipse.swt.events.MouseAdapter;
 
 public class SWTCalendarDialog {
     private Shell shell;
@@ -20,7 +22,7 @@ public class SWTCalendarDialog {
 
     public SWTCalendarDialog(Display display) {
         this.display = display;
-        shell = new Shell(display, SWT.APPLICATION_MODAL | SWT.CLOSE);
+        shell = new Shell(display, SWT.APPLICATION_MODAL);
         shell.setImage(SWTResourceManager.getImage(SWTCalendarDialog.class, "/com/hms/icon/hms-calendar-icon.png"));
         shell.setLayout(new RowLayout());        
         swtcal = new SWTCalendar(shell);
@@ -46,5 +48,5 @@ public class SWTCalendarDialog {
 
     public void addDateChangedListener(SWTCalendarListener listener) {
         swtcal.addSWTCalendarListener(listener);
-    }    public void addKeyListener(KeyAdapter keyListener) {        swtcal.addSWTCalendarKeyListener(keyListener);    }
+    }    public void addKeyListener(KeyAdapter keyListener) {        swtcal.addSWTCalendarKeyListener(keyListener);    }        public void addMouseListener(MouseAdapter mouseListener) {        swtcal.addSWTCalendarMouseListener(mouseListener);    }
 }

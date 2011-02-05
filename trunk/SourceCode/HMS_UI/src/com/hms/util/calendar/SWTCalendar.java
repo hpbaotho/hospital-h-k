@@ -27,6 +27,7 @@ import java.util.Locale;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
@@ -230,5 +231,11 @@ public class SWTCalendar extends Composite {
     	dayChooser.addSWTCalendarKeyListener(keyListener);
     	monthChooser.addSWTCalendarKeyListener(keyListener);
     	yearChooser.addKeyListener(keyListener);
+    }
+    
+    public void addSWTCalendarMouseListener(MouseAdapter mouseListener) {
+    	dayChooser.addSWTCalendarMouseListener(mouseListener);
+    	monthChooser.addSWTCalendarMouseListener(mouseListener);
+    	yearChooser.addMouseListener(mouseListener);
     }
 }
