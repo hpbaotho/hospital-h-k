@@ -21,5 +21,8 @@
 	<classpathentry kind="lib" path="lib/datechooser-1.0.0.jar"/>
 	<classpathentry kind="lib" path="lib/gallery-0.5.2.jar"/>
 	<classpathentry kind="lib" path="lib/net.sf.swtaddons_0.1.1_bin_src.jar"/>
+	<classpathentry kind="lib" path="compositetable-1.0.0.jar" sourcepath="compositetable-1.0.0-src.zip"/>
+	<classpathentry kind="lib" path="ganttchart-2.0.jar" sourcepath="ganttchart-2.0-src.zip"/>
+	<classpathentry kind="lib" path="tablecombo-1.0.0.jar" sourcepath="tablecombo-1.0.0-src.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
