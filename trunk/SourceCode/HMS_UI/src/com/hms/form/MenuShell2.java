@@ -20,7 +20,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
-public class MenuShell extends Shell {
+public class MenuShell2 extends Shell {
 
 	/**
 	 * Launch the application.
@@ -30,7 +30,7 @@ public class MenuShell extends Shell {
 	public static void main(String args[]) {
 		try {
 			Display display = Display.getDefault();
-			MenuShell shell = new MenuShell(display);
+			MenuShell2 shell = new MenuShell2(display);
 			shell.open();
 			shell.layout();
 			while (!shell.isDisposed()) {
@@ -48,21 +48,95 @@ public class MenuShell extends Shell {
 	 * 
 	 * @param display
 	 */
-	public MenuShell(Display display) {
+	public MenuShell2(Display display) {
 		super(display, SWT.SHELL_TRIM);
-		setImage(SWTResourceManager.getImage(MenuShell.class,
+		setImage(SWTResourceManager.getImage(MenuShell2.class,
 				"/com/hms/icon/hms-hospital-icon.png"));
 
 		Menu menu = new Menu(this, SWT.BAR);
 		setMenuBar(menu);
 
 		MenuItem menuItem = new MenuItem(menu, SWT.CASCADE);
-		menuItem.setText("Reception");
+		menuItem.setText(Messages.getString("HMS.MenuFrame.menu.admin"));
 
 		Menu menu_1 = new Menu(menuItem);
 		menuItem.setMenu(menu_1);
+
+		MenuItem menuItem_2 = new MenuItem(menu_1, SWT.NONE);
+		menuItem_2.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				InformationShell infoShell = new InformationShell(getDisplay());
+				infoShell.setLocation(250, 50);
+				infoShell.open();
+				infoShell.layout();
+			}
+		});
+		menuItem_2.setImage(SWTResourceManager.getImage(MenuShell2.class,
+				"/com/hms/icon/hms-information-icon.png"));
+		menuItem_2.setText(Messages
+				.getString("HMS.MenuFrame.menu.admin.hospital_info"));
+
+		MenuItem menuItem_3 = new MenuItem(menu_1, SWT.NONE);
+		menuItem_3.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				AdministratorShell adminShell = new AdministratorShell(getDisplay());
+				adminShell.setLocation(250, 50);
+				adminShell.open();
+				adminShell.layout();
+			}
+		});
+		menuItem_3.setImage(SWTResourceManager.getImage(MenuShell2.class,
+				"/com/hms/icon/hms-admin-icon.png"));
+		menuItem_3
+				.setText(Messages.getString("HMS.MenuFrame.menu.admin.admin"));
+
+		MenuItem menuItem_4 = new MenuItem(menu_1, SWT.NONE);
+		menuItem_4.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				HistoryShell history = new HistoryShell(getDisplay());
+				history.setLocation(250, 50);
+				history.open();
+				history.layout();
+			}
+		});
+		menuItem_4.setImage(SWTResourceManager.getImage(MenuShell2.class,
+				"/com/hms/icon/hms-history-icon.png"));
+		menuItem_4.setText(Messages
+				.getString("HMS.MenuFrame.menu.admin.history"));
+
+		MenuItem menuItem_5 = new MenuItem(menu_1, SWT.NONE);
+		menuItem_5.setImage(SWTResourceManager.getImage(MenuShell2.class,
+				"/com/hms/icon/hms-backup-icon.png"));
+		menuItem_5.setText(Messages
+				.getString("HMS.MenuFrame.menu.admin.backup"));
+
+		MenuItem menuItem_6 = new MenuItem(menu_1, SWT.NONE);
+		menuItem_6.setImage(SWTResourceManager.getImage(MenuShell2.class,
+				"/com/hms/icon/hms-restore-icon.png"));
+		menuItem_6.setText(Messages
+				.getString("HMS.MenuFrame.menu.admin.restore"));
+
+		MenuItem menuItem_7 = new MenuItem(menu_1, SWT.NONE);
+		menuItem_7.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				dispose();
+			}
+		});
+		menuItem_7.setImage(SWTResourceManager.getImage(MenuShell2.class,
+				"/com/hms/icon/hms-exit-button-icon.png"));
+		menuItem_7.setText(Messages.getString("HMS.MenuFrame.menu.admin.exit"));
 		
-		MenuItem mntmPatientmanagement = new MenuItem(menu_1, SWT.NONE);
+		MenuItem mntmCashier = new MenuItem(menu, SWT.CASCADE);
+		mntmCashier.setText("Cashier");
+		
+		Menu menu_4 = new Menu(mntmCashier);
+		mntmCashier.setMenu(menu_4);
+		
+		MenuItem mntmPatientmanagement = new MenuItem(menu_4, SWT.NONE);
 		mntmPatientmanagement.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -72,33 +146,14 @@ public class MenuShell extends Shell {
 				patientList.layout();
 			}
 		});
-		mntmPatientmanagement.setImage(SWTResourceManager.getImage(MenuShell.class, "/com/hms/icon/hms-patient-icon.png"));
+		mntmPatientmanagement.setImage(SWTResourceManager.getImage(MenuShell2.class, "/com/hms/icon/hms-patient-icon.png"));
 		mntmPatientmanagement.setText("PatientManagement");
-		
-		MenuItem mntmServices = new MenuItem(menu_1, SWT.NONE);
-		mntmServices.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				ServicesShell services = new ServicesShell(getDisplay());
-				services.setLocation(250, 50);
-				services.open();
-				services.layout();
-			}
-		});
-		mntmServices.setImage(SWTResourceManager.getImage(MenuShell.class, "/com/hms/icon/hms-subclinical-icon.png"));
-		mntmServices.setText("Services");
-		
-		MenuItem mntmCashier = new MenuItem(menu, SWT.CASCADE);
-		mntmCashier.setText("Examine");
-		
-		Menu menu_4 = new Menu(mntmCashier);
-		mntmCashier.setMenu(menu_4);
 
-		MenuItem mntmMedical = new MenuItem(menu, SWT.CASCADE);
-		mntmMedical.setText("Medical");
+		MenuItem menuItem_1 = new MenuItem(menu, SWT.CASCADE);
+		menuItem_1.setText(Messages.getString("HMS.MenuFrame.menu.doctor"));
 
-		Menu menu_2 = new Menu(mntmMedical);
-		mntmMedical.setMenu(menu_2);
+		Menu menu_2 = new Menu(menuItem_1);
+		menuItem_1.setMenu(menu_2);
 
 		MenuItem menuItem_8 = new MenuItem(menu_2, SWT.NONE);
 		menuItem_8.addSelectionListener(new SelectionAdapter() {
@@ -110,28 +165,28 @@ public class MenuShell extends Shell {
 				prescription.layout();
 			}
 		});
-		menuItem_8.setImage(SWTResourceManager.getImage(MenuShell.class,
+		menuItem_8.setImage(SWTResourceManager.getImage(MenuShell2.class,
 				"/com/hms/icon/hms-prescription-icon.png"));
 		menuItem_8.setText(Messages
 				.getString("HMS.MenuFrame.menu.doctor.prescription"));
 
 		MenuItem menuItem_10 = new MenuItem(menu_2, SWT.NONE);
-		menuItem_10.setImage(SWTResourceManager.getImage(MenuShell.class,
+		menuItem_10.setImage(SWTResourceManager.getImage(MenuShell2.class,
 				"/com/hms/icon/hms-subclinical-icon.png"));
 		menuItem_10.setText(Messages
 				.getString("HMS.MenuFrame.menu.doctor.subclinical"));
 
 		MenuItem menuItem_11 = new MenuItem(menu_2, SWT.NONE);
-		menuItem_11.setImage(SWTResourceManager.getImage(MenuShell.class,
+		menuItem_11.setImage(SWTResourceManager.getImage(MenuShell2.class,
 				"/com/hms/icon/hms-medical-test-icon.png"));
 		menuItem_11.setText(Messages
 				.getString("HMS.MenuFrame.menu.doctor.medical_test"));
 
-		MenuItem mntmCashier_1 = new MenuItem(menu, SWT.CASCADE);
-		mntmCashier_1.setText("Cashier");
+		MenuItem menuItem_12 = new MenuItem(menu, SWT.CASCADE);
+		menuItem_12.setText(Messages.getString("HMS.MenuFrame.menu.invoice"));
 
-		Menu menu_3 = new Menu(mntmCashier_1);
-		mntmCashier_1.setMenu(menu_3);
+		Menu menu_3 = new Menu(menuItem_12);
+		menuItem_12.setMenu(menu_3);
 
 		MenuItem menuItem_13 = new MenuItem(menu_3, SWT.NONE);
 		menuItem_13.addSelectionListener(new SelectionAdapter() {
@@ -143,7 +198,7 @@ public class MenuShell extends Shell {
 				invoice.layout();
 			}
 		});
-		menuItem_13.setImage(SWTResourceManager.getImage(MenuShell.class,
+		menuItem_13.setImage(SWTResourceManager.getImage(MenuShell2.class,
 				"/com/hms/icon/hms-invoice-icon.png"));
 		menuItem_13.setText(Messages
 				.getString("HMS.MenuFrame.menu.invoice.medicine_service"));
@@ -158,7 +213,7 @@ public class MenuShell extends Shell {
 				imInvoice.layout();
 			}
 		});
-		menuItem_14.setImage(SWTResourceManager.getImage(MenuShell.class,
+		menuItem_14.setImage(SWTResourceManager.getImage(MenuShell2.class,
 				"/com/hms/icon/hms-invoice-io-icon.png"));
 		menuItem_14.setText(Messages
 				.getString("HMS.MenuFrame.menu.invoice.import"));
@@ -173,40 +228,10 @@ public class MenuShell extends Shell {
 				exInvoice.layout();
 			}
 		});
-		menuItem_15.setImage(SWTResourceManager.getImage(MenuShell.class,
+		menuItem_15.setImage(SWTResourceManager.getImage(MenuShell2.class,
 				"/com/hms/icon/hms-invoice-io-icon.png"));
 		menuItem_15.setText(Messages
 				.getString("HMS.MenuFrame.menu.invoice.export"));
-		
-		MenuItem mntmAdministrator = new MenuItem(menu, SWT.CASCADE);
-		mntmAdministrator.setText("Administrator");
-		
-		Menu menu_5 = new Menu(mntmAdministrator);
-		mntmAdministrator.setMenu(menu_5);
-		
-		MenuItem menuItem_1 = new MenuItem(menu_5, SWT.NONE);
-		menuItem_1.setText("!HMS.MenuFrame.menu.admin.hospital_info!");
-		menuItem_1.setImage(SWTResourceManager.getImage(MenuShell.class, "/com/hms/icon/hms-information-icon.png"));
-		
-		MenuItem menuItem_2 = new MenuItem(menu_5, SWT.NONE);
-		menuItem_2.setText("!HMS.MenuFrame.menu.admin.exit!");
-		menuItem_2.setImage(SWTResourceManager.getImage(MenuShell.class, "/com/hms/icon/hms-exit-button-icon.png"));
-		
-		MenuItem menuItem_3 = new MenuItem(menu_5, SWT.NONE);
-		menuItem_3.setText("!HMS.MenuFrame.menu.admin.restore!");
-		menuItem_3.setImage(SWTResourceManager.getImage(MenuShell.class, "/com/hms/icon/hms-restore-icon.png"));
-		
-		MenuItem menuItem_4 = new MenuItem(menu_5, SWT.NONE);
-		menuItem_4.setText("!HMS.MenuFrame.menu.admin.backup!");
-		menuItem_4.setImage(SWTResourceManager.getImage(MenuShell.class, "/com/hms/icon/hms-backup-icon.png"));
-		
-		MenuItem menuItem_5 = new MenuItem(menu_5, SWT.NONE);
-		menuItem_5.setText("!HMS.MenuFrame.menu.admin.history!");
-		menuItem_5.setImage(SWTResourceManager.getImage(MenuShell.class, "/com/hms/icon/hms-history-icon.png"));
-		
-		MenuItem menuItem_6 = new MenuItem(menu_5, SWT.NONE);
-		menuItem_6.setText("!HMS.MenuFrame.menu.admin.admin!");
-		menuItem_6.setImage(SWTResourceManager.getImage(MenuShell.class, "/com/hms/icon/hms-admin-icon.png"));
 
 		MenuItem menuItem_9 = new MenuItem(menu, SWT.NONE);
 		menuItem_9.addSelectionListener(new SelectionAdapter() {
@@ -240,13 +265,13 @@ public class MenuShell extends Shell {
 		});
 		toolItem.setToolTipText(Messages
 				.getString("HMS.MenuFrame.menu.admin.hospital_info"));
-		toolItem.setImage(SWTResourceManager.getImage(MenuShell.class,
+		toolItem.setImage(SWTResourceManager.getImage(MenuShell2.class,
 				"/com/hms/icon/hms-information-icon.png"));
 
 		ToolItem toolItem_1 = new ToolItem(toolBar, SWT.NONE);
 		toolItem_1.setToolTipText(Messages
 				.getString("HMS.MenuFrame.menu.admin.admin"));
-		toolItem_1.setImage(SWTResourceManager.getImage(MenuShell.class,
+		toolItem_1.setImage(SWTResourceManager.getImage(MenuShell2.class,
 				"/com/hms/icon/hms-admin-icon.png"));
 
 		ToolItem toolItem_2 = new ToolItem(toolBar, SWT.NONE);
@@ -261,19 +286,19 @@ public class MenuShell extends Shell {
 		});
 		toolItem_2.setToolTipText(Messages
 				.getString("HMS.MenuFrame.menu.admin.history"));
-		toolItem_2.setImage(SWTResourceManager.getImage(MenuShell.class,
+		toolItem_2.setImage(SWTResourceManager.getImage(MenuShell2.class,
 				"/com/hms/icon/hms-history-icon.png"));
 
 		ToolItem toolItem_3 = new ToolItem(toolBar, SWT.NONE);
 		toolItem_3.setToolTipText(Messages
 				.getString("HMS.MenuFrame.menu.admin.backup"));
-		toolItem_3.setImage(SWTResourceManager.getImage(MenuShell.class,
+		toolItem_3.setImage(SWTResourceManager.getImage(MenuShell2.class,
 				"/com/hms/icon/hms-backup-icon.png"));
 
 		ToolItem toolItem_4 = new ToolItem(toolBar, SWT.NONE);
 		toolItem_4.setToolTipText(Messages
 				.getString("HMS.MenuFrame.menu.admin.restore"));
-		toolItem_4.setImage(SWTResourceManager.getImage(MenuShell.class,
+		toolItem_4.setImage(SWTResourceManager.getImage(MenuShell2.class,
 				"/com/hms/icon/hms-restore-icon.png"));
 
 		CoolItem coolItem_1 = new CoolItem(coolBar, SWT.DROP_DOWN);
@@ -294,15 +319,15 @@ public class MenuShell extends Shell {
 		});
 		toolItem_5.setToolTipText(Messages
 				.getString("HMS.MenuFrame.menu.doctor.prescription"));
-		toolItem_5.setImage(SWTResourceManager.getImage(MenuShell.class,
+		toolItem_5.setImage(SWTResourceManager.getImage(MenuShell2.class,
 				"/com/hms/icon/hms-prescription-icon.png"));
 
 		ToolItem toolItem_6 = new ToolItem(toolBar_1, SWT.NONE);
-		toolItem_6.setImage(SWTResourceManager.getImage(MenuShell.class,
+		toolItem_6.setImage(SWTResourceManager.getImage(MenuShell2.class,
 				"/com/hms/icon/hms-subclinical-icon.png"));
 
 		ToolItem toolItem_7 = new ToolItem(toolBar_1, SWT.NONE);
-		toolItem_7.setImage(SWTResourceManager.getImage(MenuShell.class,
+		toolItem_7.setImage(SWTResourceManager.getImage(MenuShell2.class,
 				"/com/hms/icon/hms-medical-test-icon.png"));
 
 		CoolItem coolItem_2 = new CoolItem(coolBar, SWT.DROP_DOWN);
@@ -349,7 +374,7 @@ public class MenuShell extends Shell {
 				}
 			}
 		});
-		toolItem_8.setImage(SWTResourceManager.getImage(MenuShell.class,
+		toolItem_8.setImage(SWTResourceManager.getImage(MenuShell2.class,
 				"/com/hms/icon/hms-printer-icon.png"));
 		createContents();
 	}
