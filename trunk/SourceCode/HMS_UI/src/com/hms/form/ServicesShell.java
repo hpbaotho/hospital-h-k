@@ -29,12 +29,6 @@ import org.eclipse.swt.events.SelectionEvent;
 
 public class ServicesShell extends Shell {
 	private Text text;
-	private Text text_1;
-	private Text text_2;
-	private Text text_3;
-	private Text text_4;
-	private Text text_5;
-	private Text text_6;
 	private Text text_7;
 	private Table table;
 	private List<Control> selectedRowEditor = null;
@@ -70,59 +64,6 @@ public class ServicesShell extends Shell {
 		setImage(SWTResourceManager.getImage(ServicesShell.class, "/com/hms/icon/hms-subclinical-icon.png"));
 		setLayout(null);
 		
-		Group grpBasicExamine = new Group(this, SWT.NONE);
-		grpBasicExamine.setFont(SWTResourceManager.getFont("Tahoma", 12, SWT.BOLD));
-		grpBasicExamine.setText("Basic examine");
-		grpBasicExamine.setBounds(10, 37, 572, 79);
-		
-		text_1 = new Text(grpBasicExamine, SWT.BORDER);
-		text_1.setBounds(105, 23, 79, 21);
-		
-		Label lblPulse = new Label(grpBasicExamine, SWT.NONE);
-		lblPulse.setText("Pulse");
-		lblPulse.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		lblPulse.setBounds(10, 22, 89, 21);
-		
-		text_2 = new Text(grpBasicExamine, SWT.BORDER);
-		text_2.setBounds(105, 50, 79, 21);
-		
-		Label lblTemperature = new Label(grpBasicExamine, SWT.NONE);
-		lblTemperature.setText("Temperature");
-		lblTemperature.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		lblTemperature.setBounds(10, 49, 92, 21);
-		
-		text_3 = new Text(grpBasicExamine, SWT.BORDER);
-		text_3.setBounds(285, 24, 79, 21);
-		
-		Label lblBreathing = new Label(grpBasicExamine, SWT.NONE);
-		lblBreathing.setText("Breathing");
-		lblBreathing.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		lblBreathing.setBounds(190, 23, 89, 21);
-		
-		Label lblBloodPressure = new Label(grpBasicExamine, SWT.NONE);
-		lblBloodPressure.setText("Blood pressure");
-		lblBloodPressure.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		lblBloodPressure.setBounds(190, 50, 92, 21);
-		
-		text_4 = new Text(grpBasicExamine, SWT.BORDER);
-		text_4.setBounds(285, 51, 79, 21);
-		
-		text_5 = new Text(grpBasicExamine, SWT.BORDER);
-		text_5.setBounds(483, 23, 79, 21);
-		
-		Label lblHeight = new Label(grpBasicExamine, SWT.NONE);
-		lblHeight.setText("Height");
-		lblHeight.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		lblHeight.setBounds(388, 22, 89, 21);
-		
-		Label lblWeight = new Label(grpBasicExamine, SWT.NONE);
-		lblWeight.setText("Weight");
-		lblWeight.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		lblWeight.setBounds(388, 49, 92, 21);
-		
-		text_6 = new Text(grpBasicExamine, SWT.BORDER);
-		text_6.setBounds(483, 50, 79, 21);
-		
 		text = new Text(this, SWT.BORDER);
 		text.setBounds(136, 10, 200, 21);
 		
@@ -138,7 +79,7 @@ public class ServicesShell extends Shell {
 		Group grpServices = new Group(this, SWT.NONE);
 		grpServices.setFont(SWTResourceManager.getFont("Tahoma", 12, SWT.BOLD));
 		grpServices.setText("Services");
-		grpServices.setBounds(10, 122, 572, 338);
+		grpServices.setBounds(10, 37, 572, 423);
 		
 		Label lblMedicineId = new Label(grpServices, SWT.NONE);
 		lblMedicineId.setText("Services");
@@ -184,7 +125,7 @@ public class ServicesShell extends Shell {
 			}
 		});
 		table.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.NORMAL));
-		table.setBounds(10, 77, 538, 251);
+		table.setBounds(10, 77, 538, 336);
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
 		

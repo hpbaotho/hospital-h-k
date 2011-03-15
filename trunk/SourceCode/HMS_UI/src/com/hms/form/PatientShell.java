@@ -139,7 +139,7 @@ public class PatientShell extends Shell {
 		txtEmail.setBounds(136, 146, 240, 21);
 		
 		Label lblJob = new Label(composite, SWT.NONE);
-		lblJob.setText("Job");
+		lblJob.setText("Career");
 		lblJob.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
 		lblJob.setBounds(10, 172, 120, 21);
 		
