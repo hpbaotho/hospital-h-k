@@ -93,6 +93,21 @@ public class MenuShell extends Shell {
 		
 		Menu menu_4 = new Menu(mntmCashier);
 		mntmCashier.setMenu(menu_4);
+		
+		MenuItem mntmBasicExamination = new MenuItem(menu_4, SWT.NONE);
+		mntmBasicExamination.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				BasicExamShell basicExam = new BasicExamShell(getDisplay());
+				basicExam.setLocation(250, 50);
+				basicExam.open();
+				basicExam.layout();
+			}
+		});
+		mntmBasicExamination.setText("Basic examination");
+		
+		MenuItem mntmExamination = new MenuItem(menu_4, SWT.NONE);
+		mntmExamination.setText("Examination");
 
 		MenuItem mntmMedical = new MenuItem(menu, SWT.CASCADE);
 		mntmMedical.setText("Medical");
