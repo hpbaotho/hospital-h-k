@@ -24,5 +24,7 @@
 	<classpathentry kind="lib" path="compositetable-1.0.0.jar" sourcepath="compositetable-1.0.0-src.zip"/>
 	<classpathentry kind="lib" path="ganttchart-2.0.jar" sourcepath="ganttchart-2.0-src.zip"/>
 	<classpathentry kind="lib" path="tablecombo-1.0.0.jar" sourcepath="tablecombo-1.0.0-src.zip"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Spring"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JDBC"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

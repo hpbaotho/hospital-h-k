@@ -8,16 +8,20 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.hms.bundle.Messages;
 import com.hms.main.SWTApplication;
+import com.hms.model.dao.UserDao;
+import com.hms.model.entity.User;
 import com.swtdesigner.SWTResourceManager;
 
 public class LoginShell extends Shell {
 	
-	private static Text text;
-	private static Text text_1;
-	private static Text text_2;
+	private static Text txtUserID;
+	private static Text txtPassword;
+	private static Text txtServer;
 	
 	/**
 	 * Launch the application.
@@ -53,6 +57,13 @@ public class LoginShell extends Shell {
 	 * Create contents of the shell.
 	 */
 	protected void createContents() {
+		// -------------------------Get beans------------------------------------
+		ApplicationContext appContext = 
+    		new ClassPathXmlApplicationContext("com/hms/model/config/Beans.xml");
+	
+    	final UserDao userDao = (UserDao)appContext.getBean("userDao");
+		// -----------------------------------------------------------------------
+		
 		setImage(SWTResourceManager.getImage(SWTApplication.class, "/com/hms/icon/hms-login-icon.png"));
 		setSize(450, 300);
 		setText(Messages.getString("HMS.LoginFrame.title"));
@@ -63,22 +74,22 @@ public class LoginShell extends Shell {
 		label_1.setBounds(44, 74, 115, 21);
 		label_1.setText(Messages.getString("HMS.LoginFrame.label.user_name"));
 		
-		text = new Text(this, SWT.BORDER);
-		text.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.NORMAL));
-		text.setBounds(165, 68, 221, 27);
+		txtUserID = new Text(this, SWT.BORDER);
+		txtUserID.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.NORMAL));
+		txtUserID.setBounds(165, 68, 221, 27);
 		
-		text_1 = new Text(this, SWT.BORDER | SWT.PASSWORD);
-		text_1.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.NORMAL));
-		text_1.setBounds(165, 101, 221, 27);
+		txtPassword = new Text(this, SWT.BORDER | SWT.PASSWORD);
+		txtPassword.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.NORMAL));
+		txtPassword.setBounds(165, 101, 221, 27);
 		
 		Label label_2 = new Label(this, SWT.NONE);
 		label_2.setText(Messages.getString("HMS.LoginFrame.label.password"));
 		label_2.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
 		label_2.setBounds(44, 107, 115, 21);
 		
-		text_2 = new Text(this, SWT.BORDER);
-		text_2.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.NORMAL));
-		text_2.setBounds(165, 134, 221, 27);
+		txtServer = new Text(this, SWT.BORDER);
+		txtServer.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.NORMAL));
+		txtServer.setBounds(165, 134, 221, 27);
 		
 		Label label_3 = new Label(this, SWT.NONE);
 		label_3.setText(Messages.getString("HMS.LoginFrame.label.server"));
@@ -89,10 +100,14 @@ public class LoginShell extends Shell {
 		button.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				MenuShell menuShell = new MenuShell(Display.getDefault());
-				menuShell.setLocation(250, 50);
-				menuShell.open();
-				menuShell.layout();
+				User user = userDao.findByIdAndPass(txtUserID.getText().trim(), txtPassword.getText().trim());
+				
+				if ( user != null) {
+					MenuShell menuShell = new MenuShell(Display.getDefault());
+					menuShell.setLocation(250, 50);
+					menuShell.open();
+					menuShell.layout();
+				}
 			}
 		});
 		button.setAlignment(SWT.LEFT);

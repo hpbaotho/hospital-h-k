@@ -15,6 +15,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
+import org.eclipse.swt.widgets.Composite;
 
 public class ExaminationShell extends Shell {
 	private Table table_1;
@@ -28,6 +29,9 @@ public class ExaminationShell extends Shell {
 	private Text text_8;
 	private Text text_9;
 	private Text text_10;
+	private Text text;
+	private Text text_1;
+	private Text text_2;
 
 	/**
 	 * Launch the application.
@@ -227,6 +231,33 @@ public class ExaminationShell extends Shell {
 		tbtmExamination.setText("Examination");
 		
 		tabFolder.setSelection(tbtmExamination);
+		
+		Composite composite = new Composite(tabFolder, SWT.NONE);
+		tbtmExamination.setControl(composite);
+		
+		text = new Text(composite, SWT.BORDER | SWT.WRAP | SWT.MULTI);
+		text.setBounds(175, 11, 731, 69);
+		
+		Label lblClinicalSympto = new Label(composite, SWT.NONE);
+		lblClinicalSympto.setText("Clinical Symptoms");
+		lblClinicalSympto.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
+		lblClinicalSympto.setBounds(10, 10, 159, 21);
+		
+		text_1 = new Text(composite, SWT.BORDER);
+		text_1.setBounds(175, 87, 731, 21);
+		
+		Label lblPreliminary = new Label(composite, SWT.NONE);
+		lblPreliminary.setText("Preliminary diagnosis");
+		lblPreliminary.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
+		lblPreliminary.setBounds(10, 86, 159, 21);
+		
+		text_2 = new Text(composite, SWT.BORDER | SWT.WRAP | SWT.MULTI);
+		text_2.setBounds(175, 115, 731, 172);
+		
+		Label label_4 = new Label(composite, SWT.NONE);
+		label_4.setText("Clinical Symptoms");
+		label_4.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
+		label_4.setBounds(10, 114, 159, 21);
 		
 		CTabItem tbtmPrescription = new CTabItem(tabFolder, SWT.NONE);
 		tbtmPrescription.setFont(SWTResourceManager.getFont("Tahoma", 10, SWT.NORMAL));

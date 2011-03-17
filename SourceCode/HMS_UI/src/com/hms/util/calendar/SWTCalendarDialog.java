@@ -1,7 +1,6 @@
 package com.hms.util.calendar;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.DisposeEvent;import org.eclipse.swt.events.DisposeListener;import org.eclipse.swt.layout.RowLayout;
+import org.eclipse.swt.SWT;import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import com.hms.util.calendar.SWTCalendar;
@@ -10,10 +9,7 @@ import com.hms.util.calendar.SWTCalendarListener;
 import java.util.Calendar;
 import java.util.Date;
 import com.swtdesigner.SWTResourceManager;
-import org.eclipse.swt.events.KeyAdapter;
-import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.FocusAdapter;
-import org.eclipse.swt.events.FocusEvent;import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.KeyAdapter;import org.eclipse.swt.events.MouseAdapter;
 
 public class SWTCalendarDialog {
     private Shell shell;
