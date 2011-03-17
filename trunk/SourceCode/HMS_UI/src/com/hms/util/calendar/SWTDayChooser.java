@@ -64,12 +64,16 @@ public class SWTDayChooser extends Composite
     private Calendar calendar;
     private Calendar today;
     private Locale locale;
-    private List listeners;
-    private List keyListeners = null;
-    private List mouseListeners = null;
+    @SuppressWarnings("rawtypes")
+	private List listeners;
+    @SuppressWarnings("rawtypes")
+	private List keyListeners = null;
+    @SuppressWarnings("rawtypes")
+	private List mouseListeners = null;
     private int style;
 
-    public SWTDayChooser(Composite parent, int style) {
+    @SuppressWarnings("rawtypes")
+	public SWTDayChooser(Composite parent, int style) {
         super(parent, style & ~RED_WEEKEND);
         this.style = style;
         listeners = new ArrayList(3);
@@ -285,7 +289,8 @@ public class SWTDayChooser extends Composite
     /* (non-Javadoc)
      * @see org.eclipse.swt.events.MouseListener#mouseDoubleClick(org.eclipse.swt.events.MouseEvent)
      */
-    public void mouseDoubleClick(MouseEvent event) {
+    @SuppressWarnings("unchecked")
+	public void mouseDoubleClick(MouseEvent event) {
     	if (this.mouseListeners != null) {
     		MouseAdapter[] mouseListenerArray = new MouseAdapter[this.mouseListeners.size()];
     		mouseListeners.toArray(mouseListenerArray);
@@ -341,7 +346,8 @@ public class SWTDayChooser extends Composite
     /* (non-Javadoc)
      * @see org.eclipse.swt.events.KeyListener#keyPressed(org.eclipse.swt.events.KeyEvent)
      */
-    public void keyPressed(KeyEvent event) {
+    @SuppressWarnings("unchecked")
+	public void keyPressed(KeyEvent event) {
         switch (event.keyCode) {
             case SWT.ARROW_LEFT:
                 selectDay(calendar.get(Calendar.DAY_OF_MONTH) - 1);
@@ -453,7 +459,8 @@ public class SWTDayChooser extends Composite
         return false;
     }
 
-    public void addSWTCalendarListener(SWTCalendarListener listener) {
+    @SuppressWarnings("unchecked")
+	public void addSWTCalendarListener(SWTCalendarListener listener) {
         this.listeners.add(listener);
     }
 
@@ -461,7 +468,8 @@ public class SWTDayChooser extends Composite
         this.listeners.remove(listener);
     }
 
-    public void addSWTCalendarKeyListener(KeyAdapter listener) {
+    @SuppressWarnings("unchecked")
+	public void addSWTCalendarKeyListener(KeyAdapter listener) {
     	if (this.keyListeners == null) {
     		this.keyListeners = new ArrayList<KeyAdapter>();
     	}
@@ -474,7 +482,8 @@ public class SWTDayChooser extends Composite
     	}
     }
     
-    public void addSWTCalendarMouseListener(MouseAdapter listener) {
+    @SuppressWarnings("unchecked")
+	public void addSWTCalendarMouseListener(MouseAdapter listener) {
     	if (this.mouseListeners == null) {
     		this.mouseListeners = new ArrayList<MouseAdapter>();
     	}
@@ -487,7 +496,8 @@ public class SWTDayChooser extends Composite
     	}
     }
     
-    private void dateChanged() {
+    @SuppressWarnings("unchecked")
+	private void dateChanged() {
         if (!listeners.isEmpty()) {
             SWTCalendarListener[] listenersArray = new SWTCalendarListener[listeners.size()];
             listeners.toArray(listenersArray);
@@ -566,9 +576,9 @@ public class SWTDayChooser extends Composite
             label.setText(text);
         }
 
-        public String getText() {
+        /*public String getText() {
             return label.getText();
-        }
+        }*/
 
         /* (non-Javadoc)
          * @see org.eclipse.swt.widgets.Control#setFont(org.eclipse.swt.graphics.Font)
