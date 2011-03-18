@@ -21,7 +21,11 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
  
      <property name="mappingResources">
 		<list>
-	           <value>/com/hms/model/entity/User.hbm.xml</value>
+	    	<value>/com/hms/model/entity/User.hbm.xml</value>
+	    	<value>/com/hms/model/entity/Service.hbm.xml</value>
+	    	<value>/com/hms/model/entity/Department.hbm.xml</value>
+	    	<value>/com/hms/model/entity/V_Material.hbm.xml</value>
+	    	<value>/com/hms/model/entity/Patient.hbm.xml</value>
 		</list>
       </property>	
  

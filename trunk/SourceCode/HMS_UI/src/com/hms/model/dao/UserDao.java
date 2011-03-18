@@ -14,8 +14,8 @@ import com.hms.model.entity.User;
 public interface UserDao {
 
 	void save(User user);
-	void update(User medicine);
-	void delete(User medicine);
+	void update(User user);
+	void delete(User user);
 	List<User> findAll();
 	User findByIdAndPass(String id, String password);
 

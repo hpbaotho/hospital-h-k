@@ -8,13 +8,18 @@ import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+
+import com.hms.model.dao.DepartmentDao;
+import com.hms.model.dao.ServiceDao;
+import com.hms.model.dao.V_MaterialDao;
+import com.hms.model.entity.Service;
+import com.hms.model.entity.V_Material;
 import com.swtdesigner.SWTResourceManager;
+
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
@@ -26,14 +31,20 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabItem;
 
 public class ServicesShell extends Shell {
-	private Text text;
-	private Text text_7;
 	private Table table;
 	private List<Control> selectedRowEditor = null;
 	private int selectedRowIndex = -1;
+	private String[] lstDept = null;
 	
+	private ServiceDao serviceDao = null;
+	private DepartmentDao departmentDao = null;
+	private V_MaterialDao materialDao = null;
 	/**
 	 * Launch the application.
 	 * @param args
@@ -60,45 +71,44 @@ public class ServicesShell extends Shell {
 	 */
 	public ServicesShell(Display display) {
 		super(display, SWT.SHELL_TRIM);
+		
+		// -------------------------Get beans------------------------------------
+		ApplicationContext appContext = 
+    		new ClassPathXmlApplicationContext("com/hms/model/config/Beans.xml");
+	
+    	serviceDao = (ServiceDao) appContext.getBean("serviceDao");
+    	departmentDao = (DepartmentDao) appContext.getBean("departmentDao");
+    	materialDao = (V_MaterialDao) appContext.getBean("materialDao");
+		// -----------------------------------------------------------------------
+		
+    	List<V_Material> lstMaterial= materialDao.findByType("department");
+    	
+    	// Fill list departments
+    	lstDept = new String[lstMaterial.size()];
+    	for (int i = 0; i < lstDept.length; i++) {
+    		lstDept[i] = lstMaterial.get(i).getValueDisp();
+    	}
+    	
 		setLocation(-28, -63);
 		setImage(SWTResourceManager.getImage(ServicesShell.class, "/com/hms/icon/hms-subclinical-icon.png"));
 		setLayout(null);
 		
-		text = new Text(this, SWT.BORDER);
-		text.setBounds(136, 10, 200, 21);
+		CTabFolder tabFolder = new CTabFolder(this, SWT.BORDER);
+		tabFolder.setSimple(false);
+		tabFolder.setBounds(10, 10, 672, 450);
+		tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
 		
-		Label label = new Label(this, SWT.NONE);
-		label.setText("Name");
-		label.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		label.setBounds(10, 10, 120, 21);
+		CTabItem tbtmServices = new CTabItem(tabFolder, SWT.NONE);
+		tbtmServices.setFont(SWTResourceManager.getFont("Tahoma", 12, SWT.BOLD));
+		tbtmServices.setText("Services");
 		
-		Button button = new Button(this, SWT.NONE);
-		button.setImage(SWTResourceManager.getImage(ServicesShell.class, "/com/hms/icon/hms-search-icon.png"));
-		button.setBounds(336, 8, 24, 24);
+		Composite composite = new Composite(tabFolder, SWT.NONE);
+		tbtmServices.setControl(composite);
 		
-		Group grpServices = new Group(this, SWT.NONE);
-		grpServices.setFont(SWTResourceManager.getFont("Tahoma", 12, SWT.BOLD));
-		grpServices.setText("Services");
-		grpServices.setBounds(10, 37, 572, 423);
+		table = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
+		table.setBounds(10, 10, 622, 407);
+		table.setLinesVisible(true);
 		
-		Label lblMedicineId = new Label(grpServices, SWT.NONE);
-		lblMedicineId.setText("Services");
-		lblMedicineId.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		lblMedicineId.setBounds(10, 23, 89, 21);
-		
-		Combo combo = new Combo(grpServices, SWT.NONE);
-		combo.setBounds(10, 50, 215, 21);
-		
-		text_7 = new Text(grpServices, SWT.BORDER);
-		text_7.setBounds(260, 50, 156, 21);
-		
-		Label lblPrice = new Label(grpServices, SWT.NONE);
-		lblPrice.setText("Price");
-		lblPrice.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		lblPrice.setBounds(260, 22, 92, 21);
-		
-		table = new Table(grpServices, SWT.BORDER | SWT.FULL_SELECTION);
-
 		table.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -124,56 +134,37 @@ public class ServicesShell extends Shell {
 				}
 			}
 		});
-		table.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.NORMAL));
-		table.setBounds(10, 77, 538, 336);
+		table.setFont(SWTResourceManager.getFont("Tahoma", 12, SWT.NORMAL));
 		table.setHeaderVisible(true);
-		table.setLinesVisible(true);
 		
-		TableColumn tableColumn = new TableColumn(table, SWT.NONE);
-		tableColumn.setWidth(0);
+		TableColumn tblclmnNo = new TableColumn(table, SWT.NONE);
+		tblclmnNo.setText("No");
+		tblclmnNo.setWidth(38);
+		
+		TableColumn tblColPatient = new TableColumn(table, SWT.CENTER);
+		tblColPatient.setWidth(176);
+		tblColPatient.setText("Patient");
 		
 		TableColumn tblclmnServices = new TableColumn(table, SWT.CENTER);
-		tblclmnServices.setWidth(287);
+		tblclmnServices.setWidth(253);
 		tblclmnServices.setText("Services");
 		
 		TableColumn tblclmnPrice = new TableColumn(table, SWT.CENTER);
-		tblclmnPrice.setWidth(245);
+		tblclmnPrice.setWidth(146);
 		tblclmnPrice.setText("Price");
 		
-		TableItem tableItem = new TableItem(table, SWT.NONE);
-		tableItem.setText(new String[] {"", "Kham mat", "15.000"});
+		this.fillTable(table);
 		
-		TableItem tableItem_1 = new TableItem(table, SWT.NONE);
-		tableItem_1.setText(new String[] {"", "Kham tai - mui - hong", "20.000"});
-		
-		ToolBar toolBar = new ToolBar(grpServices, SWT.FLAT | SWT.RIGHT | SWT.VERTICAL);
-		toolBar.setBounds(548, 77, 24, 44);
+	
+		ToolBar toolBar = new ToolBar(composite, SWT.FLAT | SWT.RIGHT | SWT.VERTICAL);
+		toolBar.setBounds(632, 10, 24, 44);
 		
 		ToolItem toolItem = new ToolItem(toolBar, SWT.NONE);
 		toolItem.setImage(SWTResourceManager.getImage(ServicesShell.class, "/com/hms/icon/hms-add-icon.png"));
 		
 		ToolItem toolItem_1 = new ToolItem(toolBar, SWT.NONE);
 		toolItem_1.setImage(SWTResourceManager.getImage(ServicesShell.class, "/com/hms/icon/hms-delete-icon.png"));
-
-		//Table editor
-		/*TableItem[] items = table.getItems();
-	    for (int i = 0; i < items.length; i++) {
-	      TableEditor editor = new TableEditor(table);
-	      CCombo comboEditor = new CCombo(table, SWT.NONE);
-	      comboEditor.setItems(new String[] {"Kham mat", "Kham tai - mui - hong"});
-	      comboEditor.setText(items[i].getText(0));
-	      comboEditor.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.NORMAL));
-	      editor.grabHorizontal = true;
-	      editor.setEditor(comboEditor, items[i], 0);
-	      editor = new TableEditor(table);
-	      Text text = new Text(table, SWT.CENTER);
-	      text.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.NORMAL));
-	      text.setText(items[i].getText(1));
-	      editor.grabHorizontal = true;
-	      editor.minimumWidth = text.getSize().x;
-	      editor.setEditor(text, items[i], 1);
-	    }*/
-	    
+		
 		createContents();
 	}
 
@@ -194,22 +185,45 @@ public class ServicesShell extends Shell {
 		}
 
 		TableEditor editor = new TableEditor(table);
-	    CCombo comboEditor = new CCombo(table, SWT.CENTER);
-		comboEditor.setItems(new String[] {"Kham mat", "Kham tai - mui - hong"});
-		comboEditor.setText(table.getSelection()[0].getText(1));
-		comboEditor.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.NORMAL));
+	    
+		Composite compPatient = new Composite(table, SWT.NONE);
+	    Text txtPatient = new Text(compPatient, SWT.CENTER);
+	    txtPatient.setBounds(0, 0, 150, 21);
+	    txtPatient.setText("HUAN");
+		txtPatient.setFont(SWTResourceManager.getFont("Tahoma", 12, SWT.NORMAL));
+		Button btnPatient = new Button(compPatient, SWT.CENTER);
+		btnPatient.setBounds(150, 0, 24, 20);
+		btnPatient.setImage(SWTResourceManager.getImage(ServicesShell.class, "/com/hms/icon/hms-search-icon.png"));
+		btnPatient.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				PatientListShell patientList = new PatientListShell(getDisplay());
+				patientList.setLocation(250, 50);
+				patientList.open();
+				patientList.layout();
+			}
+		});
+		editor.grabHorizontal = true;
+		editor.setEditor(compPatient, table.getSelection()[0], 1);
+		this.selectedRowEditor.add(compPatient);
+		
+		editor = new TableEditor(table);
+		CCombo comboEditor = new CCombo(table, SWT.CENTER);
+		comboEditor.setItems(lstDept);
+		comboEditor.setText(table.getSelection()[0].getText(2));
+		comboEditor.setFont(SWTResourceManager.getFont("Tahoma", 12, SWT.NORMAL));
 		comboEditor.addKeyListener(keyAdapter);		
 		editor.grabHorizontal = true;
-		editor.setEditor(comboEditor, table.getSelection()[0], 1);
+		editor.setEditor(comboEditor, table.getSelection()[0], 2);
 		this.selectedRowEditor.add(comboEditor);
 		
 		editor = new TableEditor(table);
 		Text text = new Text(table, SWT.CENTER);
-		text.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.NORMAL));
-		text.setText(table.getSelection()[0].getText(2));
+		text.setFont(SWTResourceManager.getFont("Tahoma", 12, SWT.NORMAL));
+		text.setText(table.getSelection()[0].getText(3));
 		editor.grabHorizontal = true;
 		editor.minimumWidth = text.getSize().x;
-		editor.setEditor(text, table.getSelection()[0], 2);
+		editor.setEditor(text, table.getSelection()[0], 3);
 		this.selectedRowEditor.add(text);
 		
 		comboEditor.setFocus();
@@ -243,20 +257,27 @@ public class ServicesShell extends Shell {
 				}
 			}
 			
-//			for (Control control: selectedRowEditor) {
-//				System.out.println(control.getClass().toString());
-//				control.dispose();
-//			}
 			selectedRowEditor.clear();
 		}
 	}
 
+	protected void fillTable(Table table) {
+		TableItem tableItem = null;
+		
+		if (serviceDao != null) {
+			for (Service service : serviceDao.findAll()) {
+				tableItem = new TableItem(table, SWT.NONE);
+				tableItem.setText(new String[] {String.valueOf(service.getServiceNo()), "HUAN", departmentDao.findById(service.getDeptID()).getDeptName(), String.valueOf(service.getPrice())});
+			}
+		}
+	}
+	
 	/**
 	 * Create contents of the shell.
 	 */
 	protected void createContents() {
 		setText("Services");
-		setSize(600, 500);
+		setSize(700, 500);
 		setLocation(50, 200);
 	}
 

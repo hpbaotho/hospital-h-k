@@ -3,36 +3,43 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated Oct 30, 2010 4:50:53 PM by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
-    <class name="com.hms.model.entity.User" table="USER_MASTER" catalog="HMS">
-        <id name="id" type="java.lang.String">
-            <column name="USER_ID" />
+    <class name="com.hms.model.entity.Patient" table="PATIENT" catalog="HMS">
+        <id name="patientID" type="java.lang.String">
+            <column name="PATIENT_ID" />
             <generator class="identity" />
         </id>
-        <property name="password" type="java.lang.String">
-            <column name="PASSWORD" />
+        <property name="patientName" type="java.lang.String">
+            <column name="PATIENT_NAME" />
         </property>
-        <property name="name" type="java.lang.String">
-            <column name="USER_NAME" />
+        <property name="dayOfBirth" type="java.sql.Date">
+            <column name="DAY_OF_BIRTH" />
         </property>
-        <property name="email" type="java.lang.String">
-            <column name="EMAIL" />
-        </property>
-        <property name="address" type="java.lang.String">
-            <column name="ADDRESS" />
+        <property name="sex" type="java.lang.String">
+            <column name="SEX" />
         </property>
         <property name="phoneNumber" type="java.lang.String">
             <column name="PHONE_NUMBER" />
         </property>
-        <property name="level" type="int">
-            <column name="USER_LEVEL" />
+        <property name="email" type="java.lang.String">
+            <column name="EMAIL" />
         </property>
-        <property name="numberOfLogin" type="int">
-            <column name="Number_Of_Login" />
+        <property name="career" type="java.lang.String">
+            <column name="CAREER" />
         </property>
-        <property name="lastLoginDate" type="java.sql.Date">
-            <column name="Last_Login_Date" />
+        <property name="streetNo" type="java.lang.String">
+            <column name="STREET_NO" />
         </property>
-        <property name="register" type="java.lang.String">
+        <property name="ward" type="java.lang.String">
+            <column name="WARD" />
+        </property>
+        <property name="district" type="java.lang.String">
+            <column name="DISTRICT" />
+        </property>
+        <property name="city" type="java.lang.String">
+            <column name="CITY" />
+        </property>
+        
+     	<property name="register" type="java.lang.String">
             <column name="REGISTER" />
         </property>
         <property name="updater" type="java.lang.String">
