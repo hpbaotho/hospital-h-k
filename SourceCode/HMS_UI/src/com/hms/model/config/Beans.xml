@@ -9,5 +9,9 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 	
 	<!-- Beans Declaration -->
 	<import resource="../bean/User.xml"/>
+	<import resource="../bean/Service.xml"/>
+	<import resource="../bean/Department.xml"/>
+	<import resource="../bean/V_Material.xml"/>
+	<import resource="../bean/Patient.xml"/>
 	
 </beans>

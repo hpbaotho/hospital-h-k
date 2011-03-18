@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 30, 2010 4:50:53 PM by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="com.hms.model.entity.Service" table="SERVICE" catalog="HMS">
+        <id name="serviceNo" type="int">
+            <column name="SERVICE_NO" />
+            <generator class="increment" />
+        </id>
+        <property name="patientID" type="java.lang.String">
+            <column name="PATIENT_ID" />
+        </property>
+        <property name="deptID" type="java.lang.String">
+            <column name="DEPT_ID" />
+        </property>
+        <property name="price" type="double">
+            <column name="PRICE" />
+        </property>
+     	<property name="register" type="java.lang.String">
+            <column name="REGISTER" />
+        </property>
+        <property name="updater" type="java.lang.String">
+            <column name="UPDATER" />
+        </property>
+        <property name="registerDate" type="java.sql.Date">
+            <column name="REGISTER_DATE" />
+        </property>
+        <property name="updateDate" type="java.sql.Date">
+            <column name="UPDATE_DATE" />
+        </property>
+        <property name="recordStatus" type="java.lang.String">
+            <column name="RECORD_STATUS" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -26,6 +26,12 @@ public class User implements Serializable {
 	private int level;
 	private int numberOfLogin;
 	private Date lastLoginDate;
+	private String register;
+	private String updater;
+	private Date registerDate;
+	private Date updateDate;
+	private String recordStatus;
+	
 	/**
 	 * @return the id
 	 */
@@ -133,6 +139,66 @@ public class User implements Serializable {
 	 */
 	public void setLastLoginDate(Date lastLoginDate) {
 		this.lastLoginDate = lastLoginDate;
+	}
+	/**
+	 * @return the register
+	 */
+	public String getRegister() {
+		return register;
+	}
+	/**
+	 * @param register the register to set
+	 */
+	public void setRegister(String register) {
+		this.register = register;
+	}
+	/**
+	 * @return the updater
+	 */
+	public String getUpdater() {
+		return updater;
+	}
+	/**
+	 * @param updater the updater to set
+	 */
+	public void setUpdater(String updater) {
+		this.updater = updater;
+	}
+	/**
+	 * @return the registerDate
+	 */
+	public Date getRegisterDate() {
+		return registerDate;
+	}
+	/**
+	 * @param registerDate the registerDate to set
+	 */
+	public void setRegisterDate(Date registerDate) {
+		this.registerDate = registerDate;
+	}
+	/**
+	 * @return the updateDate
+	 */
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+	/**
+	 * @param updateDate the updateDate to set
+	 */
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}
+	/**
+	 * @return the recordStatus
+	 */
+	public String getRecordStatus() {
+		return recordStatus;
+	}
+	/**
+	 * @param recordStatus the recordStatus to set
+	 */
+	public void setRecordStatus(String recordStatus) {
+		this.recordStatus = recordStatus;
 	}
 	
 	

@@ -5,17 +5,23 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 import com.hms.bundle.Messages;
+import com.hms.model.dao.PatientDao;
+import com.hms.model.entity.Patient;
 import com.swtdesigner.SWTResourceManager;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class PatientListShell extends Shell {
 	private Table table;
-
+	private PatientDao patientDao = null;
+	
 	/**
 	 * Launch the application.
 	 * @param args
@@ -42,6 +48,14 @@ public class PatientListShell extends Shell {
 	 */
 	public PatientListShell(Display display) {
 		super(display, SWT.SHELL_TRIM);
+		
+		ApplicationContext appContext = 
+    		new ClassPathXmlApplicationContext("com/hms/model/config/Beans.xml");
+	
+		patientDao = (PatientDao) appContext.getBean("patientDao");
+    	
+		
+		
 		setImage(SWTResourceManager.getImage(PatientListShell.class, "/com/hms/icon/hms-patient-icon.png"));
 		
 		Composite composite_1 = new Composite(this, SWT.NONE);
@@ -123,6 +137,9 @@ public class PatientListShell extends Shell {
 		button_3.setImage(SWTResourceManager.getImage(PatientListShell.class, "/com/hms/icon/hms-cancel-icon.png"));
 		button_3.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
 		button_3.setBounds(729, 594, 133, 46);
+		
+		this.fillTable(table);
+		
 		createContents();
 	}
 
@@ -135,6 +152,17 @@ public class PatientListShell extends Shell {
 
 	}
 
+	protected void fillTable(Table table) {
+		TableItem tableItem = null;
+		
+		if (patientDao != null) {
+			for (Patient patient : patientDao.findAll()) {
+				tableItem = new TableItem(table, SWT.NONE);
+				tableItem.setText(new String[] {"", patient.getPatientID(), patient.getPatientName(), String.valueOf(patient.getDayOfBirth()), patient.getSex(), patient.getStreetNo() + ", Phuong " +patient.getWard() + ", Quan " + patient.getDistrict() + ", TP " + patient.getCity()});
+			}
+		}
+	}
+	
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
