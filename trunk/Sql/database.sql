@@ -175,6 +175,45 @@ create table HMS.V_Material
   PRIMARY KEY (No)
 );
 
+-- Medicine_Group --
+create table HMS.Medicine_Group
+(
+  Group_ID          VARCHAR(20),
+  Group_Name        VARCHAR(100),
+  Description       VARCHAR(200),
+  Register          VARCHAR(40),
+  Updater           VARCHAR(40),
+  Register_Date     DATETIME,
+  Update_Date       DATETIME,
+  Record_Status     CHAR,
+  PRIMARY KEY (Group_ID)
+);
+
+-- Medicine --
+create table HMS.Medicine
+(
+  Medicine_ID        VARCHAR(20),
+  Medicine_Name      VARCHAR(100),
+  Group_ID      		VARCHAR(20),
+  Parameter          VARCHAR(200),
+  Price					DOUBLE,
+  Cost					DOUBLE,
+  Unit 					VARCHAR(10),
+  Manufacturer 		VARCHAR(100),
+  Whole_Sale_Price	DOUBLE,
+  Insurance_Price	   DOUBLE,
+  Register           VARCHAR(40),
+  Updater            VARCHAR(40),
+  Register_Date      DATETIME,
+  Update_Date        DATETIME,
+  Record_Status      CHAR,
+  PRIMARY KEY (Medicine_ID),
+  CONSTRAINT FK_MEDICINE_GROUP FOREIGN KEY FK_MEDICINE_GROUP (Group_ID)
+  REFERENCES Medicine_Group (Group_ID)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE
+);
+
 ---------------------------------------------------- RECORD ---------------------------------------------------------
 -- User_Master --
 insert into HMS.User_Master (User_ID, Password, User_Name, Address, Phone_Number, User_Level, Number_of_Login, Last_Login_Date, Register, Updater, Register_Date, Update_Date, Record_Status)
@@ -234,3 +273,17 @@ values (1, 'department', 'Department1', 'Department1', 'Huan Pham', null, null, 
 
 insert into HMS.V_Material (No, Type, value, value_disp, Register, Updater, Register_Date, Update_Date, Record_Status)
 values (2, 'department', 'Department2', 'Department2', 'Huan Pham', null, null, null, 'A');
+
+-- Medicine_Group --
+insert into HMS.Medicine_Group (Group_ID, Group_Name, Description, Register, Updater, Register_Date, Update_Date, Record_Status)
+values ('Group1', 'Group 1', 'Group Medicine 1', 'Huan Pham', null, null, null, 'A');
+
+insert into HMS.Medicine_Group (Group_ID, Group_Name, Description, Register, Updater, Register_Date, Update_Date, Record_Status)
+values ('Group2', 'Group 2', 'Group Medicine 2', 'Huan Pham', null, null, null, 'A');
+
+-- Medicine --
+insert into HMS.Medicine (Medicine_ID, Medicine_Name, Group_ID, Parameter, Price, Cost, Unit, Manufacturer, Whole_Sale_Price, Insurance_Price, Register, Updater, Register_Date, Update_Date, Record_Status)
+values ('Para', 'Paradol', 'Group1', 'Para, Suger', 5000, 4000, 'Hop', 'Ho Chi Minh', 5000, 5000, 'Huan Pham', null, null, null, 'A');
+
+insert into HMS.Medicine (Medicine_ID, Medicine_Name, Group_ID, Parameter, Price, Cost, Unit, Manufacturer, Whole_Sale_Price, Insurance_Price, Register, Updater, Register_Date, Update_Date, Record_Status)
+values ('Treps', 'Trepsil', 'Group2', 'Paracitamol, Suger', 15000, 14000, 'Vi', 'Ho Chi Minh', 15000, 15000, 'Huan Pham', null, null, null, 'A');
