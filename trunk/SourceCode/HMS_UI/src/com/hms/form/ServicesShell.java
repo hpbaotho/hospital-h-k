@@ -204,11 +204,11 @@ public class ServicesShell extends Shell {
 		tblcolDeptID.setText("New Column");
 		
 	
-		ToolBar toolBar = new ToolBar(composite, SWT.FLAT | SWT.RIGHT | SWT.VERTICAL);
-		toolBar.setBounds(632, 10, 24, 66);
+		ToolBar tbControl = new ToolBar(composite, SWT.FLAT | SWT.RIGHT | SWT.VERTICAL);
+		tbControl.setBounds(632, 10, 24, 66);
 		
-		ToolItem toolItem = new ToolItem(toolBar, SWT.NONE);
-		toolItem.addSelectionListener(new SelectionAdapter() {
+		ToolItem tbiAdd = new ToolItem(tbControl, SWT.NONE);
+		tbiAdd.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				TableItem newItem = new TableItem(table, SWT.NONE);
@@ -217,10 +217,10 @@ public class ServicesShell extends Shell {
 				setTableItemEditor(tblitemEditing);
 			}
 		});
-		toolItem.setImage(SWTResourceManager.getImage(ServicesShell.class, "/com/hms/icon/hms-add-icon.png"));
+		tbiAdd.setImage(SWTResourceManager.getImage(ServicesShell.class, "/com/hms/icon/hms-add-icon.png"));
 		
-		ToolItem toolItem_2 = new ToolItem(toolBar, SWT.NONE);
-		toolItem_2.addSelectionListener(new SelectionAdapter() {
+		ToolItem tbiEdit = new ToolItem(tbControl, SWT.NONE);
+		tbiEdit.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (tblitemEditing == null) {
@@ -233,10 +233,10 @@ public class ServicesShell extends Shell {
 				
 			}
 		});
-		toolItem_2.setImage(SWTResourceManager.getImage(ServicesShell.class, "/com/hms/icon/hms-edit-icon.png"));
+		tbiEdit.setImage(SWTResourceManager.getImage(ServicesShell.class, "/com/hms/icon/hms-edit-icon.png"));
 		
-		ToolItem toolItem_1 = new ToolItem(toolBar, SWT.NONE);
-		toolItem_1.setImage(SWTResourceManager.getImage(ServicesShell.class, "/com/hms/icon/hms-delete-icon.png"));
+		ToolItem tbiDelete = new ToolItem(tbControl, SWT.NONE);
+		tbiDelete.setImage(SWTResourceManager.getImage(ServicesShell.class, "/com/hms/icon/hms-delete-icon.png"));
 		
 		Button btnCancel = new Button(composite, SWT.NONE);
 		btnCancel.addSelectionListener(new SelectionAdapter() {

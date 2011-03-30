@@ -13,5 +13,6 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 	<import resource="../bean/Department.xml"/>
 	<import resource="../bean/V_Material.xml"/>
 	<import resource="../bean/Patient.xml"/>
-	
+	<import resource="../bean/MedicineGroup.xml"/>
+	<import resource="../bean/Medicine.xml"/>
 </beans>

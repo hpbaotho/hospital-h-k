@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Spinner;
 
 public class ExaminationShell extends Shell {
 	private Table table_1;
@@ -32,6 +33,8 @@ public class ExaminationShell extends Shell {
 	private Text text;
 	private Text text_1;
 	private Text text_2;
+	private Text text_3;
+	private Table table;
 
 	/**
 	 * Launch the application.
@@ -206,7 +209,7 @@ public class ExaminationShell extends Shell {
 		Button btnSave = new Button(this, SWT.NONE);
 		btnSave.setImage(SWTResourceManager.getImage(ExaminationShell.class, "/com/hms/icon/hms-save-icon.png"));
 		btnSave.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		btnSave.setBounds(545, 614, 134, 46);
+		btnSave.setBounds(545, 631, 134, 29);
 		btnSave.setText("Save");
 		
 		Button btnCancel = new Button(this, SWT.NONE);
@@ -219,11 +222,11 @@ public class ExaminationShell extends Shell {
 		btnCancel.setText("Cancel");
 		btnCancel.setImage(SWTResourceManager.getImage(ExaminationShell.class, "/com/hms/icon/hms-cancel-icon.png"));
 		btnCancel.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		btnCancel.setBounds(710, 614, 134, 46);
+		btnCancel.setBounds(710, 631, 134, 29);
 		
 		CTabFolder tabFolder = new CTabFolder(this, SWT.BORDER);
 		tabFolder.setSimple(false);
-		tabFolder.setBounds(10, 226, 922, 371);
+		tabFolder.setBounds(10, 226, 922, 399);
 		tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
 		
 		CTabItem tbtmExamination = new CTabItem(tabFolder, SWT.NONE);
@@ -262,6 +265,86 @@ public class ExaminationShell extends Shell {
 		CTabItem tbtmPrescription = new CTabItem(tabFolder, SWT.NONE);
 		tbtmPrescription.setFont(SWTResourceManager.getFont("Tahoma", 10, SWT.NORMAL));
 		tbtmPrescription.setText("Prescription");
+		
+		Composite composite_1 = new Composite(tabFolder, SWT.NONE);
+		tbtmPrescription.setControl(composite_1);
+		
+		Label label_11 = new Label(composite_1, SWT.NONE);
+		label_11.setText("Medicine name");
+		label_11.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
+		label_11.setBounds(10, 11, 109, 21);
+		
+		text_3 = new Text(composite_1, SWT.BORDER);
+		text_3.setBounds(125, 12, 177, 21);
+		
+		Button button = new Button(composite_1, SWT.NONE);
+		button.setText("...");
+		button.setBounds(308, 10, 29, 23);
+		
+		Label label_12 = new Label(composite_1, SWT.NONE);
+		label_12.setText("Morning");
+		label_12.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
+		label_12.setBounds(343, 12, 69, 21);
+		
+		Spinner spinner = new Spinner(composite_1, SWT.BORDER);
+		spinner.setBounds(428, 10, 47, 21);
+		
+		Label label_13 = new Label(composite_1, SWT.NONE);
+		label_13.setText("Afternoon");
+		label_13.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
+		label_13.setBounds(481, 11, 69, 21);
+		
+		Spinner spinner_1 = new Spinner(composite_1, SWT.BORDER);
+		spinner_1.setBounds(556, 10, 47, 21);
+		
+		Label label_14 = new Label(composite_1, SWT.NONE);
+		label_14.setText("Evening");
+		label_14.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
+		label_14.setBounds(481, 38, 69, 21);
+		
+		Spinner spinner_2 = new Spinner(composite_1, SWT.BORDER);
+		spinner_2.setBounds(556, 37, 47, 21);
+		
+		Label label_15 = new Label(composite_1, SWT.NONE);
+		label_15.setText("No of date");
+		label_15.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
+		label_15.setBounds(343, 39, 69, 21);
+		
+		Spinner spinner_3 = new Spinner(composite_1, SWT.BORDER);
+		spinner_3.setBounds(428, 38, 47, 21);
+		
+		table = new Table(composite_1, SWT.BORDER | SWT.FULL_SELECTION);
+		table.setLinesVisible(true);
+		table.setHeaderVisible(true);
+		table.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.NORMAL));
+		table.setBounds(10, 69, 834, 294);
+		
+		TableColumn tableColumn = new TableColumn(table, SWT.NONE);
+		tableColumn.setText("New Column");
+		
+		TableColumn tableColumn_1 = new TableColumn(table, SWT.CENTER);
+		tableColumn_1.setWidth(100);
+		tableColumn_1.setText("ID");
+		
+		TableColumn tableColumn_2 = new TableColumn(table, SWT.CENTER);
+		tableColumn_2.setWidth(218);
+		tableColumn_2.setText("Name");
+		
+		TableColumn tableColumn_3 = new TableColumn(table, SWT.CENTER);
+		tableColumn_3.setWidth(82);
+		tableColumn_3.setText("Unit");
+		
+		TableColumn tableColumn_4 = new TableColumn(table, SWT.CENTER);
+		tableColumn_4.setWidth(161);
+		tableColumn_4.setText("Price");
+		
+		TableColumn tableColumn_5 = new TableColumn(table, SWT.CENTER);
+		tableColumn_5.setWidth(81);
+		tableColumn_5.setText("Quantity");
+		
+		TableColumn tableColumn_6 = new TableColumn(table, SWT.CENTER);
+		tableColumn_6.setWidth(185);
+		tableColumn_6.setText("Total");
 		createContents();
 	}
 
