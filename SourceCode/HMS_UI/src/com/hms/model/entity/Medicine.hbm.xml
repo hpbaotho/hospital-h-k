@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 30, 2010 4:50:53 PM by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="com.hms.model.entity.Medicine" table="Medicine" catalog="HMS">
+        <id name="medicineID" type="java.lang.String">
+            <column name="MEDICINE_ID" />
+            <generator class="identity" />
+        </id>
+        <property name="medicineName" type="java.lang.String">
+            <column name="MEDICINE_NAME" />
+        </property>
+     	<property name="groupID" type="java.lang.String">
+            <column name="GROUP_ID" />
+        </property>
+        <property name="parameter" type="java.lang.String">
+            <column name="PARAMETER" />
+        </property>
+        <property name="price" type="double">
+            <column name="PRICE" />
+        </property>
+        <property name="cost" type="double">
+            <column name="COST" />
+        </property>
+        <property name="unit" type="java.lang.String">
+            <column name="UNIT" />
+        </property>
+        <property name="manufacturer" type="java.lang.String">
+            <column name="MANUFACTURER" />
+        </property>
+        <property name="wholeSalePrice" type="double">
+            <column name="WHOLE_SALE_PRICE" />
+        </property>
+        <property name="insurancePrice" type="double">
+            <column name="INSURANCE_PRICE" />
+        </property>
+        
+        <property name="register" type="java.lang.String">
+            <column name="REGISTER" />
+        </property>
+        <property name="updater" type="java.lang.String">
+            <column name="UPDATER" />
+        </property>
+        <property name="registerDate" type="java.sql.Date">
+            <column name="REGISTER_DATE" />
+        </property>
+        <property name="updateDate" type="java.sql.Date">
+            <column name="UPDATE_DATE" />
+        </property>
+        <property name="recordStatus" type="java.lang.String">
+            <column name="RECORD_STATUS" />
+        </property>
+    </class>
+</hibernate-mapping>
