@@ -5,6 +5,7 @@ package com.hms.model.dao;
 
 import java.util.List;
 
+import com.hms.model.entity.Item;
 import com.hms.model.entity.Medicine;
 
 /**
@@ -18,5 +19,5 @@ public interface MedicineDao {
 	void delete(Medicine medicine);
 	List<Medicine> findAll();
 	Medicine findById(String id);
-
+	List<Medicine> find(List<Item> criteria);
 }

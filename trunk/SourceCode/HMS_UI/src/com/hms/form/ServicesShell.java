@@ -369,7 +369,13 @@ public class ServicesShell extends Shell {
 		if (serviceDao != null) {
 			for (Service service : serviceDao.findAll()) {
 				tableItem = new TableItem(table, SWT.NONE);
-				tableItem.setText(new String[] {String.valueOf(service.getServiceNo()), patientDao.findById(service.getPatientID()).getPatientName(), departmentDao.findById(service.getDeptID()).getDeptName(), String.valueOf(service.getPrice()), service.getPatientID(), service.getDeptID()});
+				tableItem.setText(new String[] {
+						String.valueOf(service.getServiceNo()), 
+						patientDao.findById(service.getPatientID()).getPatientName(), 
+						departmentDao.findById(service.getDeptID()).getDeptName(), 
+						String.valueOf(service.getPrice()), 
+						service.getPatientID(), 
+						service.getDeptID()});
 			}
 		}
 	}
