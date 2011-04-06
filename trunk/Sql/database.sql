@@ -274,6 +274,18 @@ values (1, 'department', 'Department1', 'Department1', 'Huan Pham', null, null, 
 insert into HMS.V_Material (No, Type, value, value_disp, Register, Updater, Register_Date, Update_Date, Record_Status)
 values (2, 'department', 'Department2', 'Department2', 'Huan Pham', null, null, null, 'A');
 
+insert into HMS.V_Material (No, Type, value, value_disp, Register, Updater, Register_Date, Update_Date, Record_Status)
+values (3, 'unit', 'hop', 'Hop', 'Huan Pham', null, null, null, 'A');
+
+insert into HMS.V_Material (No, Type, value, value_disp, Register, Updater, Register_Date, Update_Date, Record_Status)
+values (4, 'unit', 'vi', 'Vi', 'Huan Pham', null, null, null, 'A');
+
+insert into HMS.V_Material (No, Type, value, value_disp, Register, Updater, Register_Date, Update_Date, Record_Status)
+values (5, 'unit', 'vien', 'Vien', 'Huan Pham', null, null, null, 'A');
+
+insert into HMS.V_Material (No, Type, value, value_disp, Register, Updater, Register_Date, Update_Date, Record_Status)
+values (6, 'unit', 'cai', 'Cai', 'Huan Pham', null, null, null, 'A');
+
 -- Medicine_Group --
 insert into HMS.Medicine_Group (Group_ID, Group_Name, Description, Register, Updater, Register_Date, Update_Date, Record_Status)
 values ('Group1', 'Group 1', 'Group Medicine 1', 'Huan Pham', null, null, null, 'A');
