@@ -17,6 +17,7 @@ import com.hms.model.entity.Item;
 import com.hms.model.entity.Medicine;
 import com.hms.model.entity.MedicineGroup;
 import com.hms.model.entity.V_Material;
+import com.hms.util.MessageBuilder;
 import com.swtdesigner.SWTResourceManager;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -43,6 +44,8 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
 
 public class MSManagementShell extends Shell {
 	private MSManagementShell me = this;
@@ -79,7 +82,7 @@ public class MSManagementShell extends Shell {
 	private static final int SMALL_MODE_HEIGHT = 485;
 	private static final int FULL_MODE_Y = 36;
 	private static final int FULL_MODE_HEIGHT = 624;
-	private Text txtSearch;
+	private Text txtFooter;
 
 	/**
 	 * Launch the application.
@@ -154,11 +157,12 @@ public class MSManagementShell extends Shell {
 		
 		this.fillTable(tblMedicine, medicineDao.findAll());
 		
-		txtSearch = new Text(this, SWT.NONE);
-		txtSearch.setText("Search <F2>");
-		txtSearch.setEditable(false);
-		txtSearch.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
-		txtSearch.setBounds(10, 680, 872, 30);
+		txtFooter = new Text(this, SWT.NONE);
+		txtFooter.setFont(SWTResourceManager.getFont("Tahoma", 12, SWT.NORMAL));
+		txtFooter.setText("Search <F2>");
+		txtFooter.setEditable(false);
+		txtFooter.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+		txtFooter.setBounds(10, 691, 872, 19);
 		
 		initial();
 	}
@@ -175,6 +179,21 @@ public class MSManagementShell extends Shell {
 		compMedicine.setBounds(10, 175, 872, 485);
 		
 		tblMedicine = new Table(compMedicine, SWT.BORDER | SWT.FULL_SELECTION);
+		tblMedicine.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				List<Item> lstItems = new LinkedList<Item>();
+				
+				lstItems.add(new Item("Add", "F5"));
+				lstItems.add(new Item("Search", "F8"));
+				
+				txtFooter.setText(MessageBuilder.buildFooter(lstItems));
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				txtFooter.setText("");
+			}
+		});
 		tblMedicine.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
