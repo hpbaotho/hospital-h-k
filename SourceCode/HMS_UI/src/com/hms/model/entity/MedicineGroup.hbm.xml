@@ -6,7 +6,6 @@
     <class name="com.hms.model.entity.MedicineGroup" table="Medicine_Group" catalog="HMS">
         <id name="groupID" type="java.lang.String">
             <column name="GROUP_ID" />
-            <generator class="identity" />
         </id>
         <property name="groupName" type="java.lang.String">
             <column name="GROUP_NAME" />

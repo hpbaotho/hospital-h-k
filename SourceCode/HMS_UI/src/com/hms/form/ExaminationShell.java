@@ -1,11 +1,27 @@
 package com.hms.form;
 
+import java.text.SimpleDateFormat;
+import java.util.List;
+
+import net.sf.swtaddons.autocomplete.combo.AutocompleteComboSelector;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+
+import com.hms.form.lov.MedicineLOV;
+import com.hms.model.dao.DepartmentDao;
+import com.hms.model.dao.DoctorDao;
+import com.hms.model.dao.PatientDao;
+import com.hms.model.dao.ServiceDao;
+import com.hms.model.entity.Department;
+import com.hms.model.entity.Doctor;
+import com.hms.model.entity.Patient;
+import com.hms.model.entity.Service;
 import com.swtdesigner.SWTResourceManager;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -17,15 +33,20 @@ import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Spinner;
+import org.eclipse.nebula.widgets.tablecombo.TableCombo;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
 
 public class ExaminationShell extends Shell {
-	private Table table_1;
+	private Table tblPatient;
 	private Text txtPatientID;
 	private Text txtPatientName;
 	private Text txtPatientSex;
 	private Text txtPatientAge;
 	private Text text_4;
-	private Text text_5;
+	private Text txtPulse;
 	private Text text_6;
 	private Text text_8;
 	private Text text_9;
@@ -35,7 +56,23 @@ public class ExaminationShell extends Shell {
 	private Text text_2;
 	private Text text_3;
 	private Table table;
-
+	private Combo cmbDepartment;
+	private Combo cmbDoctor;
+	
+	//List
+	private String[] lstDept = null;
+	private String[] lstDeptID = null;
+	private String[] lstDoctor = null;
+	private String[] lstDoctorID = null;
+	
+	//Database context
+	ApplicationContext appContext = null;
+	private DepartmentDao departmentDao = null;
+	private DoctorDao doctorDao = null;
+	private ServiceDao serviceDao = null;
+	private PatientDao patientDao = null;
+	private SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+	
 	/**
 	 * Launch the application.
 	 * @param args
@@ -43,7 +80,7 @@ public class ExaminationShell extends Shell {
 	public static void main(String args[]) {
 		try {
 			Display display = Display.getDefault();
-			ExaminationShell shell = new ExaminationShell(display);
+			ExaminationShell shell = new ExaminationShell(display, SWT.SHELL_TRIM, new ClassPathXmlApplicationContext("com/hms/model/config/Beans.xml"));
 			shell.open();
 			shell.layout();
 			while (!shell.isDisposed()) {
@@ -60,8 +97,26 @@ public class ExaminationShell extends Shell {
 	 * Create the shell.
 	 * @param display
 	 */
-	public ExaminationShell(Display display) {
-		super(display, SWT.SHELL_TRIM);
+	public ExaminationShell(Display display, int style, ApplicationContext appContext) {
+		super(display, style);
+		
+		this.appContext = appContext;
+		this.departmentDao = (DepartmentDao) appContext.getBean("departmentDao");
+		this.doctorDao = (DoctorDao) appContext.getBean("doctorDao");
+		this.serviceDao = (ServiceDao) appContext.getBean("serviceDao");
+		this.patientDao = (PatientDao) appContext.getBean("patientDao");
+		
+		createContents();
+		
+		this.initial();
+	}
+
+	/**
+	 * Create contents of the shell.
+	 */
+	protected void createContents() {
+		setText("Examination");
+		setSize(950, 700);
 		setImage(SWTResourceManager.getImage(ExaminationShell.class, "/com/hms/icon/hms-invoice-io-icon.png"));
 		
 		Group grpImportInvoiceInformation = new Group(this, SWT.SHADOW_ETCHED_IN);
@@ -71,8 +126,8 @@ public class ExaminationShell extends Shell {
 		grpImportInvoiceInformation.setBounds(10, 10, 922, 210);
 		
 		Label lblInvoiceNumber = new Label(grpImportInvoiceInformation, SWT.NONE);
-		lblInvoiceNumber.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		lblInvoiceNumber.setBounds(10, 29, 100, 21);
+		lblInvoiceNumber.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
+		lblInvoiceNumber.setBounds(10, 31, 100, 14);
 		lblInvoiceNumber.setText("Department");
 		
 		Label label_1 = new Label(grpImportInvoiceInformation, SWT.SEPARATOR);
@@ -81,42 +136,104 @@ public class ExaminationShell extends Shell {
 		Label label_3 = new Label(grpImportInvoiceInformation, SWT.SEPARATOR | SWT.HORIZONTAL);
 		label_3.setBounds(0, 84, 330, 2);
 		
-		Combo cmbDepartment = new Combo(grpImportInvoiceInformation, SWT.NONE);
+		cmbDepartment = new Combo(grpImportInvoiceInformation, SWT.NONE);
+		cmbDepartment.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				int index = -1;
+				
+				if (cmbDepartment.getText().trim().equals("")) {
+					cmbDoctor.removeAll();
+					return;
+				}
+				
+				for (int i = 1; i < lstDept.length; i++) {
+					if (cmbDepartment.getText().equals(lstDept[i])) {
+						index = i;
+						break;
+					}
+				}
+				
+				if (index > 0) {
+					//Fill data to doctor combobox
+					List<Doctor> listDoctor = doctorDao.findByDeptId(lstDeptID[index]);
+			    	
+			    	// Fill list departments
+			    	lstDoctor = new String[listDoctor.size() + 1];
+			    	lstDoctorID = new String[listDoctor.size() + 1];
+			    	lstDoctor[0] = "";
+			    	lstDoctorID[0] = "";
+			    	
+			    	for (int i = 0; i < listDoctor.size(); i++) {
+			    		lstDoctor[i + 1] = listDoctor.get(i).getDoctorName();
+			    		lstDoctorID[i + 1] = listDoctor.get(i).getDoctorID();
+			    	}
+			    	
+			    	cmbDoctor.setItems(lstDoctor);
+			    	
+			    	//Get patients of current department
+			    	List<Service> listService = serviceDao.findByDeptId(lstDeptID[index]);
+			    	TableItem item = null;
+			    	Patient patient = null;
+			    	String[] txtRow = null;
+			    	
+			    	for (Service service: listService) {
+			    		item = new TableItem(tblPatient, SWT.NONE);
+			    		patient = patientDao.findById(service.getPatientID());
+			    		txtRow = new String[4];
+			    		txtRow[0] = service.getPatientID();
+			    		txtRow[1] = patient.getPatientName();
+			    		txtRow[2] = patient.getSex();
+			    		if (patient.getDayOfBirth() != null) {
+			    			txtRow[3] = formatter.format(patient.getDayOfBirth());
+			    		} else {
+			    			txtRow[3] = "";
+			    		}
+			    		
+			    		item.setText(txtRow);
+			    	}
+				}
+			}
+		});
+
 		cmbDepartment.setBounds(116, 29, 200, 21);
+		//Auto combo
+		new AutocompleteComboSelector(cmbDepartment);
 		
 		Label label = new Label(grpImportInvoiceInformation, SWT.NONE);
 		label.setText("Doctor");
-		label.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		label.setBounds(10, 57, 100, 21);
+		label.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
+		label.setBounds(10, 59, 100, 14);
 		
-		Combo cmbDoctor = new Combo(grpImportInvoiceInformation, SWT.NONE);
+		cmbDoctor = new Combo(grpImportInvoiceInformation, SWT.NONE);
 		cmbDoctor.setBounds(116, 57, 200, 21);
+		new AutocompleteComboSelector(cmbDoctor);
 		
-		table_1 = new Table(grpImportInvoiceInformation, SWT.BORDER | SWT.FULL_SELECTION);
-		table_1.setBounds(0, 84, 330, 125);
-		table_1.setHeaderVisible(true);
-		table_1.setLinesVisible(true);
+		tblPatient = new Table(grpImportInvoiceInformation, SWT.BORDER | SWT.FULL_SELECTION);
+		tblPatient.setBounds(0, 84, 330, 125);
+		tblPatient.setHeaderVisible(true);
+		tblPatient.setLinesVisible(true);
 		
-		TableColumn tblclmnId = new TableColumn(table_1, SWT.NONE);
+		TableColumn tblclmnId = new TableColumn(tblPatient, SWT.NONE);
 		tblclmnId.setWidth(90);
 		tblclmnId.setText("ID");
 		
-		TableColumn tblclmnName = new TableColumn(table_1, SWT.NONE);
+		TableColumn tblclmnName = new TableColumn(tblPatient, SWT.NONE);
 		tblclmnName.setWidth(82);
 		tblclmnName.setText("Name");
 		
-		TableColumn tblclmnSex = new TableColumn(table_1, SWT.NONE);
+		TableColumn tblclmnSex = new TableColumn(tblPatient, SWT.NONE);
 		tblclmnSex.setWidth(76);
 		tblclmnSex.setText("Sex");
 		
-		TableColumn tblclmnAge = new TableColumn(table_1, SWT.NONE);
+		TableColumn tblclmnAge = new TableColumn(tblPatient, SWT.NONE);
 		tblclmnAge.setWidth(73);
 		tblclmnAge.setText("Age");
 		
 		Label lblMedicalCode = new Label(grpImportInvoiceInformation, SWT.NONE);
 		lblMedicalCode.setText("Patient ID");
-		lblMedicalCode.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		lblMedicalCode.setBounds(336, 29, 109, 21);
+		lblMedicalCode.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
+		lblMedicalCode.setBounds(336, 31, 109, 14);
 		
 		txtPatientID = new Text(grpImportInvoiceInformation, SWT.BORDER);
 		txtPatientID.setEditable(false);
@@ -124,8 +241,8 @@ public class ExaminationShell extends Shell {
 		
 		Label lblPatientName = new Label(grpImportInvoiceInformation, SWT.NONE);
 		lblPatientName.setText("Patient name");
-		lblPatientName.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		lblPatientName.setBounds(336, 56, 109, 21);
+		lblPatientName.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
+		lblPatientName.setBounds(336, 59, 109, 14);
 		
 		txtPatientName = new Text(grpImportInvoiceInformation, SWT.BORDER);
 		txtPatientName.setEditable(false);
@@ -137,8 +254,8 @@ public class ExaminationShell extends Shell {
 		
 		Label lblSex = new Label(grpImportInvoiceInformation, SWT.NONE);
 		lblSex.setText("Sex");
-		lblSex.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		lblSex.setBounds(336, 84, 39, 21);
+		lblSex.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
+		lblSex.setBounds(336, 86, 39, 14);
 		
 		txtPatientAge = new Text(grpImportInvoiceInformation, SWT.BORDER);
 		txtPatientAge.setEditable(false);
@@ -146,36 +263,36 @@ public class ExaminationShell extends Shell {
 		
 		Label lblAge = new Label(grpImportInvoiceInformation, SWT.NONE);
 		lblAge.setText("Age");
-		lblAge.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		lblAge.setBounds(336, 111, 39, 21);
+		lblAge.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
+		lblAge.setBounds(336, 113, 39, 14);
 		
 		Label label_2 = new Label(grpImportInvoiceInformation, SWT.NONE);
 		label_2.setText("Pulse");
-		label_2.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		label_2.setBounds(334, 151, 89, 21);
+		label_2.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
+		label_2.setBounds(337, 154, 89, 14);
 		
 		Label label_5 = new Label(grpImportInvoiceInformation, SWT.NONE);
 		label_5.setText("Temperature");
-		label_5.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		label_5.setBounds(334, 178, 92, 21);
+		label_5.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
+		label_5.setBounds(334, 181, 92, 14);
 		
 		text_4 = new Text(grpImportInvoiceInformation, SWT.BORDER);
 		text_4.setEditable(false);
 		text_4.setBounds(429, 179, 79, 21);
 		
-		text_5 = new Text(grpImportInvoiceInformation, SWT.BORDER);
-		text_5.setEditable(false);
-		text_5.setBounds(429, 152, 79, 21);
+		txtPulse = new Text(grpImportInvoiceInformation, SWT.BORDER);
+		txtPulse.setEditable(false);
+		txtPulse.setBounds(429, 152, 79, 21);
 		
 		Label label_6 = new Label(grpImportInvoiceInformation, SWT.NONE);
 		label_6.setText("Breathing");
-		label_6.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		label_6.setBounds(514, 150, 101, 21);
+		label_6.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
+		label_6.setBounds(514, 154, 101, 14);
 		
 		Label label_7 = new Label(grpImportInvoiceInformation, SWT.NONE);
 		label_7.setText("Blood pressure");
-		label_7.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		label_7.setBounds(514, 177, 101, 21);
+		label_7.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
+		label_7.setBounds(514, 181, 101, 14);
 		
 		text_6 = new Text(grpImportInvoiceInformation, SWT.BORDER);
 		text_6.setEditable(false);
@@ -187,13 +304,13 @@ public class ExaminationShell extends Shell {
 		
 		Label label_8 = new Label(grpImportInvoiceInformation, SWT.NONE);
 		label_8.setText("Height");
-		label_8.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		label_8.setBounds(712, 151, 89, 21);
+		label_8.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
+		label_8.setBounds(706, 154, 89, 14);
 		
 		Label label_9 = new Label(grpImportInvoiceInformation, SWT.NONE);
 		label_9.setText("Weight");
-		label_9.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		label_9.setBounds(712, 178, 92, 21);
+		label_9.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
+		label_9.setBounds(706, 181, 92, 14);
 		
 		text_9 = new Text(grpImportInvoiceInformation, SWT.BORDER);
 		text_9.setEditable(false);
@@ -243,7 +360,7 @@ public class ExaminationShell extends Shell {
 		
 		Label lblClinicalSympto = new Label(composite, SWT.NONE);
 		lblClinicalSympto.setText("Clinical Symptoms");
-		lblClinicalSympto.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
+		lblClinicalSympto.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
 		lblClinicalSympto.setBounds(10, 10, 159, 21);
 		
 		text_1 = new Text(composite, SWT.BORDER);
@@ -251,15 +368,15 @@ public class ExaminationShell extends Shell {
 		
 		Label lblPreliminary = new Label(composite, SWT.NONE);
 		lblPreliminary.setText("Preliminary diagnosis");
-		lblPreliminary.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		lblPreliminary.setBounds(10, 86, 159, 21);
+		lblPreliminary.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
+		lblPreliminary.setBounds(10, 89, 159, 14);
 		
 		text_2 = new Text(composite, SWT.BORDER | SWT.WRAP | SWT.MULTI);
 		text_2.setBounds(175, 115, 731, 172);
 		
 		Label label_4 = new Label(composite, SWT.NONE);
 		label_4.setText("Clinical Symptoms");
-		label_4.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
+		label_4.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
 		label_4.setBounds(10, 114, 159, 21);
 		
 		CTabItem tbtmPrescription = new CTabItem(tabFolder, SWT.NONE);
@@ -278,6 +395,14 @@ public class ExaminationShell extends Shell {
 		text_3.setBounds(125, 12, 177, 21);
 		
 		Button button = new Button(composite_1, SWT.NONE);
+		button.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				MedicineLOV medicineLOV = new MedicineLOV(getDisplay(), SWT.DIALOG_TRIM, appContext);
+				medicineLOV.setLocation(250, 50);
+				medicineLOV.open();
+			}
+		});
 		button.setText("...");
 		button.setBounds(308, 10, 29, 23);
 		
@@ -345,18 +470,33 @@ public class ExaminationShell extends Shell {
 		TableColumn tableColumn_6 = new TableColumn(table, SWT.CENTER);
 		tableColumn_6.setWidth(185);
 		tableColumn_6.setText("Total");
-		createContents();
+		
+		TableCombo tableCombo = new TableCombo(composite_1, SWT.BORDER);
+		tableCombo.setBounds(125, 38, 177, 21);
+		tableCombo.defineColumns(new String[] {"ID", "Name"});
+		tableCombo.setShowTableHeader(true);
+		tableCombo.setTableVisible(true);
+		TableItem itemCmb = new TableItem(tableCombo.getTable(), SWT.NONE);
+		itemCmb.setText(new String[]{"id1", "name1"});
 	}
 
-	/**
-	 * Create contents of the shell.
-	 */
-	protected void createContents() {
-		setText("Examination");
-		setSize(950, 700);
-
+	private void initial() {
+		List<Department> lstDepartment= departmentDao.findAll();
+    	
+    	// Fill list departments
+    	lstDept = new String[lstDepartment.size() + 1];
+    	lstDeptID = new String[lstDepartment.size() + 1];
+    	lstDept[0] = "";
+    	lstDeptID[0] = "";
+    	
+    	for (int i = 0; i < lstDept.length - 1; i++) {
+    		lstDept[i + 1] = lstDepartment.get(i).getDeptName();
+    		lstDeptID[i + 1] = lstDepartment.get(i).getDeptID();
+    	}
+    	
+    	this.cmbDepartment.setItems(lstDept);
+    	
 	}
-
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components

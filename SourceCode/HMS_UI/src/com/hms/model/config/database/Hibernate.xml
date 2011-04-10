@@ -27,6 +27,7 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 		    	<value>/com/hms/model/entity/Patient.hbm.xml</value>
 		    	<value>/com/hms/model/entity/MedicineGroup.hbm.xml</value>
 		    	<value>/com/hms/model/entity/Medicine.hbm.xml</value>
+		    	<value>/com/hms/model/entity/Doctor.hbm.xml</value>
 			</list>
       	</property>	
  

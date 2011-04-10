@@ -3,15 +3,21 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated Oct 30, 2010 4:50:53 PM by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
-    <class name="com.hms.model.entity.User" table="USER_MASTER" catalog="HMS">
-        <id name="id" type="java.lang.String">
-            <column name="USER_ID" />
+    <class name="com.hms.model.entity.Doctor" table="DOCTOR" catalog="HMS">
+        <id name="doctorID" type="java.lang.String">
+            <column name="DOCTOR_ID" />
         </id>
-        <property name="password" type="java.lang.String">
-            <column name="PASSWORD" />
+        <property name="doctorName" type="java.lang.String">
+            <column name="DOCTOR_NAME" />
         </property>
-        <property name="name" type="java.lang.String">
-            <column name="USER_NAME" />
+        <property name="deptID" type="java.lang.String">
+            <column name="DEPT_ID" />
+        </property>
+        <property name="sex" type="java.lang.String">
+            <column name="SEX" />
+        </property>
+        <property name="phoneNumber" type="java.lang.String">
+            <column name="PHONE_NUMBER" />
         </property>
         <property name="email" type="java.lang.String">
             <column name="EMAIL" />
@@ -19,19 +25,8 @@
         <property name="address" type="java.lang.String">
             <column name="ADDRESS" />
         </property>
-        <property name="phoneNumber" type="java.lang.String">
-            <column name="PHONE_NUMBER" />
-        </property>
-        <property name="level" type="int">
-            <column name="USER_LEVEL" />
-        </property>
-        <property name="numberOfLogin" type="int">
-            <column name="Number_Of_Login" />
-        </property>
-        <property name="lastLoginDate" type="java.sql.Date">
-            <column name="Last_Login_Date" />
-        </property>
-        <property name="register" type="java.lang.String">
+        
+     	<property name="register" type="java.lang.String">
             <column name="REGISTER" />
         </property>
         <property name="updater" type="java.lang.String">
