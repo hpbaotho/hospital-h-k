@@ -19,9 +19,13 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class MenuShell extends Shell {
 
+	private ApplicationContext appContext = null;
+	
 	/**
 	 * Launch the application.
 	 * 
@@ -30,7 +34,7 @@ public class MenuShell extends Shell {
 	public static void main(String args[]) {
 		try {
 			Display display = Display.getDefault();
-			MenuShell shell = new MenuShell(display);
+			MenuShell shell = new MenuShell(display, SWT.SHELL_TRIM, new ClassPathXmlApplicationContext("com/hms/model/config/Beans.xml"));
 			shell.open();
 			shell.layout();
 			while (!shell.isDisposed()) {
@@ -48,8 +52,20 @@ public class MenuShell extends Shell {
 	 * 
 	 * @param display
 	 */
-	public MenuShell(Display display) {
-		super(display, SWT.SHELL_TRIM);
+	public MenuShell(Display display, int style, ApplicationContext appContext) {
+		super(display, style);
+		
+		this.appContext = appContext;
+		
+		createContents();
+	}
+
+	/**
+	 * Create contents of the shell.
+	 */
+	protected void createContents() {
+		setText(Messages.getString("HMS.MenuFrame.title"));
+		setSize(900, 700);
 		setImage(SWTResourceManager.getImage(MenuShell.class,
 				"/com/hms/icon/hms-hospital-icon.png"));
 
@@ -61,20 +77,22 @@ public class MenuShell extends Shell {
 
 		Menu menu_1 = new Menu(menuItem);
 		menuItem.setMenu(menu_1);
-		
+
 		MenuItem mntmPatientmanagement = new MenuItem(menu_1, SWT.NONE);
 		mntmPatientmanagement.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				PatientListShell patientList = new PatientListShell(getDisplay());
+				PatientListShell patientList = new PatientListShell(
+						getDisplay());
 				patientList.setLocation(250, 50);
 				patientList.open();
 				patientList.layout();
 			}
 		});
-		mntmPatientmanagement.setImage(SWTResourceManager.getImage(MenuShell.class, "/com/hms/icon/hms-patient-icon.png"));
+		mntmPatientmanagement.setImage(SWTResourceManager.getImage(
+				MenuShell.class, "/com/hms/icon/hms-patient-icon.png"));
 		mntmPatientmanagement.setText("PatientManagement");
-		
+
 		MenuItem mntmServices = new MenuItem(menu_1, SWT.NONE);
 		mntmServices.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -85,15 +103,16 @@ public class MenuShell extends Shell {
 				services.layout();
 			}
 		});
-		mntmServices.setImage(SWTResourceManager.getImage(MenuShell.class, "/com/hms/icon/hms-subclinical-icon.png"));
+		mntmServices.setImage(SWTResourceManager.getImage(MenuShell.class,
+				"/com/hms/icon/hms-subclinical-icon.png"));
 		mntmServices.setText("Services");
-		
+
 		MenuItem mntmCashier = new MenuItem(menu, SWT.CASCADE);
 		mntmCashier.setText("Examine");
-		
+
 		Menu menu_4 = new Menu(mntmCashier);
 		mntmCashier.setMenu(menu_4);
-		
+
 		MenuItem mntmBasicExamination = new MenuItem(menu_4, SWT.NONE);
 		mntmBasicExamination.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -105,8 +124,16 @@ public class MenuShell extends Shell {
 			}
 		});
 		mntmBasicExamination.setText("Basic examination");
-		
+
 		MenuItem mntmExamination = new MenuItem(menu_4, SWT.NONE);
+		mntmExamination.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				ExaminationShell examimation = new ExaminationShell(getDisplay(), SWT.SHELL_TRIM, appContext);
+				examimation.setLocation(250, 50);
+				examimation.open();
+			}
+		});
 		mntmExamination.setText("Examination");
 
 		MenuItem mntmMedical = new MenuItem(menu, SWT.CASCADE);
@@ -119,7 +146,8 @@ public class MenuShell extends Shell {
 		menuItem_8.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				PrescriptionListShell prescription = new PrescriptionListShell(getDisplay());
+				PrescriptionListShell prescription = new PrescriptionListShell(
+						getDisplay());
 				prescription.setLocation(250, 50);
 				prescription.open();
 				prescription.layout();
@@ -167,7 +195,8 @@ public class MenuShell extends Shell {
 		menuItem_14.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				IMInvoiceListShell imInvoice = new IMInvoiceListShell(getDisplay());
+				IMInvoiceListShell imInvoice = new IMInvoiceListShell(
+						getDisplay());
 				imInvoice.setLocation(250, 50);
 				imInvoice.open();
 				imInvoice.layout();
@@ -182,7 +211,8 @@ public class MenuShell extends Shell {
 		menuItem_15.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				EXInvoiceListShell exInvoice = new EXInvoiceListShell(getDisplay());
+				EXInvoiceListShell exInvoice = new EXInvoiceListShell(
+						getDisplay());
 				exInvoice.setLocation(250, 50);
 				exInvoice.open();
 				exInvoice.layout();
@@ -192,36 +222,42 @@ public class MenuShell extends Shell {
 				"/com/hms/icon/hms-invoice-io-icon.png"));
 		menuItem_15.setText(Messages
 				.getString("HMS.MenuFrame.menu.invoice.export"));
-		
+
 		MenuItem mntmAdministrator = new MenuItem(menu, SWT.CASCADE);
 		mntmAdministrator.setText("Administrator");
-		
+
 		Menu menu_5 = new Menu(mntmAdministrator);
 		mntmAdministrator.setMenu(menu_5);
-		
+
 		MenuItem menuItem_1 = new MenuItem(menu_5, SWT.NONE);
 		menuItem_1.setText("!HMS.MenuFrame.menu.admin.hospital_info!");
-		menuItem_1.setImage(SWTResourceManager.getImage(MenuShell.class, "/com/hms/icon/hms-information-icon.png"));
-		
+		menuItem_1.setImage(SWTResourceManager.getImage(MenuShell.class,
+				"/com/hms/icon/hms-information-icon.png"));
+
 		MenuItem menuItem_2 = new MenuItem(menu_5, SWT.NONE);
 		menuItem_2.setText("!HMS.MenuFrame.menu.admin.exit!");
-		menuItem_2.setImage(SWTResourceManager.getImage(MenuShell.class, "/com/hms/icon/hms-exit-button-icon.png"));
-		
+		menuItem_2.setImage(SWTResourceManager.getImage(MenuShell.class,
+				"/com/hms/icon/hms-exit-button-icon.png"));
+
 		MenuItem menuItem_3 = new MenuItem(menu_5, SWT.NONE);
 		menuItem_3.setText("!HMS.MenuFrame.menu.admin.restore!");
-		menuItem_3.setImage(SWTResourceManager.getImage(MenuShell.class, "/com/hms/icon/hms-restore-icon.png"));
-		
+		menuItem_3.setImage(SWTResourceManager.getImage(MenuShell.class,
+				"/com/hms/icon/hms-restore-icon.png"));
+
 		MenuItem menuItem_4 = new MenuItem(menu_5, SWT.NONE);
 		menuItem_4.setText("!HMS.MenuFrame.menu.admin.backup!");
-		menuItem_4.setImage(SWTResourceManager.getImage(MenuShell.class, "/com/hms/icon/hms-backup-icon.png"));
-		
+		menuItem_4.setImage(SWTResourceManager.getImage(MenuShell.class,
+				"/com/hms/icon/hms-backup-icon.png"));
+
 		MenuItem menuItem_5 = new MenuItem(menu_5, SWT.NONE);
 		menuItem_5.setText("!HMS.MenuFrame.menu.admin.history!");
-		menuItem_5.setImage(SWTResourceManager.getImage(MenuShell.class, "/com/hms/icon/hms-history-icon.png"));
-		
+		menuItem_5.setImage(SWTResourceManager.getImage(MenuShell.class,
+				"/com/hms/icon/hms-history-icon.png"));
+
 		MenuItem menuItem_6 = new MenuItem(menu_5, SWT.NONE);
 		menuItem_6.setText("!HMS.MenuFrame.menu.admin.admin!");
-		menuItem_6.setImage(SWTResourceManager.getImage(MenuShell.class, "/com/hms/icon/hms-admin-icon.png"));
+		menuItem_6.setImage(SWTResourceManager.getImage(MenuShell.class,
+				"/com/hms/icon/hms-admin-icon.png"));
 
 		MenuItem menuItem_9 = new MenuItem(menu, SWT.NONE);
 		menuItem_9.addSelectionListener(new SelectionAdapter() {
@@ -301,7 +337,8 @@ public class MenuShell extends Shell {
 		toolItem_5.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				PrescriptionListShell prescriptionShell = new PrescriptionListShell(getDisplay());
+				PrescriptionListShell prescriptionShell = new PrescriptionListShell(
+						getDisplay());
 				prescriptionShell.setLocation(250, 50);
 				prescriptionShell.open();
 				prescriptionShell.layout();
@@ -326,7 +363,7 @@ public class MenuShell extends Shell {
 		ToolBar toolBar_2 = new ToolBar(coolBar, SWT.FLAT | SWT.RIGHT);
 		coolItem_2.setControl(toolBar_2);
 		toolBar_2.setSize(100, 21);
-		
+
 		final PrintDialog dialog = new PrintDialog(this);
 
 		ToolItem toolItem_8 = new ToolItem(toolBar_2, SWT.NONE);
@@ -347,7 +384,8 @@ public class MenuShell extends Shell {
 
 						// Starts a new page.
 						if (printer.startPage()) {
-							gc.drawString("Hospital Management System", 200, 200);
+							gc.drawString("Hospital Management System", 200,
+									200);
 
 							// Finishes the page.
 							printer.endPage();
@@ -366,16 +404,6 @@ public class MenuShell extends Shell {
 		});
 		toolItem_8.setImage(SWTResourceManager.getImage(MenuShell.class,
 				"/com/hms/icon/hms-printer-icon.png"));
-		createContents();
-	}
-
-	/**
-	 * Create contents of the shell.
-	 */
-	protected void createContents() {
-		setText(Messages.getString("HMS.MenuFrame.title"));
-		setSize(900, 700);
-
 	}
 
 	@Override

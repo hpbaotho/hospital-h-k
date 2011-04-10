@@ -23,6 +23,8 @@ public class LoginShell extends Shell {
 	private static Text txtPassword;
 	private static Text txtServer;
 	
+	private ApplicationContext appContext = null;
+	
 	/**
 	 * Launch the application.
 	 * @param args
@@ -58,7 +60,7 @@ public class LoginShell extends Shell {
 	 */
 	protected void createContents() {
 		// -------------------------Get beans------------------------------------
-		ApplicationContext appContext = 
+		this.appContext = 
     		new ClassPathXmlApplicationContext("com/hms/model/config/Beans.xml");
 	
     	final UserDao userDao = (UserDao)appContext.getBean("userDao");
@@ -103,7 +105,7 @@ public class LoginShell extends Shell {
 				User user = userDao.findByIdAndPass(txtUserID.getText().trim(), txtPassword.getText().trim());
 				
 				if ( user != null) {
-					MenuShell menuShell = new MenuShell(Display.getDefault());
+					MenuShell menuShell = new MenuShell(getDisplay(), SWT.SHELL_TRIM, appContext);
 					menuShell.setLocation(250, 50);
 					menuShell.open();
 					menuShell.layout();
