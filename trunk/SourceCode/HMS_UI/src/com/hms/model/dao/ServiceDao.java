@@ -18,6 +18,6 @@ public interface ServiceDao {
 	void delete(Service Service);
 	List<Service> findAll();
 	Service findById(String id);
-	Service findByDeptId(String deptID);
+	List<Service> findByDeptId(String deptID);
 
 }

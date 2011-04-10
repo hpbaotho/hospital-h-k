@@ -50,15 +50,11 @@ public class ServiceDaoImpl extends HibernateDaoSupport implements ServiceDao {
 	}
 
 	@Override
-	public Service findByDeptId(String deptID) {
+	public List<Service> findByDeptId(String deptID) {
 		@SuppressWarnings("unchecked")
 		List<Service> list = this.getHibernateTemplate().find("from Service where Dept_ID=?", deptID);
 		
-		if (list.size() > 0) {
-			return (Service) list.get(0);
-		}
-		
-		return null;
+		return list;
 	}
 
 }
