@@ -38,6 +38,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.ModifyEvent;
 
 public class ExaminationShell extends Shell {
 	private Table tblPatient;
@@ -66,12 +70,15 @@ public class ExaminationShell extends Shell {
 	private String[] lstDoctorID = null;
 	
 	//Database context
-	ApplicationContext appContext = null;
+	private ApplicationContext appContext = null;
 	private DepartmentDao departmentDao = null;
 	private DoctorDao doctorDao = null;
 	private ServiceDao serviceDao = null;
 	private PatientDao patientDao = null;
 	private SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+	
+	//Boolean
+	private boolean isEntered = false;
 	
 	/**
 	 * Launch the application.
@@ -137,62 +144,33 @@ public class ExaminationShell extends Shell {
 		label_3.setBounds(0, 84, 330, 2);
 		
 		cmbDepartment = new Combo(grpImportInvoiceInformation, SWT.NONE);
+		cmbDepartment.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				if (isEntered) {
+					selectDepartment();
+					isEntered = false;
+				}
+			}
+		});
+		cmbDepartment.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.keyCode == 13) {
+					isEntered = true;
+				}
+			}
+		});
+		cmbDepartment.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				System.out.println("Selection");
+				selectDepartment();
+			}
+		});
 		cmbDepartment.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				int index = -1;
-				
-				if (cmbDepartment.getText().trim().equals("")) {
-					cmbDoctor.removeAll();
-					return;
-				}
-				
-				for (int i = 1; i < lstDept.length; i++) {
-					if (cmbDepartment.getText().equals(lstDept[i])) {
-						index = i;
-						break;
-					}
-				}
-				
-				if (index > 0) {
-					//Fill data to doctor combobox
-					List<Doctor> listDoctor = doctorDao.findByDeptId(lstDeptID[index]);
-			    	
-			    	// Fill list departments
-			    	lstDoctor = new String[listDoctor.size() + 1];
-			    	lstDoctorID = new String[listDoctor.size() + 1];
-			    	lstDoctor[0] = "";
-			    	lstDoctorID[0] = "";
-			    	
-			    	for (int i = 0; i < listDoctor.size(); i++) {
-			    		lstDoctor[i + 1] = listDoctor.get(i).getDoctorName();
-			    		lstDoctorID[i + 1] = listDoctor.get(i).getDoctorID();
-			    	}
-			    	
-			    	cmbDoctor.setItems(lstDoctor);
-			    	
-			    	//Get patients of current department
-			    	List<Service> listService = serviceDao.findByDeptId(lstDeptID[index]);
-			    	TableItem item = null;
-			    	Patient patient = null;
-			    	String[] txtRow = null;
-			    	
-			    	for (Service service: listService) {
-			    		item = new TableItem(tblPatient, SWT.NONE);
-			    		patient = patientDao.findById(service.getPatientID());
-			    		txtRow = new String[4];
-			    		txtRow[0] = service.getPatientID();
-			    		txtRow[1] = patient.getPatientName();
-			    		txtRow[2] = patient.getSex();
-			    		if (patient.getDayOfBirth() != null) {
-			    			txtRow[3] = formatter.format(patient.getDayOfBirth());
-			    		} else {
-			    			txtRow[3] = "";
-			    		}
-			    		
-			    		item.setText(txtRow);
-			    	}
-				}
+
 			}
 		});
 
@@ -324,9 +302,9 @@ public class ExaminationShell extends Shell {
 		label_10.setBounds(328, 138, 594, 2);
 		
 		Button btnSave = new Button(this, SWT.NONE);
-		btnSave.setImage(SWTResourceManager.getImage(ExaminationShell.class, "/com/hms/icon/hms-save-icon.png"));
-		btnSave.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		btnSave.setBounds(545, 631, 134, 29);
+		btnSave.setImage(null);
+		btnSave.setFont(SWTResourceManager.getFont("Tahoma", 8, SWT.NORMAL));
+		btnSave.setBounds(750, 631, 88, 23);
 		btnSave.setText("Save");
 		
 		Button btnCancel = new Button(this, SWT.NONE);
@@ -337,9 +315,9 @@ public class ExaminationShell extends Shell {
 			}
 		});
 		btnCancel.setText("Cancel");
-		btnCancel.setImage(SWTResourceManager.getImage(ExaminationShell.class, "/com/hms/icon/hms-cancel-icon.png"));
-		btnCancel.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		btnCancel.setBounds(710, 631, 134, 29);
+		btnCancel.setImage(null);
+		btnCancel.setFont(SWTResourceManager.getFont("Tahoma", 8, SWT.NORMAL));
+		btnCancel.setBounds(844, 631, 88, 23);
 		
 		CTabFolder tabFolder = new CTabFolder(this, SWT.BORDER);
 		tabFolder.setSimple(false);
@@ -351,33 +329,6 @@ public class ExaminationShell extends Shell {
 		tbtmExamination.setText("Examination");
 		
 		tabFolder.setSelection(tbtmExamination);
-		
-		Composite composite = new Composite(tabFolder, SWT.NONE);
-		tbtmExamination.setControl(composite);
-		
-		text = new Text(composite, SWT.BORDER | SWT.WRAP | SWT.MULTI);
-		text.setBounds(175, 11, 731, 69);
-		
-		Label lblClinicalSympto = new Label(composite, SWT.NONE);
-		lblClinicalSympto.setText("Clinical Symptoms");
-		lblClinicalSympto.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
-		lblClinicalSympto.setBounds(10, 10, 159, 21);
-		
-		text_1 = new Text(composite, SWT.BORDER);
-		text_1.setBounds(175, 87, 731, 21);
-		
-		Label lblPreliminary = new Label(composite, SWT.NONE);
-		lblPreliminary.setText("Preliminary diagnosis");
-		lblPreliminary.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
-		lblPreliminary.setBounds(10, 89, 159, 14);
-		
-		text_2 = new Text(composite, SWT.BORDER | SWT.WRAP | SWT.MULTI);
-		text_2.setBounds(175, 115, 731, 172);
-		
-		Label label_4 = new Label(composite, SWT.NONE);
-		label_4.setText("Clinical Symptoms");
-		label_4.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
-		label_4.setBounds(10, 114, 159, 21);
 		
 		CTabItem tbtmPrescription = new CTabItem(tabFolder, SWT.NONE);
 		tbtmPrescription.setFont(SWTResourceManager.getFont("Tahoma", 10, SWT.NORMAL));
@@ -476,6 +427,36 @@ public class ExaminationShell extends Shell {
 		tableCombo.defineColumns(new String[] {"ID", "Name"});
 		tableCombo.setShowTableHeader(true);
 		tableCombo.setTableVisible(true);
+		
+		CTabItem tabItem = new CTabItem(tabFolder, SWT.NONE);
+		tabItem.setText("New Item");
+		
+		Composite composite = new Composite(tabFolder, SWT.NONE);
+		tabItem.setControl(composite);
+		
+		text = new Text(composite, SWT.BORDER | SWT.WRAP | SWT.MULTI);
+		text.setBounds(175, 11, 731, 69);
+		
+		Label lblClinicalSympto = new Label(composite, SWT.NONE);
+		lblClinicalSympto.setText("Clinical Symptoms");
+		lblClinicalSympto.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
+		lblClinicalSympto.setBounds(10, 10, 159, 21);
+		
+		text_1 = new Text(composite, SWT.BORDER);
+		text_1.setBounds(175, 87, 731, 21);
+		
+		Label lblPreliminary = new Label(composite, SWT.NONE);
+		lblPreliminary.setText("Preliminary diagnosis");
+		lblPreliminary.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
+		lblPreliminary.setBounds(10, 89, 159, 14);
+		
+		text_2 = new Text(composite, SWT.BORDER | SWT.WRAP | SWT.MULTI);
+		text_2.setBounds(175, 115, 731, 172);
+		
+		Label label_4 = new Label(composite, SWT.NONE);
+		label_4.setText("Clinical Symptoms");
+		label_4.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
+		label_4.setBounds(10, 114, 159, 21);
 		TableItem itemCmb = new TableItem(tableCombo.getTable(), SWT.NONE);
 		itemCmb.setText(new String[]{"id1", "name1"});
 	}
@@ -497,6 +478,66 @@ public class ExaminationShell extends Shell {
     	this.cmbDepartment.setItems(lstDept);
     	
 	}
+	
+	private void selectDepartment() {
+		int index = -1;
+		
+		if (cmbDepartment.getText().trim().equals("")) {
+			cmbDoctor.removeAll();
+			tblPatient.removeAll();
+			return;
+		}
+		
+		for (int i = 1; i < lstDept.length; i++) {
+			if (cmbDepartment.getText().equals(lstDept[i])) {
+				index = i;
+				break;
+			}
+		}
+		
+		if (index > 0) {
+			//Fill data to doctor combobox
+			List<Doctor> listDoctor = doctorDao.findByDeptId(lstDeptID[index]);
+	    	
+	    	// Fill list departments
+	    	lstDoctor = new String[listDoctor.size() + 1];
+	    	lstDoctorID = new String[listDoctor.size() + 1];
+	    	lstDoctor[0] = "";
+	    	lstDoctorID[0] = "";
+	    	
+	    	for (int i = 0; i < listDoctor.size(); i++) {
+	    		lstDoctor[i + 1] = listDoctor.get(i).getDoctorName();
+	    		lstDoctorID[i + 1] = listDoctor.get(i).getDoctorID();
+	    	}
+	    	
+	    	cmbDoctor.setItems(lstDoctor);
+
+	    	//Get patients of current department
+	    	List<Service> listService = serviceDao.findByDeptId(lstDeptID[index]);
+	    	TableItem item = null;
+	    	Patient patient = null;
+	    	String[] txtRow = null;
+	    	
+	    	tblPatient.removeAll();
+	    	
+	    	for (Service service: listService) {
+	    		item = new TableItem(tblPatient, SWT.NONE);
+	    		patient = patientDao.findById(service.getPatientID());
+	    		txtRow = new String[4];
+	    		txtRow[0] = service.getPatientID();
+	    		txtRow[1] = patient.getPatientName();
+	    		txtRow[2] = patient.getSex();
+	    		if (patient.getDayOfBirth() != null) {
+	    			txtRow[3] = formatter.format(patient.getDayOfBirth());
+	    		} else {
+	    			txtRow[3] = "";
+	    		}
+	    		
+	    		item.setText(txtRow);
+	    	}
+		}
+	}
+	
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
