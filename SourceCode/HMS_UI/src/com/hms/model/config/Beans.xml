@@ -16,4 +16,6 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 	<import resource="../bean/MedicineGroup.xml"/>
 	<import resource="../bean/Medicine.xml"/>
 	<import resource="../bean/Doctor.xml"/>
+	<import resource="../bean/BasicMedicalRecord.xml"/>
+	<import resource="../bean/MedicalRecord.xml"/>
 </beans>

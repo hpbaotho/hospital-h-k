@@ -10,8 +10,10 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 import com.hms.form.lov.MedicineLOV;
+import com.hms.model.dao.BasicMedicalRecordDao;
 import com.hms.model.dao.DepartmentDao;
 import com.hms.model.dao.DoctorDao;
+import com.hms.model.dao.MedicalRecordDao;
 import com.hms.model.dao.PatientDao;
 import com.hms.model.dao.ServiceDao;
 import com.hms.model.entity.Department;
@@ -42,6 +44,8 @@ import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 
 public class ExaminationShell extends Shell {
 	private Table tblPatient;
@@ -49,12 +53,12 @@ public class ExaminationShell extends Shell {
 	private Text txtPatientName;
 	private Text txtPatientSex;
 	private Text txtPatientAge;
-	private Text text_4;
+	private Text txtTemperature;
 	private Text txtPulse;
-	private Text text_6;
-	private Text text_8;
-	private Text text_9;
-	private Text text_10;
+	private Text txtBloodPress;
+	private Text txtBreathing;
+	private Text txtHeight;
+	private Text txtWeight;
 	private Text text;
 	private Text text_1;
 	private Text text_2;
@@ -62,6 +66,10 @@ public class ExaminationShell extends Shell {
 	private Table table;
 	private Combo cmbDepartment;
 	private Combo cmbDoctor;
+	private CTabFolder tabFolder;
+	private CTabItem tbtmExamination;
+	private CTabItem tbtmPrescription;
+	private Button btnSave;
 	
 	//List
 	private String[] lstDept = null;
@@ -75,6 +83,10 @@ public class ExaminationShell extends Shell {
 	private DoctorDao doctorDao = null;
 	private ServiceDao serviceDao = null;
 	private PatientDao patientDao = null;
+	private BasicMedicalRecordDao basicMedicalRecordDao = null;
+	private MedicalRecordDao medicalRecordDao = null;
+	
+	//Utilities
 	private SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 	
 	//Boolean
@@ -112,6 +124,8 @@ public class ExaminationShell extends Shell {
 		this.doctorDao = (DoctorDao) appContext.getBean("doctorDao");
 		this.serviceDao = (ServiceDao) appContext.getBean("serviceDao");
 		this.patientDao = (PatientDao) appContext.getBean("patientDao");
+		this.basicMedicalRecordDao = (BasicMedicalRecordDao) appContext.getBean("basicMedicalRecordDao");
+		this.medicalRecordDao = (MedicalRecordDao) appContext.getBean("medicalRecordDao");
 		
 		createContents();
 		
@@ -188,6 +202,20 @@ public class ExaminationShell extends Shell {
 		new AutocompleteComboSelector(cmbDoctor);
 		
 		tblPatient = new Table(grpImportInvoiceInformation, SWT.BORDER | SWT.FULL_SELECTION);
+		tblPatient.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.keyCode == 13) {
+					examinePatient();
+				}
+			}
+		});
+		tblPatient.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				examinePatient();
+			}
+		});
 		tblPatient.setBounds(0, 84, 330, 125);
 		tblPatient.setHeaderVisible(true);
 		tblPatient.setLinesVisible(true);
@@ -244,64 +272,72 @@ public class ExaminationShell extends Shell {
 		lblAge.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
 		lblAge.setBounds(336, 113, 39, 14);
 		
-		Label label_2 = new Label(grpImportInvoiceInformation, SWT.NONE);
-		label_2.setText("Pulse");
-		label_2.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
-		label_2.setBounds(337, 154, 89, 14);
+		Label lblPulse = new Label(grpImportInvoiceInformation, SWT.NONE);
+		lblPulse.setText("Pulse");
+		lblPulse.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
+		lblPulse.setBounds(337, 154, 89, 14);
 		
-		Label label_5 = new Label(grpImportInvoiceInformation, SWT.NONE);
-		label_5.setText("Temperature");
-		label_5.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
-		label_5.setBounds(334, 181, 92, 14);
+		Label lblTemperature = new Label(grpImportInvoiceInformation, SWT.NONE);
+		lblTemperature.setText("Temperature");
+		lblTemperature.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
+		lblTemperature.setBounds(334, 181, 92, 14);
 		
-		text_4 = new Text(grpImportInvoiceInformation, SWT.BORDER);
-		text_4.setEditable(false);
-		text_4.setBounds(429, 179, 79, 21);
+		txtTemperature = new Text(grpImportInvoiceInformation, SWT.BORDER);
+		txtTemperature.setEditable(false);
+		txtTemperature.setBounds(429, 179, 79, 21);
 		
 		txtPulse = new Text(grpImportInvoiceInformation, SWT.BORDER);
 		txtPulse.setEditable(false);
 		txtPulse.setBounds(429, 152, 79, 21);
 		
-		Label label_6 = new Label(grpImportInvoiceInformation, SWT.NONE);
-		label_6.setText("Breathing");
-		label_6.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
-		label_6.setBounds(514, 154, 101, 14);
+		Label lblBreathing = new Label(grpImportInvoiceInformation, SWT.NONE);
+		lblBreathing.setText("Breathing");
+		lblBreathing.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
+		lblBreathing.setBounds(514, 154, 101, 14);
 		
-		Label label_7 = new Label(grpImportInvoiceInformation, SWT.NONE);
-		label_7.setText("Blood pressure");
-		label_7.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
-		label_7.setBounds(514, 181, 101, 14);
+		Label lblBloodPress = new Label(grpImportInvoiceInformation, SWT.NONE);
+		lblBloodPress.setText("Blood pressure");
+		lblBloodPress.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
+		lblBloodPress.setBounds(514, 181, 101, 14);
 		
-		text_6 = new Text(grpImportInvoiceInformation, SWT.BORDER);
-		text_6.setEditable(false);
-		text_6.setBounds(621, 179, 79, 21);
+		txtBloodPress = new Text(grpImportInvoiceInformation, SWT.BORDER);
+		txtBloodPress.setEditable(false);
+		txtBloodPress.setBounds(621, 179, 79, 21);
 		
-		text_8 = new Text(grpImportInvoiceInformation, SWT.BORDER);
-		text_8.setEditable(false);
-		text_8.setBounds(621, 152, 79, 21);
+		txtBreathing = new Text(grpImportInvoiceInformation, SWT.BORDER);
+		txtBreathing.setEditable(false);
+		txtBreathing.setBounds(621, 152, 79, 21);
 		
-		Label label_8 = new Label(grpImportInvoiceInformation, SWT.NONE);
-		label_8.setText("Height");
-		label_8.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
-		label_8.setBounds(706, 154, 89, 14);
+		Label lblHeight = new Label(grpImportInvoiceInformation, SWT.NONE);
+		lblHeight.setText("Height");
+		lblHeight.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
+		lblHeight.setBounds(706, 154, 89, 14);
 		
-		Label label_9 = new Label(grpImportInvoiceInformation, SWT.NONE);
-		label_9.setText("Weight");
-		label_9.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
-		label_9.setBounds(706, 181, 92, 14);
+		Label lblWeight = new Label(grpImportInvoiceInformation, SWT.NONE);
+		lblWeight.setText("Weight");
+		lblWeight.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
+		lblWeight.setBounds(706, 181, 92, 14);
 		
-		text_9 = new Text(grpImportInvoiceInformation, SWT.BORDER);
-		text_9.setEditable(false);
-		text_9.setBounds(807, 152, 79, 21);
+		txtHeight = new Text(grpImportInvoiceInformation, SWT.BORDER);
+		txtHeight.setEditable(false);
+		txtHeight.setBounds(807, 152, 79, 21);
 		
-		text_10 = new Text(grpImportInvoiceInformation, SWT.BORDER);
-		text_10.setEditable(false);
-		text_10.setBounds(807, 179, 79, 21);
+		txtWeight = new Text(grpImportInvoiceInformation, SWT.BORDER);
+		txtWeight.setEditable(false);
+		txtWeight.setBounds(807, 179, 79, 21);
 		
 		Label label_10 = new Label(grpImportInvoiceInformation, SWT.SEPARATOR | SWT.HORIZONTAL);
 		label_10.setBounds(328, 138, 594, 2);
 		
-		Button btnSave = new Button(this, SWT.NONE);
+		btnSave = new Button(this, SWT.NONE);
+		btnSave.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				setEnabledPatientFields(false);
+				setEnabledGeneralFields(true);
+				tblPatient.setFocus();
+			}
+		});
 		btnSave.setImage(null);
 		btnSave.setFont(SWTResourceManager.getFont("Tahoma", 8, SWT.NORMAL));
 		btnSave.setBounds(750, 631, 88, 23);
@@ -319,20 +355,47 @@ public class ExaminationShell extends Shell {
 		btnCancel.setFont(SWTResourceManager.getFont("Tahoma", 8, SWT.NORMAL));
 		btnCancel.setBounds(844, 631, 88, 23);
 		
-		CTabFolder tabFolder = new CTabFolder(this, SWT.BORDER);
+		tabFolder = new CTabFolder(this, SWT.BORDER);
 		tabFolder.setSimple(false);
 		tabFolder.setBounds(10, 226, 922, 399);
 		tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
 		
-		CTabItem tbtmExamination = new CTabItem(tabFolder, SWT.NONE);
+		tbtmExamination = new CTabItem(tabFolder, SWT.NONE);
 		tbtmExamination.setFont(SWTResourceManager.getFont("Tahoma", 10, SWT.NORMAL));
 		tbtmExamination.setText("Examination");
 		
-		tabFolder.setSelection(tbtmExamination);
+		Composite composite = new Composite(tabFolder, SWT.NONE);
+		tbtmExamination.setControl(composite);
 		
-		CTabItem tbtmPrescription = new CTabItem(tabFolder, SWT.NONE);
+		text = new Text(composite, SWT.BORDER | SWT.WRAP | SWT.MULTI);
+		text.setBounds(175, 11, 731, 69);
+		
+		Label lblClinicalSympto = new Label(composite, SWT.NONE);
+		lblClinicalSympto.setText("Clinical Symptoms");
+		lblClinicalSympto.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
+		lblClinicalSympto.setBounds(10, 10, 159, 21);
+		
+		text_1 = new Text(composite, SWT.BORDER);
+		text_1.setBounds(175, 87, 731, 21);
+		
+		Label lblPreliminary = new Label(composite, SWT.NONE);
+		lblPreliminary.setText("Preliminary diagnosis");
+		lblPreliminary.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
+		lblPreliminary.setBounds(10, 89, 159, 14);
+		
+		text_2 = new Text(composite, SWT.BORDER | SWT.WRAP | SWT.MULTI);
+		text_2.setBounds(175, 115, 731, 172);
+		
+		Label label_4 = new Label(composite, SWT.NONE);
+		label_4.setText("Clinical Symptoms");
+		label_4.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
+		label_4.setBounds(10, 114, 159, 21);
+		
+		tbtmPrescription = new CTabItem(tabFolder, SWT.NONE);
 		tbtmPrescription.setFont(SWTResourceManager.getFont("Tahoma", 10, SWT.NORMAL));
 		tbtmPrescription.setText("Prescription");
+		
+		tabFolder.setSelection(tbtmExamination);
 		
 		Composite composite_1 = new Composite(tabFolder, SWT.NONE);
 		tbtmPrescription.setControl(composite_1);
@@ -428,35 +491,6 @@ public class ExaminationShell extends Shell {
 		tableCombo.setShowTableHeader(true);
 		tableCombo.setTableVisible(true);
 		
-		CTabItem tabItem = new CTabItem(tabFolder, SWT.NONE);
-		tabItem.setText("New Item");
-		
-		Composite composite = new Composite(tabFolder, SWT.NONE);
-		tabItem.setControl(composite);
-		
-		text = new Text(composite, SWT.BORDER | SWT.WRAP | SWT.MULTI);
-		text.setBounds(175, 11, 731, 69);
-		
-		Label lblClinicalSympto = new Label(composite, SWT.NONE);
-		lblClinicalSympto.setText("Clinical Symptoms");
-		lblClinicalSympto.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
-		lblClinicalSympto.setBounds(10, 10, 159, 21);
-		
-		text_1 = new Text(composite, SWT.BORDER);
-		text_1.setBounds(175, 87, 731, 21);
-		
-		Label lblPreliminary = new Label(composite, SWT.NONE);
-		lblPreliminary.setText("Preliminary diagnosis");
-		lblPreliminary.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
-		lblPreliminary.setBounds(10, 89, 159, 14);
-		
-		text_2 = new Text(composite, SWT.BORDER | SWT.WRAP | SWT.MULTI);
-		text_2.setBounds(175, 115, 731, 172);
-		
-		Label label_4 = new Label(composite, SWT.NONE);
-		label_4.setText("Clinical Symptoms");
-		label_4.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
-		label_4.setBounds(10, 114, 159, 21);
 		TableItem itemCmb = new TableItem(tableCombo.getTable(), SWT.NONE);
 		itemCmb.setText(new String[]{"id1", "name1"});
 	}
@@ -477,6 +511,33 @@ public class ExaminationShell extends Shell {
     	
     	this.cmbDepartment.setItems(lstDept);
     	
+    	//Disable patient field
+    	this.setEnabledPatientFields(false);
+	}
+	
+	private void setEnabledPatientFields(boolean isEnabled) {
+		if (!isEnabled) {
+			this.txtPatientID.setText("");
+			this.txtPatientName.setText("");
+			this.txtPatientSex.setText("");
+			this.txtPatientAge.setText("");
+			this.txtPulse.setText("");
+			this.txtTemperature.setText("");
+			this.txtBreathing.setText("");
+			this.txtBloodPress.setText("");
+			this.txtHeight.setText("");
+			this.txtWeight.setText("");
+		}
+		
+		this.btnSave.setEnabled(isEnabled);
+		
+		this.tabFolder.setEnabled(isEnabled);
+	}
+	
+	private void setEnabledGeneralFields(boolean isEnabled) {
+		this.cmbDepartment.setEnabled(isEnabled);
+		this.cmbDoctor.setEnabled(isEnabled);
+		this.tblPatient.setEnabled(isEnabled);
 	}
 	
 	private void selectDepartment() {
@@ -535,6 +596,21 @@ public class ExaminationShell extends Shell {
 	    		
 	    		item.setText(txtRow);
 	    	}
+		}
+	}
+	
+	private void examinePatient() {
+		if (tblPatient.getSelectionCount() > 0) {
+			TableItem selectedItem = tblPatient.getSelection()[0];
+		
+			txtPatientID.setText(selectedItem.getText(0));
+			txtPatientName.setText(selectedItem.getText(1));
+			txtPatientSex.setText(selectedItem.getText(2));
+			txtPatientAge.setText(selectedItem.getText(3));
+			
+			setEnabledPatientFields(true);
+			
+			setEnabledGeneralFields(false);
 		}
 	}
 	
