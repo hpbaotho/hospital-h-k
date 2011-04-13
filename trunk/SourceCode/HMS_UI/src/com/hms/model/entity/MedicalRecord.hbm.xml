@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 30, 2010 4:50:53 PM by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="com.hms.model.entity.Department" table="DEPARTMENT" catalog="HMS">
+        <id name="recordID" type="java.lang.String">
+            <column name="RECORD_ID" />
+        </id>
+        <property name="patientID" type="java.lang.String">
+            <column name="PATIENT_ID" />
+        </property>
+        <property name="doctorID" type="java.lang.String">
+            <column name="DOCTOR_ID" />
+        </property>
+        <property name="deptID" type="java.lang.String">
+            <column name="DEPT_ID" />
+        </property>
+        <property name="basicRecordID" type="java.lang.String">
+            <column name="BASIC_RECORD_ID" />
+        </property>
+        <property name="clinicalSymptoms" type="java.lang.String">
+            <column name="CLINICAL_SYMPTOMS" />
+        </property>
+		<property name="preDiagnosis" type="java.lang.String">
+            <column name="PRE_DIAGNOSIS" />
+        </property>
+        <property name="diagnosis" type="java.lang.String">
+            <column name="DIAGNOSIS" />
+        </property>
+        
+     	<property name="register" type="java.lang.String">
+            <column name="REGISTER" />
+        </property>
+        <property name="updater" type="java.lang.String">
+            <column name="UPDATER" />
+        </property>
+        <property name="registerDate" type="java.sql.Date">
+            <column name="REGISTER_DATE" />
+        </property>
+        <property name="updateDate" type="java.sql.Date">
+            <column name="UPDATE_DATE" />
+        </property>
+        <property name="recordStatus" type="java.lang.String">
+            <column name="RECORD_STATUS" />
+        </property>
+    </class>
+</hibernate-mapping>
