@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated Oct 30, 2010 4:50:53 PM by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
-    <class name="com.hms.model.entity.Department" table="DEPARTMENT" catalog="HMS">
+    <class name="com.hms.model.entity.MedicalRecord" table="MEDICAL_RECORD" catalog="HMS">
         <id name="recordID" type="java.lang.String">
             <column name="RECORD_ID" />
         </id>

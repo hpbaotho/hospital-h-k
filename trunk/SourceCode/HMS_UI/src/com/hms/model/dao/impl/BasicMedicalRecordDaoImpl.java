@@ -48,4 +48,14 @@ public class BasicMedicalRecordDaoImpl extends HibernateDaoSupport implements Ba
 		
 		return null;
 	}
+
+	@Override
+	public List<BasicMedicalRecord> findByPatientId(String patientID) {
+		@SuppressWarnings("unchecked")
+		List<BasicMedicalRecord> list = this.getHibernateTemplate().find("from BasicMedicalRecord where Patient_ID=?", patientID);
+		
+		return list;
+	}
+	
+	
 }

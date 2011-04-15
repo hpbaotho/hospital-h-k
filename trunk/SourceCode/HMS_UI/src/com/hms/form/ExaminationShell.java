@@ -16,6 +16,7 @@ import com.hms.model.dao.DoctorDao;
 import com.hms.model.dao.MedicalRecordDao;
 import com.hms.model.dao.PatientDao;
 import com.hms.model.dao.ServiceDao;
+import com.hms.model.entity.BasicMedicalRecord;
 import com.hms.model.entity.Department;
 import com.hms.model.entity.Doctor;
 import com.hms.model.entity.Patient;
@@ -602,11 +603,37 @@ public class ExaminationShell extends Shell {
 	private void examinePatient() {
 		if (tblPatient.getSelectionCount() > 0) {
 			TableItem selectedItem = tblPatient.getSelection()[0];
-		
+			
+			//Show detail information of patient
 			txtPatientID.setText(selectedItem.getText(0));
 			txtPatientName.setText(selectedItem.getText(1));
 			txtPatientSex.setText(selectedItem.getText(2));
 			txtPatientAge.setText(selectedItem.getText(3));
+			
+			//Show basic medical record
+			int index = -1;
+			
+			for (int i = 1; i < lstDept.length; i++) {
+				if (this.cmbDepartment.getText().equals(lstDept[i])) {
+					index = i;
+					break;
+				}
+			}
+			if (index > 0) {
+				List<BasicMedicalRecord> listBasicMedicalRecord = this.basicMedicalRecordDao.findByPatientId(this.txtPatientID.getText());
+				if (listBasicMedicalRecord.size() > 0) {
+					BasicMedicalRecord basicMedicalRecord = listBasicMedicalRecord.get(0);
+					
+					if (basicMedicalRecord != null) {
+						this.txtPulse.setText(String.valueOf(basicMedicalRecord.getPulse()));
+						this.txtTemperature.setText(String.valueOf(basicMedicalRecord.getTemperature()));
+						this.txtBreathing.setText(String.valueOf(basicMedicalRecord.getBreathing()));
+						this.txtBloodPress.setText(String.valueOf(basicMedicalRecord.getBloodPressure()));
+						this.txtHeight.setText(String.valueOf(basicMedicalRecord.getHeight()));
+						this.txtWeight.setText(String.valueOf(basicMedicalRecord.getWeight()));
+					}
+				}
+			}
 			
 			setEnabledPatientFields(true);
 			

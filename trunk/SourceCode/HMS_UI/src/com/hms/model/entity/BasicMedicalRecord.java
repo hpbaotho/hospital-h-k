@@ -25,6 +25,7 @@ public class BasicMedicalRecord implements Serializable {
 	private double bloodPressure;
 	private double height;
 	private double weight;
+	private Date recordDate;
 	
 	private String register;
 	private String updater;
@@ -128,6 +129,18 @@ public class BasicMedicalRecord implements Serializable {
 	 */
 	public void setWeight(double weight) {
 		this.weight = weight;
+	}
+	/**
+	 * @return the recordDate
+	 */
+	public Date getRecordDate() {
+		return recordDate;
+	}
+	/**
+	 * @param recordDate the recordDate to set
+	 */
+	public void setRecordDate(Date recordDate) {
+		this.recordDate = recordDate;
 	}
 	/**
 	 * @return the register

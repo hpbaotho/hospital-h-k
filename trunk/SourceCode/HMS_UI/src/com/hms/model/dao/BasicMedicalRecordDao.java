@@ -18,5 +18,5 @@ public interface BasicMedicalRecordDao {
 	void delete(BasicMedicalRecord basicMedicalRecord);
 	List<BasicMedicalRecord> findAll();
 	BasicMedicalRecord findById(String id);
-
+	List<BasicMedicalRecord> findByPatientId(String patientID);
 }
