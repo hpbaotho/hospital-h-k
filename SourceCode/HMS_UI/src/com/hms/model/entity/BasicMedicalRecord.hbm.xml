@@ -28,6 +28,9 @@
         <property name="weight" type="double">
             <column name="WEIGHT" />
         </property>
+        <property name="recordDate" type="java.sql.Date">
+            <column name="RECORD_DATE" />
+        </property>
         
      	<property name="register" type="java.lang.String">
             <column name="REGISTER" />

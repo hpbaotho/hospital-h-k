@@ -97,7 +97,7 @@ public class MenuShell extends Shell {
 		mntmServices.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				ServicesShell services = new ServicesShell(getDisplay());
+				ServicesShell services = new ServicesShell(getDisplay(), SWT.SHELL_TRIM, appContext);
 				services.setLocation(250, 50);
 				services.open();
 				services.layout();
@@ -117,7 +117,7 @@ public class MenuShell extends Shell {
 		mntmBasicExamination.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				BasicExamShell basicExam = new BasicExamShell(getDisplay());
+				BasicExamShell basicExam = new BasicExamShell(getDisplay(), SWT.SHELL_TRIM, appContext);
 				basicExam.setLocation(250, 50);
 				basicExam.open();
 				basicExam.layout();
