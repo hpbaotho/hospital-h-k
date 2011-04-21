@@ -620,10 +620,10 @@ public class ExaminationShell extends Shell {
 				}
 			}
 			if (index > 0) {
-				List<BasicMedicalRecord> listBasicMedicalRecord = this.basicMedicalRecordDao.findByPatientId(this.txtPatientID.getText());
-				if (listBasicMedicalRecord.size() > 0) {
-					BasicMedicalRecord basicMedicalRecord = listBasicMedicalRecord.get(0);
-					
+				BasicMedicalRecord basicMedicalRecord = this.basicMedicalRecordDao.findCurrentRecordByPatientId(this.txtPatientID.getText());
+				
+				if (basicMedicalRecord != null) {
+	
 					if (basicMedicalRecord != null) {
 						this.txtPulse.setText(String.valueOf(basicMedicalRecord.getPulse()));
 						this.txtTemperature.setText(String.valueOf(basicMedicalRecord.getTemperature()));
