@@ -19,4 +19,5 @@ public interface BasicMedicalRecordDao {
 	List<BasicMedicalRecord> findAll();
 	BasicMedicalRecord findById(String id);
 	List<BasicMedicalRecord> findByPatientId(String patientID);
+	BasicMedicalRecord findCurrentRecordByPatientId(String patientID);
 }

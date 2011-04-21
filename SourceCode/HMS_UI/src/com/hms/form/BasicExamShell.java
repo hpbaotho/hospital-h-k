@@ -17,6 +17,8 @@ import com.hms.util.calendar.SWTCalendarDialog;
 import com.hms.util.calendar.SWTCalendarEvent;
 import com.hms.util.calendar.SWTCalendarListener;
 import com.swtdesigner.SWTResourceManager;
+
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Button;
@@ -35,6 +37,10 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.orm.hibernate3.HibernateTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 
@@ -61,6 +67,10 @@ public class BasicExamShell extends Shell {
 	// DAO
 	private ApplicationContext appContext = null;
 	private BasicMedicalRecordDao basicMedicalRecordDao = null;
+	
+	private HibernateTransactionManager transaction = null;
+	private TransactionStatus status = null;
+	private DefaultTransactionDefinition def = null;
 	
 	/**
 	 * Launch the application.
@@ -95,6 +105,16 @@ public class BasicExamShell extends Shell {
 		//Get beans
 		basicMedicalRecordDao = (BasicMedicalRecordDao) appContext.getBean("basicMedicalRecordDao");
 		
+		transaction = (HibernateTransactionManager) appContext.getBean("transactionManager");
+    	
+    	def = new DefaultTransactionDefinition();
+    	
+    	// explicitly setting the transaction name is something that can only be done programmatically
+    	def.setName("Basic examination transaction");
+    	def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+
+    	status = transaction.getTransaction(def);
+    	
 		this.createContents();
 		
 		this.initial();
@@ -155,7 +175,7 @@ public class BasicExamShell extends Shell {
 		tblExam = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
 		
 		tblExam.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.NORMAL));
-		tblExam.setBounds(10, 10, 631, 377);
+		tblExam.setBounds(10, 10, 631, 348);
 		tblExam.setHeaderVisible(true);
 		tblExam.setLinesVisible(true);
 		
@@ -195,6 +215,17 @@ public class BasicExamShell extends Shell {
 		toolBar.setBounds(642, 10, 24, 66);
 		
 		ToolItem toolItem = new ToolItem(toolBar, SWT.NONE);
+		toolItem.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				TableItem newItem = new TableItem(tblExam, SWT.NONE);
+				
+				tblitemEditing = newItem;
+				tblExam.setSelection(newItem);
+				
+				setTableItemEditor(tblitemEditing);
+			}
+		});
 		toolItem.setImage(SWTResourceManager.getImage(BasicExamShell.class, "/com/hms/icon/hms-add-icon.png"));
 		
 		ToolItem toolItem_2 = new ToolItem(toolBar, SWT.NONE);
@@ -214,6 +245,26 @@ public class BasicExamShell extends Shell {
 		
 		ToolItem toolItem_1 = new ToolItem(toolBar, SWT.NONE);
 		toolItem_1.setImage(SWTResourceManager.getImage(BasicExamShell.class, "/com/hms/icon/hms-delete-icon.png"));
+		
+		Button btnOK = new Button(composite, SWT.NONE);
+		btnOK.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				ok();
+			}
+		});
+		btnOK.setText("OK");
+		btnOK.setBounds(455, 364, 90, 23);
+		
+		Button btnCancel = new Button(composite, SWT.NONE);
+		btnCancel.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				cancel();
+			}
+		});
+		btnCancel.setText("Cancel");
+		btnCancel.setBounds(551, 364, 90, 23);
 	}
 
 	@Override
@@ -513,5 +564,29 @@ public class BasicExamShell extends Shell {
         
         calendarDialog.open(getShell().getBounds().x + tabFolder.getBounds().x + tblExam.getBounds().x + compPatient.getBounds().x + calendarField.getBounds().x, 
         		50 + getShell().getBounds().y + tabFolder.getBounds().y + tblExam.getBounds().y + compPatient.getBounds().y + calendarField.getBounds().y + (selectedIndex + 1) * 10);
+	}
+
+	private void ok() {
+		transaction.commit(status);
+		status = transaction.getTransaction(def);
+		dispose();
+	}
+	
+	private void cancel() {
+		MessageBox mb = new MessageBox(this, SWT.ICON_QUESTION | SWT.YES | SWT.NO | SWT.CANCEL);
+		mb.setText("Confirm");
+		mb.setMessage("Do you want to save ?");
+		
+		int val = mb.open();
+		
+		switch (val) {
+		case SWT.YES:
+			ok();
+			break;
+		case SWT.NO:
+			transaction.rollback(status);
+			dispose();
+		}
+		
 	}
 }
