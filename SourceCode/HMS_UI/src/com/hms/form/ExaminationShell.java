@@ -1,6 +1,7 @@
 package com.hms.form;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import net.sf.swtaddons.autocomplete.combo.AutocompleteComboSelector;
@@ -19,11 +20,13 @@ import com.hms.model.dao.ServiceDao;
 import com.hms.model.entity.BasicMedicalRecord;
 import com.hms.model.entity.Department;
 import com.hms.model.entity.Doctor;
+import com.hms.model.entity.MedicalRecord;
 import com.hms.model.entity.Patient;
 import com.hms.model.entity.Service;
 import com.swtdesigner.SWTResourceManager;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Table;
@@ -60,9 +63,9 @@ public class ExaminationShell extends Shell {
 	private Text txtBreathing;
 	private Text txtHeight;
 	private Text txtWeight;
-	private Text text;
-	private Text text_1;
-	private Text text_2;
+	private Text txtClinicalSymptom;
+	private Text txtPreDiagnosis;
+	private Text txtDiagnosis;
 	private Text text_3;
 	private Table table;
 	private Combo cmbDepartment;
@@ -71,6 +74,7 @@ public class ExaminationShell extends Shell {
 	private CTabItem tbtmExamination;
 	private CTabItem tbtmPrescription;
 	private Button btnSave;
+	private String txtBasicMedicalID = null;
 	
 	//List
 	private String[] lstDept = null;
@@ -330,32 +334,6 @@ public class ExaminationShell extends Shell {
 		Label label_10 = new Label(grpImportInvoiceInformation, SWT.SEPARATOR | SWT.HORIZONTAL);
 		label_10.setBounds(328, 138, 594, 2);
 		
-		btnSave = new Button(this, SWT.NONE);
-		btnSave.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				setEnabledPatientFields(false);
-				setEnabledGeneralFields(true);
-				tblPatient.setFocus();
-			}
-		});
-		btnSave.setImage(null);
-		btnSave.setFont(SWTResourceManager.getFont("Tahoma", 8, SWT.NORMAL));
-		btnSave.setBounds(750, 631, 88, 23);
-		btnSave.setText("Save");
-		
-		Button btnCancel = new Button(this, SWT.NONE);
-		btnCancel.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				dispose();
-			}
-		});
-		btnCancel.setText("Cancel");
-		btnCancel.setImage(null);
-		btnCancel.setFont(SWTResourceManager.getFont("Tahoma", 8, SWT.NORMAL));
-		btnCancel.setBounds(844, 631, 88, 23);
-		
 		tabFolder = new CTabFolder(this, SWT.BORDER);
 		tabFolder.setSimple(false);
 		tabFolder.setBounds(10, 226, 922, 399);
@@ -368,29 +346,29 @@ public class ExaminationShell extends Shell {
 		Composite composite = new Composite(tabFolder, SWT.NONE);
 		tbtmExamination.setControl(composite);
 		
-		text = new Text(composite, SWT.BORDER | SWT.WRAP | SWT.MULTI);
-		text.setBounds(175, 11, 731, 69);
+		txtClinicalSymptom = new Text(composite, SWT.BORDER | SWT.WRAP | SWT.MULTI);
+		txtClinicalSymptom.setBounds(175, 11, 731, 69);
 		
-		Label lblClinicalSympto = new Label(composite, SWT.NONE);
-		lblClinicalSympto.setText("Clinical Symptoms");
-		lblClinicalSympto.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
-		lblClinicalSympto.setBounds(10, 10, 159, 21);
+		Label lblClinicalSymptom = new Label(composite, SWT.NONE);
+		lblClinicalSymptom.setText("Clinical Symptoms");
+		lblClinicalSymptom.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
+		lblClinicalSymptom.setBounds(10, 10, 159, 21);
 		
-		text_1 = new Text(composite, SWT.BORDER);
-		text_1.setBounds(175, 87, 731, 21);
+		txtPreDiagnosis = new Text(composite, SWT.BORDER);
+		txtPreDiagnosis.setBounds(175, 87, 731, 21);
 		
-		Label lblPreliminary = new Label(composite, SWT.NONE);
-		lblPreliminary.setText("Preliminary diagnosis");
-		lblPreliminary.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
-		lblPreliminary.setBounds(10, 89, 159, 14);
+		Label lblPreDiagnosis = new Label(composite, SWT.NONE);
+		lblPreDiagnosis.setText("Preliminary diagnosis");
+		lblPreDiagnosis.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
+		lblPreDiagnosis.setBounds(10, 89, 159, 14);
 		
-		text_2 = new Text(composite, SWT.BORDER | SWT.WRAP | SWT.MULTI);
-		text_2.setBounds(175, 115, 731, 172);
+		txtDiagnosis = new Text(composite, SWT.BORDER | SWT.WRAP | SWT.MULTI);
+		txtDiagnosis.setBounds(175, 115, 731, 172);
 		
-		Label label_4 = new Label(composite, SWT.NONE);
-		label_4.setText("Clinical Symptoms");
-		label_4.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
-		label_4.setBounds(10, 114, 159, 21);
+		Label lblDiagnosis = new Label(composite, SWT.NONE);
+		lblDiagnosis.setText("Clinical Symptoms");
+		lblDiagnosis.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
+		lblDiagnosis.setBounds(10, 114, 159, 21);
 		
 		tbtmPrescription = new CTabItem(tabFolder, SWT.NONE);
 		tbtmPrescription.setFont(SWTResourceManager.getFont("Tahoma", 10, SWT.NORMAL));
@@ -494,6 +472,30 @@ public class ExaminationShell extends Shell {
 		
 		TableItem itemCmb = new TableItem(tableCombo.getTable(), SWT.NONE);
 		itemCmb.setText(new String[]{"id1", "name1"});
+		
+		btnSave = new Button(this, SWT.NONE);
+		btnSave.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				save();
+			}
+		});
+		btnSave.setImage(null);
+		btnSave.setFont(SWTResourceManager.getFont("Tahoma", 8, SWT.NORMAL));
+		btnSave.setBounds(750, 631, 88, 23);
+		btnSave.setText("Save");
+		
+		Button btnCancel = new Button(this, SWT.NONE);
+		btnCancel.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				dispose();
+			}
+		});
+		btnCancel.setText("Cancel");
+		btnCancel.setImage(null);
+		btnCancel.setFont(SWTResourceManager.getFont("Tahoma", 8, SWT.NORMAL));
+		btnCancel.setBounds(844, 631, 88, 23);
 	}
 
 	private void initial() {
@@ -623,15 +625,13 @@ public class ExaminationShell extends Shell {
 				BasicMedicalRecord basicMedicalRecord = this.basicMedicalRecordDao.findCurrentRecordByPatientId(this.txtPatientID.getText());
 				
 				if (basicMedicalRecord != null) {
-	
-					if (basicMedicalRecord != null) {
-						this.txtPulse.setText(String.valueOf(basicMedicalRecord.getPulse()));
-						this.txtTemperature.setText(String.valueOf(basicMedicalRecord.getTemperature()));
-						this.txtBreathing.setText(String.valueOf(basicMedicalRecord.getBreathing()));
-						this.txtBloodPress.setText(String.valueOf(basicMedicalRecord.getBloodPressure()));
-						this.txtHeight.setText(String.valueOf(basicMedicalRecord.getHeight()));
-						this.txtWeight.setText(String.valueOf(basicMedicalRecord.getWeight()));
-					}
+					this.txtBasicMedicalID = basicMedicalRecord.getBasicRecordID();
+					this.txtPulse.setText(String.valueOf(basicMedicalRecord.getPulse()));
+					this.txtTemperature.setText(String.valueOf(basicMedicalRecord.getTemperature()));
+					this.txtBreathing.setText(String.valueOf(basicMedicalRecord.getBreathing()));
+					this.txtBloodPress.setText(String.valueOf(basicMedicalRecord.getBloodPressure()));
+					this.txtHeight.setText(String.valueOf(basicMedicalRecord.getHeight()));
+					this.txtWeight.setText(String.valueOf(basicMedicalRecord.getWeight()));
 				}
 			}
 			
@@ -641,6 +641,89 @@ public class ExaminationShell extends Shell {
 		}
 	}
 	
+	private void save() {
+		if (this.txtClinicalSymptom.getText().trim().equals("")) {
+			MessageBox mb = new MessageBox(this, SWT.ICON_WARNING | SWT.OK);
+			mb.setText("Warning");
+			mb.setMessage("Clinical Symptom is empty!");
+			mb.open();
+			
+			txtClinicalSymptom.setFocus();
+			return;
+		} else if (this.txtPreDiagnosis.getText().trim().equals("")) {
+			MessageBox mb = new MessageBox(this, SWT.ICON_WARNING | SWT.OK);
+			mb.setText("Warning");
+			mb.setMessage("Preliminary diagnosis is empty!");
+			mb.open();
+			
+			txtPreDiagnosis.setFocus();
+			return;
+		} else if (this.txtDiagnosis.getText().trim().equals("")) {
+			MessageBox mb = new MessageBox(this, SWT.ICON_WARNING | SWT.OK);
+			mb.setText("Warning");
+			mb.setMessage("Diagnosis is empty!");
+			mb.open();
+			
+			this.txtDiagnosis.setFocus();
+			return;
+		}
+		
+		//Save new Medical Record
+		if (this.medicalRecordDao != null) {
+			String mrID = "MR_";
+			String[] strDate = null;
+			
+			try {
+				strDate = formatter.format(new Date()).split("/");
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+				return;
+			}
+			
+			if (strDate.length == 3) {
+				mrID += strDate[2] + strDate[1] + strDate[0];
+			} else {
+				return;
+			}
+			
+			int index = -1;
+			
+			MedicalRecord medicalRecord = new MedicalRecord();
+			medicalRecord.setRecordID(mrID);
+			medicalRecord.setPatientID(this.txtPatientID.getText());
+			
+			for (int i = 0; i < lstDoctorID.length; i++) {
+				if (this.cmbDoctor.getText().equals(lstDoctor[i])) {
+					index = i;
+					break;
+				}
+			}
+			if (index > 0) {
+				medicalRecord.setDoctorID(lstDoctorID[index]);
+			}
+			
+			for (int i = 0; i < lstDeptID.length; i++) {
+				if (this.cmbDepartment.getText().equals(lstDept[i])) {
+					index = i;
+					break;
+				}
+			}
+			if (index > 0) {
+				medicalRecord.setDeptID(lstDeptID[index]);
+			}
+			
+			medicalRecord.setBasicRecordID(this.txtBasicMedicalID);
+			medicalRecord.setClinicalSymptoms(this.txtClinicalSymptom.getText());
+			medicalRecord.setPreDiagnosis(this.txtPreDiagnosis.getText());
+			medicalRecord.setDiagnosis(this.txtDiagnosis.getText());
+			
+			this.medicalRecordDao.save(medicalRecord);
+			
+			setEnabledPatientFields(false);
+			setEnabledGeneralFields(true);
+			tblPatient.setFocus();
+		}
+	}
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
