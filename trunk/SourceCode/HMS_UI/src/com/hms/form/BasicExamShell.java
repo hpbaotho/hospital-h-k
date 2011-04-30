@@ -63,6 +63,7 @@ public class BasicExamShell extends Shell {
 	private TableItem tblitemEditing = null;
 	private SWTCalendarDialog calendarDialog = null;
 	private SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+	private SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd");
 	
 	// DAO
 	private ApplicationContext appContext = null;
@@ -300,7 +301,7 @@ public class BasicExamShell extends Shell {
 				}
 				
 				if (basicMedic.getRecordDate() != null) {
-					rowData[1] = basicMedic.getRecordDate().toString();
+					rowData[1] = formatter.format(basicMedic.getRecordDate());
 				} else {
 					rowData[1] = "";
 				}
@@ -450,14 +451,18 @@ public class BasicExamShell extends Shell {
 			BasicMedicalRecord curBasicMedicRecord = basicMedicalRecordDao.findById(item.getText(0));
 			
 			if (curBasicMedicRecord != null) {
-				curBasicMedicRecord.setRecordDate(java.sql.Date.valueOf(item.getText(1)));
-				curBasicMedicRecord.setPulse(Double.valueOf(item.getText(2)));
-				curBasicMedicRecord.setTemperature(Double.valueOf(item.getText(3)));
-				curBasicMedicRecord.setBreathing(Double.valueOf(item.getText(4)));
-				curBasicMedicRecord.setBloodPressure(Double.valueOf(item.getText(5)));
-				curBasicMedicRecord.setHeight(Double.valueOf(item.getText(6)));
-				curBasicMedicRecord.setWeight(Double.valueOf(item.getText(7)));
-				basicMedicalRecordDao.update(curBasicMedicRecord);
+				try {
+					curBasicMedicRecord.setRecordDate(java.sql.Date.valueOf(formatter2.format(formatter.parse(item.getText(1)))));
+					curBasicMedicRecord.setPulse(Double.valueOf(item.getText(2)));
+					curBasicMedicRecord.setTemperature(Double.valueOf(item.getText(3)));
+					curBasicMedicRecord.setBreathing(Double.valueOf(item.getText(4)));
+					curBasicMedicRecord.setBloodPressure(Double.valueOf(item.getText(5)));
+					curBasicMedicRecord.setHeight(Double.valueOf(item.getText(6)));
+					curBasicMedicRecord.setWeight(Double.valueOf(item.getText(7)));
+					basicMedicalRecordDao.update(curBasicMedicRecord);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
 			} else {
 				String bmrID = "BMR_";
 				String[] strDate = null;
@@ -474,19 +479,23 @@ public class BasicExamShell extends Shell {
 				} else {
 					return;
 				}
-
+				
 				curBasicMedicRecord = new BasicMedicalRecord();
 				curBasicMedicRecord.setBasicRecordID(bmrID);
 				curBasicMedicRecord.setPatientID(patientID);
-				curBasicMedicRecord.setRecordDate(java.sql.Date.valueOf(item.getText(1)));
-				curBasicMedicRecord.setPulse(Double.valueOf(item.getText(2)));
-				curBasicMedicRecord.setTemperature(Double.valueOf(item.getText(3)));
-				curBasicMedicRecord.setBreathing(Double.valueOf(item.getText(4)));
-				curBasicMedicRecord.setBloodPressure(Double.valueOf(item.getText(5)));
-				curBasicMedicRecord.setHeight(Double.valueOf(item.getText(6)));
-				curBasicMedicRecord.setWeight(Double.valueOf(item.getText(7)));
-				basicMedicalRecordDao.save(curBasicMedicRecord);
-				item.setText(0, bmrID);
+				try {
+					curBasicMedicRecord.setRecordDate(java.sql.Date.valueOf(formatter2.format(formatter.parse(item.getText(1)))));
+					curBasicMedicRecord.setPulse(Double.valueOf(item.getText(2)));
+					curBasicMedicRecord.setTemperature(Double.valueOf(item.getText(3)));
+					curBasicMedicRecord.setBreathing(Double.valueOf(item.getText(4)));
+					curBasicMedicRecord.setBloodPressure(Double.valueOf(item.getText(5)));
+					curBasicMedicRecord.setHeight(Double.valueOf(item.getText(6)));
+					curBasicMedicRecord.setWeight(Double.valueOf(item.getText(7)));
+					basicMedicalRecordDao.save(curBasicMedicRecord);
+					item.setText(0, bmrID);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 			
 			//Destroy row editor

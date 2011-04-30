@@ -67,36 +67,36 @@ public class LoginShell extends Shell {
 		// -----------------------------------------------------------------------
 		
 		setImage(SWTResourceManager.getImage(SWTApplication.class, "/com/hms/icon/hms-login-icon.png"));
-		setSize(450, 300);
+		setSize(450, 260);
 		setText(Messages.getString("HMS.LoginFrame.title"));
 		setLocation(400, 200);
 		
 		Label label_1 = new Label(this, SWT.NONE);
-		label_1.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		label_1.setBounds(44, 74, 115, 21);
+		label_1.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
+		label_1.setBounds(44, 71, 115, 18);
 		label_1.setText(Messages.getString("HMS.LoginFrame.label.user_name"));
 		
 		txtUserID = new Text(this, SWT.BORDER);
-		txtUserID.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.NORMAL));
-		txtUserID.setBounds(165, 68, 221, 27);
+		txtUserID.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.NORMAL));
+		txtUserID.setBounds(165, 68, 221, 24);
 		
 		txtPassword = new Text(this, SWT.BORDER | SWT.PASSWORD);
-		txtPassword.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.NORMAL));
-		txtPassword.setBounds(165, 101, 221, 27);
+		txtPassword.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.NORMAL));
+		txtPassword.setBounds(165, 101, 221, 24);
 		
 		Label label_2 = new Label(this, SWT.NONE);
 		label_2.setText(Messages.getString("HMS.LoginFrame.label.password"));
-		label_2.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		label_2.setBounds(44, 107, 115, 21);
+		label_2.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
+		label_2.setBounds(44, 104, 115, 18);
 		
 		txtServer = new Text(this, SWT.BORDER);
-		txtServer.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.NORMAL));
-		txtServer.setBounds(165, 134, 221, 27);
+		txtServer.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.NORMAL));
+		txtServer.setBounds(165, 134, 221, 24);
 		
 		Label label_3 = new Label(this, SWT.NONE);
 		label_3.setText(Messages.getString("HMS.LoginFrame.label.server"));
-		label_3.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		label_3.setBounds(44, 140, 115, 21);
+		label_3.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
+		label_3.setBounds(44, 137, 115, 18);
 		
 		Button button = new Button(this, SWT.NONE);
 		button.addSelectionListener(new SelectionAdapter() {
@@ -113,9 +113,9 @@ public class LoginShell extends Shell {
 			}
 		});
 		button.setAlignment(SWT.LEFT);
-		button.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
+		button.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
 		button.setImage(SWTResourceManager.getImage(SWTApplication.class, "/com/hms/icon/hms-login-button-icon.png"));
-		button.setBounds(165, 167, 134, 34);
+		button.setBounds(108, 189, 103, 24);
 		button.setText(Messages.getString("HMS.LoginFrame.button.login"));
 		
 		Button button_1 = new Button(this, SWT.NONE);
@@ -128,8 +128,8 @@ public class LoginShell extends Shell {
 		button_1.setAlignment(SWT.LEFT);
 		button_1.setText(Messages.getString("HMS.LoginFrame.button.exit"));
 		button_1.setImage(SWTResourceManager.getImage(SWTApplication.class, "/com/hms/icon/hms-exit-button-icon.png"));
-		button_1.setFont(SWTResourceManager.getFont("Times New Roman", 12, SWT.BOLD));
-		button_1.setBounds(165, 207, 134, 34);
+		button_1.setFont(SWTResourceManager.getFont("Tahoma", 9, SWT.BOLD));
+		button_1.setBounds(249, 189, 103, 24);
 
 	}
 
