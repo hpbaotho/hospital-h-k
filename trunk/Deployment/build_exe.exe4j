@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exe4j version="4.4.1" transformSequenceNumber="1">
+  <directoryPresets config="F:/Project/BVDK/Resource/hospital" />
+  <application name="HMS" distributionSourceDir="C:/Documents and Settings/huanpham/Desktop">
+    <languages>
+      <principalLanguage id="en" customLocalizationFile="" />
+    </languages>
+  </application>
+  <executable name="HMS" type="2" iconSet="true" iconFile="F:/Project/BVDK/Resource/hospital/Hospital-Red-2.ico" executableDir="" redirectStderr="true" stderrFile="error.log" stderrMode="overwrite" redirectStdout="false" stdoutFile="output.log" stdoutMode="overwrite" failOnStderrOutput="true" executableMode="1" changeWorkingDirectory="true" workingDirectory="." singleInstance="true" serviceStartType="2" serviceDependencies="" serviceDescription="" jreLocation="" executionLevel="asInvoker" checkConsoleParameter="false" globalSingleInstance="false" amd64="false">
+    <messageSet />
+    <versionInfo include="true" fileVersion="0.1" fileDescription="Hospital Management System" legalCopyright="HMS" internalName="hms" productName="" companyName="Huan Pham" productVersion="0.1" />
+  </executable>
+  <splashScreen show="true" autoOff="true" alwaysOnTop="true" width="0" height="0" bitmapFile="F:/Project/BVDK/Resource/hospital/Hospital-icon.png" java6SplashScreen="false">
+    <text>
+      <statusLine x="20" y="20" text="" font="Arial" fontSize="8" fontColor="0,0,0" fontWeight="500" />
+      <versionLine x="20" y="40" text="version %VERSION%" font="Arial" fontSize="8" fontColor="0,0,0" fontWeight="500" />
+    </text>
+  </splashScreen>
+  <java mainClass="com.hms.main.SWTApplication" vmParameters="" arguments="" allowVMPassthroughParameters="true" preferredVM="" bundleRuntime="true" minVersion="1.5" maxVersion="" allowBetaVM="false" jdkOnly="false">
+    <searchSequence>
+      <registry />
+      <envVar name="JAVA_HOME" />
+      <envVar name="JDK_HOME" />
+    </searchSequence>
+    <classPath>
+      <archive location="./demo/hms.jar" failOnError="false" />
+      <archive location="./demo/antlrworks-1.4.jar" failOnError="false" />
+      <archive location="./demo/calendarcombo-1.0.0.jar" failOnError="false" />
+      <archive location="./demo/cdatetime-0.14.0.jar" failOnError="false" />
+      <archive location="./demo/com.ibm.icu_4.2.1.v20100412.jar" failOnError="false" />
+      <archive location="./demo/com.springsource.javassist-3.3.0.ga.jar" failOnError="false" />
+      <archive location="./demo/com.springsource.javax.ejb-3.0.0.jar" failOnError="false" />
+      <archive location="./demo/com.springsource.javax.persistence-1.0.0.jar" failOnError="false" />
+      <archive location="./demo/com.springsource.javax.servlet.jsp.jstl-1.1.2.jar" failOnError="false" />
+      <archive location="./demo/com.springsource.org.antlr-3.0.1.jar" failOnError="false" />
+      <archive location="./demo/com.springsource.org.apache.commons.collections-3.2.1.jar" failOnError="false" />
+      <archive location="./demo/com.springsource.org.apache.commons.dbcp-1.2.2.osgi.jar" failOnError="false" />
+      <archive location="./demo/com.springsource.org.apache.commons.logging-1.1.1.jar" failOnError="false" />
+      <archive location="./demo/com.springsource.org.apache.commons.pool-1.5.3.jar" failOnError="false" />
+      <archive location="./demo/com.springsource.org.apache.taglibs.standard-1.1.2.jar" failOnError="false" />
+      <archive location="./demo/com.springsource.org.dom4j-1.6.1.jar" failOnError="false" />
+      <archive location="./demo/com.springsource.org.hibernate-3.3.1.GA.jar" failOnError="false" />
+      <archive location="./demo/com.springsource.org.hibernate.annotations-3.4.0.GA.jar" failOnError="false" />
+      <archive location="./demo/com.springsource.org.hibernate.annotations.common-3.3.0.ga.jar" failOnError="false" />
+      <archive location="./demo/com.springsource.slf4j.api-1.5.6.jar" failOnError="false" />
+      <archive location="./demo/com.springsource.slf4j.jcl-1.5.6.jar" failOnError="false" />
+      <archive location="./demo/compositetable-1.0.0.jar" failOnError="false" />
+      <archive location="./demo/cwt-0.9.0.jar" failOnError="false" />
+      <archive location="./demo/datechooser-1.0.0.jar" failOnError="false" />
+      <archive location="./demo/gallery-0.5.2.jar" failOnError="false" />
+      <archive location="./demo/ganttchart-2.0.jar" failOnError="false" />
+      <archive location="./demo/grid-1.0.0.jar" failOnError="false" />
+      <archive location="./demo/hms.jar" failOnError="false" />
+      <archive location="./demo/jta-1.1.jar" failOnError="false" />
+      <archive location="./demo/mysql-connector-java-5.1.13-bin.jar" failOnError="false" />
+      <archive location="./demo/net.sf.swtaddons_0.1.1_bin_src.jar" failOnError="false" />
+      <archive location="./demo/org.eclipse.core.commands_3.6.0.I20100512-1500.jar" failOnError="false" />
+      <archive location="./demo/org.eclipse.core.runtime_3.6.0.v20100505.jar" failOnError="false" />
+      <archive location="./demo/org.eclipse.equinox.common_3.6.0.v20100503.jar" failOnError="false" />
+      <archive location="./demo/org.eclipse.equinox.registry_3.5.0.v20100503.jar" failOnError="false" />
+      <archive location="./demo/org.eclipse.jface.text_3.6.1.r361_v20100825-0800.jar" failOnError="false" />
+      <archive location="./demo/org.eclipse.jface_3.6.1.M20100825-0800.jar" failOnError="false" />
+      <archive location="./demo/org.eclipse.osgi_3.6.1.R36x_v20100806.jar" failOnError="false" />
+      <archive location="./demo/org.eclipse.swt.win32.win32.x86_3.6.1.v3655c.jar" failOnError="false" />
+      <archive location="./demo/org.eclipse.text_3.5.0.v20100601-1300.jar" failOnError="false" />
+      <archive location="./demo/org.eclipse.ui.forms_3.5.2.r36_v20100702.jar" failOnError="false" />
+      <archive location="./demo/org.eclipse.ui.workbench_3.6.1.M20100826-1330.jar" failOnError="false" />
+      <archive location="./demo/org.springframework.asm-3.0.3.RELEASE.jar" failOnError="false" />
+      <archive location="./demo/org.springframework.beans-3.0.3.RELEASE.jar" failOnError="false" />
+      <archive location="./demo/org.springframework.context-3.0.3.RELEASE.jar" failOnError="false" />
+      <archive location="./demo/org.springframework.context.support-3.0.3.RELEASE.jar" failOnError="false" />
+      <archive location="./demo/org.springframework.core-3.0.3.RELEASE.jar" failOnError="false" />
+      <archive location="./demo/org.springframework.expression-3.0.3.RELEASE.jar" failOnError="false" />
+      <archive location="./demo/org.springframework.jdbc-3.0.3.RELEASE.jar" failOnError="false" />
+      <archive location="./demo/org.springframework.orm-3.0.3.RELEASE.jar" failOnError="false" />
+      <archive location="./demo/org.springframework.transaction-3.0.3.RELEASE.jar" failOnError="false" />
+      <archive location="./demo/org.springframework.web-3.0.3.RELEASE.jar" failOnError="false" />
+      <archive location="./demo/org.springframework.web.servlet-3.0.3.RELEASE.jar" failOnError="false" />
+      <archive location="./demo/pgroup-1.0.0.jar" failOnError="false" />
+      <archive location="./demo/tablecombo-1.0.0.jar" failOnError="false" />
+    </classPath>
+    <nativeLibraryDirectories />
+  </java>
+  <includedFiles />
+  <unextractableFiles />
+</exe4j>
+
