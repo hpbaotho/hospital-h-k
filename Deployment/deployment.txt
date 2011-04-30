@@ -1,0 +1,2 @@
+- Build exe from jar: EXE4J
+- Build setup package: IEXPRESS (in run)
